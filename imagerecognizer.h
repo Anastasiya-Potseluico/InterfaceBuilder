@@ -11,6 +11,7 @@ class ImageRecognizer
 {
 public:
     ImageRecognizer();
+    ImageRecognizer(cv::Mat & source);
     QList<AbstractWidget> recognizeWidgets();
 
 private:
@@ -27,7 +28,7 @@ private:
     bool isRectangle(std::vector<cv::Point> & contour);
     bool isEllipse(std::vector<cv::Point> & contour);
     double angle(cv::Point pt1, cv::Point pt2, cv::Point pt0);
-
+    void collectFeaturesIntoWidgets();
 };
 
 #endif // IMAGERECOGNIZER_H
