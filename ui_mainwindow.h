@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed 4. Feb 22:39:41 2015
+** Created: Mon 9. Feb 20:24:11 2015
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -17,6 +17,7 @@
 #include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QMainWindow>
+#include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QStatusBar>
 #include <QtGui/QTabWidget>
@@ -27,6 +28,9 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+    QAction *loadImageAction;
+    QAction *generateUIAction;
+    QAction *loadPSDAction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QTabWidget *interfaceWidget;
@@ -34,6 +38,7 @@ public:
     QWidget *scheme_interface;
     QWidget *both_interface;
     QMenuBar *menuBar;
+    QMenu *menu;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -41,6 +46,12 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(1203, 615);
+        loadImageAction = new QAction(MainWindow);
+        loadImageAction->setObjectName(QString::fromUtf8("loadImageAction"));
+        generateUIAction = new QAction(MainWindow);
+        generateUIAction->setObjectName(QString::fromUtf8("generateUIAction"));
+        loadPSDAction = new QAction(MainWindow);
+        loadPSDAction->setObjectName(QString::fromUtf8("loadPSDAction"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -105,10 +116,17 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1203, 21));
+        menu = new QMenu(menuBar);
+        menu->setObjectName(QString::fromUtf8("menu"));
         MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
+
+        menuBar->addAction(menu->menuAction());
+        menu->addAction(loadImageAction);
+        menu->addAction(loadPSDAction);
+        menu->addAction(generateUIAction);
 
         retranslateUi(MainWindow);
 
@@ -121,9 +139,13 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
+        loadImageAction->setText(QApplication::translate("MainWindow", "\320\227\320\260\320\263\321\200\321\203\320\267\320\270\321\202\321\214 \320\270\320\267\320\276\320\261\321\200\320\260\320\266\320\265\320\275\320\270\320\265", 0, QApplication::UnicodeUTF8));
+        generateUIAction->setText(QApplication::translate("MainWindow", "\320\241\320\263\320\265\320\275\320\265\321\200\320\270\321\200\320\276\320\262\320\260\321\202\321\214 UI-\321\204\320\260\320\271\320\273", 0, QApplication::UnicodeUTF8));
+        loadPSDAction->setText(QApplication::translate("MainWindow", "\320\227\320\260\320\263\321\200\321\203\320\267\320\270\321\202\321\214 \320\274\320\260\320\272\320\265\321\202", 0, QApplication::UnicodeUTF8));
         interfaceWidget->setTabText(interfaceWidget->indexOf(maket_interface), QApplication::translate("MainWindow", "\320\234\320\260\320\272\320\265\321\202 \320\270\320\275\321\202\320\265\321\200\321\204\320\265\320\271\321\201\320\260", 0, QApplication::UnicodeUTF8));
         interfaceWidget->setTabText(interfaceWidget->indexOf(scheme_interface), QApplication::translate("MainWindow", "\320\241\321\205\320\265\320\274\320\260 \320\270\320\275\321\202\320\265\321\200\321\204\320\265\320\271\321\201\320\260", 0, QApplication::UnicodeUTF8));
         interfaceWidget->setTabText(interfaceWidget->indexOf(both_interface), QApplication::translate("MainWindow", "\320\236\320\261\320\260 \320\262\320\260\321\200\320\270\320\260\320\275\321\202\320\260", 0, QApplication::UnicodeUTF8));
+        menu->setTitle(QApplication::translate("MainWindow", "\320\234\320\265\320\275\321\216", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

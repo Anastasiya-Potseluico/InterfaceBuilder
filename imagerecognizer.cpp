@@ -14,15 +14,48 @@ void ImageRecognizer::prepareImage()
     cv::Canny(_inputImage, _inputImage, 0, 50, 5);
 }
 
-std::vector ImageRecognizer::findGeometricalFeatures()
+/*Метод для отыскания геометрических фигур на изображении*/
+std::vector <cv::Point> ImageRecognizer::findGeometricalFeatures()
 {
+    prepareImage();
+    std::vector<std::vector<cv::Point> > contours;
+    cv::findContours(bw.clone(), contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 
+    std::vector<cv::Point> approx;
+
+    for (int i = 0; i < contours.size(); i++)
+    {
+        // Аппроксимируем контуры.
+        cv::approxPolyDP(cv::Mat(contours[i]), approx, cv::arcLength(cv::Mat(contours[i]), true)*0.02, true);
+
+        // Убираем все неточно распознанные мелкие дефекты.
+        if (! (std::fabs(cv::contourArea(contours[i])) < 20) || cv::isContourConvex(approx))
+        {
+
+            if (isTriangle(approx))
+            {
+                _triangles.append(contours[i]);
+            }
+            else if (isRectangle(approx))
+            {
+                _rectangles.append(contours[i]);
+            }
+            else if (isEllipse(approx))
+            {
+                _ellipses.append(contours[i]);
+            }
+            else
+            {
+                _errors.append("Unexpected shape recognized!");
+            }
+        }
+    }
 }
 
 /*Метод для определения, является ли контур треугольником */
-bool ImageRecognizer::isTriangle(std::vector<cv::Point> & contour)
+bool ImageRecognizer::isTriangle(QList<cv::Point> &contour)
 {
-    return (approx.size() == 3);
+    return (contour.size() == 3);
 }
 
 /*Метод для определения, является ли контур прямоугольником */

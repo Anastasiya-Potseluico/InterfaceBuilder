@@ -16,6 +16,10 @@ public:
 private:
     cv::Mat _inputImage;
     QList<AbstractWidget> _widgets;
+    QList<cv::Point> _triangles;
+    QList<cv::Point> _rectangles;
+    QList<cv::Point> _ellipses;
+    QList<QString> _errors;
 
     void prepareImage();
     std::vector<cv::Point> findGeometricalFeatures();
