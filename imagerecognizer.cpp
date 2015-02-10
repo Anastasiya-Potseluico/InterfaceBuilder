@@ -15,11 +15,11 @@ void ImageRecognizer::prepareImage()
 }
 
 /*Метод для отыскания геометрических фигур на изображении*/
-std::vector <cv::Point> ImageRecognizer::findGeometricalFeatures()
+void ImageRecognizer::findGeometricalFeatures()
 {
     prepareImage();
     std::vector<std::vector<cv::Point> > contours;
-    cv::findContours(bw.clone(), contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+    cv::findContours(_inputImage, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 
     std::vector<cv::Point> approx;
 
@@ -53,7 +53,7 @@ std::vector <cv::Point> ImageRecognizer::findGeometricalFeatures()
 }
 
 /*Метод для определения, является ли контур треугольником */
-bool ImageRecognizer::isTriangle(QList<cv::Point> &contour)
+bool ImageRecognizer::isTriangle(std::vector<cv::Point> &contour)
 {
     return (contour.size() == 3);
 }
