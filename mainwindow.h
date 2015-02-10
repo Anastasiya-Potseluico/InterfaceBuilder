@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QFileDialog>
 #include "imagerecognizer.h"
 #include "psdparser.h"
 #include "opencv2/imgproc/imgproc.hpp"
