@@ -35,10 +35,12 @@ void MainWindow::chooseAction(QAction *action)
 void MainWindow::loadImage()
 {
     QString filePath;
-    filePath = QFileDialog::getOpenFileName(this,"Open picture",QString(),"Picture(*.png,*.jpeg,*.bmp)");
+    filePath = QFileDialog::getOpenFileName(this,"Open picture",QString(),"Picture(*.png *.jpeg *.bmp)");
     if(!filePath.isEmpty())
     {
         cv::Mat source = cv::imread(filePath.toStdString().c_str());
+        _recognizer = new ImageRecognizer(source);
+        _recognizer->recognizeWidgets();
     }
 }
 
