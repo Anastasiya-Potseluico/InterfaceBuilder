@@ -21,7 +21,7 @@ void MainWindow::chooseAction(QAction *action)
 {
     if (action->objectName()=="loadImageAction")
     {
-
+        loadImage();
     }
     else if (action->objectName()=="loadPSDAction")
     {
@@ -34,6 +34,12 @@ void MainWindow::chooseAction(QAction *action)
 /*Метод для загрузки изображения*/
 void MainWindow::loadImage()
 {
+    QString filePath;
+    filePath = QFileDialog::getOpenFileName(this,"Open picture",QString(),"Picture(*.png,*.jpeg,*.bmp)");
+    if(!filePath.isEmpty())
+    {
+        cv::Mat source = cv::imread(filePath.toStdString().c_str());
+    }
 }
 
 /*Метод для загрузки PSD-файла*/
