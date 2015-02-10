@@ -16,13 +16,13 @@ public:
 private:
     cv::Mat _inputImage;
     QList<AbstractWidget> _widgets;
-    QList<cv::Point> _triangles;
-    QList<cv::Point> _rectangles;
-    QList<cv::Point> _ellipses;
+    QList<std::vector<cv::Point> > _triangles;
+    QList<std::vector<cv::Point> > _rectangles;
+    QList<std::vector<cv::Point> > _ellipses;
     QList<QString> _errors;
 
     void prepareImage();
-    std::vector<cv::Point> findGeometricalFeatures();
+    void findGeometricalFeatures();
     bool isTriangle(std::vector<cv::Point> & contour);
     bool isRectangle(std::vector<cv::Point> & contour);
     bool isEllipse(std::vector<cv::Point> & contour);
