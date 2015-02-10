@@ -22,8 +22,8 @@ public:
     
 private:
     Ui::MainWindow *ui;
-    ImageRecognizer _recognizer; // Класс распознавателя виджетов на изображении.
-    PSDParser _parser; // Класс парсера макетов.
+    ImageRecognizer *_recognizer; // Класс распознавателя виджетов на изображении.
+    PSDParser *_parser; // Класс парсера макетов.
     void loadImage();
     void loadPSD();
 
