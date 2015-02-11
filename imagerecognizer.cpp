@@ -4,7 +4,7 @@ ImageRecognizer::ImageRecognizer()
 {
 }
 
-ImageRecognizer::ImageRecognizer(cv::Mat &source)
+ImageRecognizer::ImageRecognizer(cv::Mat source)
 {
     _inputImage = source;
 }

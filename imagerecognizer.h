@@ -11,7 +11,7 @@ class ImageRecognizer
 {
 public:
     ImageRecognizer();
-    ImageRecognizer(cv::Mat & source);
+    ImageRecognizer(cv::Mat source);
     QList<AbstractWidget> recognizeWidgets();
 
 private:
