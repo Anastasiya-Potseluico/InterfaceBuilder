@@ -29,6 +29,7 @@ private:
 
 private slots:
     void chooseAction(QAction * action);
+    void showInterface();
 };
 
 #endif // MAINWINDOW_H

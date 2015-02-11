@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->menuBar, SIGNAL(triggered(QAction*)), this, SLOT(chooseAction(QAction*)));
+    connect(ui->interfaceWidget, SIGNAL(currentChanged(int)), this, SLOT(showInterface()));
 
 }
 
@@ -47,4 +48,18 @@ void MainWindow::loadImage()
 /*Метод для загрузки PSD-файла*/
 void MainWindow::loadPSD()
 {
+}
+
+/*Слот для показа отображений интерфейсов*/
+void MainWindow::showInterface()
+{
+    switch (ui->interfaceWidget->currentIndex())
+    {
+    case 0:
+        break;
+    case 1:
+        break;
+    case 2:
+        break;
+    }
 }
