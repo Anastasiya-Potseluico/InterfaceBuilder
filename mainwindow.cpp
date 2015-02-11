@@ -13,16 +13,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-
     delete ui;
 }
 
 /*Слот для обработки выбора одного пункта из меню*/
 void MainWindow::chooseAction(QAction *action)
 {
+    cv::Mat loaded;
     if (action->objectName()=="loadImageAction")
     {
-        loadImage();
+        loaded = loadImage();
+        _recognizer = new ImageRecognizer(source);
+        _recognizer->recognizeWidgets();
     }
     else if (action->objectName()=="loadPSDAction")
     {
@@ -33,16 +35,12 @@ void MainWindow::chooseAction(QAction *action)
 }
 
 /*Метод для загрузки изображения*/
-void MainWindow::loadImage()
+cv::Mat MainWindow::loadImage()
 {
     QString filePath;
     filePath = QFileDialog::getOpenFileName(this,"Open picture",QString(),"Picture(*.png *.jpeg *.bmp)");
-    if(!filePath.isEmpty())
-    {
-        cv::Mat source = cv::imread(filePath.toStdString().c_str());
-        _recognizer = new ImageRecognizer(source);
-        _recognizer->recognizeWidgets();
-    }
+    cv::Mat source = cv::imread(filePath.toStdString().c_str());
+    return source;
 }
 
 /*Метод для загрузки PSD-файла*/
