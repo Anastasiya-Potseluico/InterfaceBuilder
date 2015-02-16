@@ -165,7 +165,10 @@ void ImageRecognizer::throwExtraContours()
             float square2 = cv::contourArea(_rectangles.at(j));
             if(square1 > square2 && i!=j)
             {
-                if(square2 > square1*0.90)
+                cv::Moments moment = moments(_rectangles.at(j), false);
+                cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
+                float distance = cv::pointPolygonTest(_rectangles.at(i),p,true);
+                if(square2 > square1*0.90 && distance>0)
                 {
                     _rectangles.removeAt(i);
                     j=-1;
@@ -173,7 +176,10 @@ void ImageRecognizer::throwExtraContours()
             }
             else if (square1 <= square2 && i!=j)
             {
-                if(square1 > square2*0.90)
+                cv::Moments moment = moments(_rectangles.at(i), false);
+                cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
+                float distance = cv::pointPolygonTest(_rectangles.at(j),p,true);
+                if(square1 > square2*0.90 && distance>0)
                 {
                     _rectangles.removeAt(i);
                     j=-1;
