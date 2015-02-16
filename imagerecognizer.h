@@ -29,6 +29,7 @@ private:
     bool isEllipse(std::vector<cv::Point> & contour);
     double angle(cv::Point pt1, cv::Point pt2, cv::Point pt0);
     void collectFeaturesIntoWidgets();
+    void throwExtraContours();
 };
 
 #endif // IMAGERECOGNIZER_H
