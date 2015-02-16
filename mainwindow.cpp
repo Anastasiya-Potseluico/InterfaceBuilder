@@ -23,7 +23,7 @@ void MainWindow::chooseAction(QAction *action)
     if (action->objectName()=="loadImageAction")
     {
         loaded = loadImage();
-        _recognizer = new ImageRecognizer(source);
+        _recognizer = new ImageRecognizer(loaded);
         _recognizer->recognizeWidgets();
     }
     else if (action->objectName()=="loadPSDAction")
