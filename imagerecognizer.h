@@ -19,7 +19,7 @@ private:
     QList<AbstractWidget> _widgets;
     QList<std::vector<cv::Point> > _triangles;
     QList<std::vector<cv::Point> > _rectangles;
-    QList<std::vector<cv::Point> > _ellipses;
+    QList<std::vector<cv::Point> > _circles;
     QList<QString> _errors;
 
     void prepareImage();
@@ -29,6 +29,7 @@ private:
     bool isEllipse(std::vector<cv::Point> & contour);
     double angle(cv::Point pt1, cv::Point pt2, cv::Point pt0);
     void collectFeaturesIntoWidgets();
+    void throwExtraContoursFromList(QList<std::vector<cv::Point> > &list);
     void throwExtraContours();
 };
 

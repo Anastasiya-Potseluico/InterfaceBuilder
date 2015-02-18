@@ -43,7 +43,7 @@ void ImageRecognizer::findGeometricalFeatures()
             }
             else if (isEllipse(approx))
             {
-                _ellipses.append(approx);
+                _circles.append(approx);
             }
             else
             {
@@ -69,13 +69,24 @@ void ImageRecognizer::findGeometricalFeatures()
          }
       cv::namedWindow( "all", 1 );
          cv::imshow( "all", drawing );
-    std::vector<cv::Rect> boundRect( _rectangles.size() );
+    std::vector<cv::Rect> boundRect( _rectangles.size()*10 );
     for ( int i=0; i<_rectangles.size(); i++ ) {
              boundRect[i] = cv::boundingRect( cv::Mat(_rectangles[i]) );
                 // random colour
                 cv::Scalar color( (rand()&255), (rand()&255), (rand()&255) );
                 cv::rectangle( dst, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0 );
 
+        }
+    for ( int i=0; i<_triangles.size(); i++ ) {
+                // random colour
+                cv::Scalar color( (rand()&255), (rand()&255), (rand()&255) );
+                cv::polylines( dst, _triangles[i], true, color, 2, 8, 0 );
+
+        }
+    for ( int i=0; i<_circles.size(); i++ ) {
+        // random colour
+        cv::Scalar color( (rand()&255), (rand()&255), (rand()&255) );
+        cv::polylines( dst, _circles[i], true, color, 2, 8, 0 );
         }
         cv::namedWindow( "Components", 1 );
            cv::imshow( "Components", dst );
@@ -154,38 +165,44 @@ void ImageRecognizer::collectFeaturesIntoWidgets()
 {
 }
 
-/*Метод для отбрасывания лишних распознанных контуров */
-void ImageRecognizer::throwExtraContours()
+/*Метод для отбрасывания лишних распознанных контуров в списке контуров */
+void ImageRecognizer::throwExtraContoursFromList(QList<std::vector<cv::Point> > &list)
 {
-    for(int i=0;i<_rectangles.size();i++)
+    for(int i=0;i<list.size();i++)
     {
-        for(int j=0;j<_rectangles.size();j++)
+        for(int j=0;j<list.size();j++)
         {
-            float square1 = cv::contourArea(_rectangles.at(i));
-            float square2 = cv::contourArea(_rectangles.at(j));
+            float square1 = cv::contourArea(list.at(i));
+            float square2 = cv::contourArea(list.at(j));
             if(square1 > square2 && i!=j)
             {
-                cv::Moments moment = moments(_rectangles.at(j), false);
+                cv::Moments moment = moments(list.at(j), false);
                 cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
-                float distance = cv::pointPolygonTest(_rectangles.at(i),p,true);
-                if(square2 > square1*0.90 && distance>0)
+                float distance = cv::pointPolygonTest(list.at(i),p,true);
+                if(square2 > square1*0.60 && distance>0)
                 {
-                    _rectangles.removeAt(i);
+                    list.removeAt(i);
                     j=-1;
                 }
             }
             else if (square1 <= square2 && i!=j)
             {
-                cv::Moments moment = moments(_rectangles.at(i), false);
+                cv::Moments moment = moments(list.at(i), false);
                 cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
-                float distance = cv::pointPolygonTest(_rectangles.at(j),p,true);
-                if(square1 > square2*0.90 && distance>0)
+                float distance = cv::pointPolygonTest(list.at(j),p,true);
+                if(square1 > square2*0.60 && distance>0)
                 {
-                    _rectangles.removeAt(i);
+                    list.removeAt(i);
                     j=-1;
                 }
             }
         }
     }
-    int g = 0;
+}
+
+void ImageRecognizer::throwExtraContours()
+{
+    throwExtraContoursFromList(_rectangles);
+    throwExtraContoursFromList(_triangles);
+    throwExtraContoursFromList(_circles);
 }
