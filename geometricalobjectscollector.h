@@ -23,7 +23,7 @@ private:
     QList<std::vector<cv::Point> > _rounds;
     QList<AbstractWidget> _widgets;
 
-    FIGURE_LOCATION getLocation(QList<std::vector<cv::Point> > &figure1, QList<std::vector<cv::Point> > &figure2);
+    FIGURE_LOCATION getLocation(std::vector<cv::Point> &figure1, std::vector<cv::Point> &figure2);
     void findPushButtons();
     void findRadioButtons();
     void findComboBoxes();
