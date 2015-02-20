@@ -6,7 +6,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
-enum FIGURE_LOCATION {left_up, left_down, center, right_up, right_down, none}
+enum FIGURE_LOCATION {left_up, left_down, center, right_up, right_down, none};
 
 class GeometricalObjectsCollector
 {
