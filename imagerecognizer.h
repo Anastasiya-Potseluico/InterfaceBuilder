@@ -6,6 +6,7 @@
 #include "opencv2/core/core.hpp"
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+#include "geometricalobjectscollector.h"
 
 class ImageRecognizer
 {
@@ -21,6 +22,8 @@ private:
     QList<std::vector<cv::Point> > _rectangles;
     QList<std::vector<cv::Point> > _circles;
     QList<QString> _errors;
+    GeometricalObjectsCollector * _collector; //Класс для сбора геометрических фигур в виджеты
+
 
     void prepareImage();
     void findGeometricalFeatures();
