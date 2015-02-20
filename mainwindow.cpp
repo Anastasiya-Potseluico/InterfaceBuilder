@@ -38,7 +38,7 @@ void MainWindow::chooseAction(QAction *action)
 cv::Mat MainWindow::loadImage()
 {
     QString filePath;
-    filePath = QFileDialog::getOpenFileName(this,"Open picture",QString(),"Picture(*.png *.jpeg *.bmp)");
+    filePath = QFileDialog::getOpenFileName(this,"Open picture",QString(),"Picture(*.png *.jpg *.bmp)");
     cv::Mat source = cv::imread(filePath.toStdString().c_str());
     return source;
 }
