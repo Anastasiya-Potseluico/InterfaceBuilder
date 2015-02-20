@@ -176,10 +176,7 @@ void ImageRecognizer::throwExtraContoursFromList(QList<std::vector<cv::Point> > 
             float square2 = cv::contourArea(list.at(j));
             if(square1 > square2 && i!=j)
             {
-                cv::Moments moment = moments(list.at(j), false);
-                cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
-                float distance = cv::pointPolygonTest(list.at(i),p,true);
-                if(square2 > square1*0.60 && distance>0)
+                if(square2 > square1*0.60 && isInsideContour(list.at(j),list.at(i)))
                 {
                     list.removeAt(i);
                     j=-1;
@@ -187,10 +184,7 @@ void ImageRecognizer::throwExtraContoursFromList(QList<std::vector<cv::Point> > 
             }
             else if (square1 <= square2 && i!=j)
             {
-                cv::Moments moment = moments(list.at(i), false);
-                cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
-                float distance = cv::pointPolygonTest(list.at(j),p,true);
-                if(square1 > square2*0.60 && distance>0)
+                if(square1 > square2*0.60 && isInsideContour(list.at(i),list.at(j)))
                 {
                     list.removeAt(i);
                     j=-1;
@@ -206,3 +200,20 @@ void ImageRecognizer::throwExtraContours()
     throwExtraContoursFromList(_triangles);
     throwExtraContoursFromList(_circles);
 }
+
+/* Метод для определения, находитсся ли один контур внутри другого*/
+bool ImageRecognizer::isInsideContour(const std::vector<cv::Point> &checkingContour, const std::vector<cv::Point> &contourContainer)
+{
+    int i;
+    float distance;
+    for(i = 0; i < checkingContour.size(); i++)
+    {
+        distance = cv::pointPolygonTest(contourContainer,checkingContour.at(i),true);
+        if(distance <= -2 )
+        {
+            return false;
+        }
+    }
+    return true;
+}
+

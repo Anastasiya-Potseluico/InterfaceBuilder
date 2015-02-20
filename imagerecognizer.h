@@ -33,6 +33,7 @@ private:
     double angle(cv::Point pt1, cv::Point pt2, cv::Point pt0);
     void collectFeaturesIntoWidgets();
     void throwExtraContoursFromList(QList<std::vector<cv::Point> > &list);
+    bool isInsideContour(const std::vector<cv::Point> & checkingContour,const std::vector<cv::Point> & contourContainer);
     void throwExtraContours();
 };
 
