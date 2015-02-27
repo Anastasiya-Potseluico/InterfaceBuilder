@@ -6,7 +6,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
-enum FIGURE_LOCATION {left_up, left_down, center, right_up, right_down, none};
+enum FIGURE_LOCATION {left_up, left_down, center_up, center_down, center, left_center, right_center, right_up, right_down, none};
 
 class GeometricalObjectsCollector
 {
@@ -24,6 +24,7 @@ private:
     QList<AbstractWidget> _widgets;
 
     FIGURE_LOCATION getLocation(std::vector<cv::Point> &figure1, std::vector<cv::Point> &figure2);
+    bool isInsideContour(const std::vector<cv::Point> & checkingContour,const std::vector<cv::Point> & contourContainer);
     void findPushButtons();
     void findRadioButtons();
     void findComboBoxes();
