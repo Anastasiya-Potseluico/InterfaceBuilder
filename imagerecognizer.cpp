@@ -144,45 +144,8 @@ double ImageRecognizer::angle(cv::Point pt1, cv::Point pt2, cv::Point pt0)
 QList<AbstractWidget> ImageRecognizer::recognizeWidgets()
 {
     findGeometricalFeatures();
+    _collector = new GeometricalObjectsCollector(_rectangles,_triangles, _circles);
+    _collector->collectObjectsIntoWidgets();
 }
 
-void ImageRecognizer::collectFeaturesIntoWidgets()
-{
-}
-
-/*ћетод дл€ отбрасывани€ лишних распознанных контуров в списке контуров */
-void ImageRecognizer::throwExtraContoursFromList(QList<std::vector<cv::Point> > &list)
-{
-
-    for(int i = 0;i<list.size();i++ )
-    {
-        float square = cv::contourArea(list.at(i),true);
-        if(square < 0)
-        {
-            list.removeAt(i);
-            i=-1;
-        }
-    }
-}
-
-void ImageRecognizer::throwExtraContours()
-{
-    throwExtraContoursFromList(_rectangles);
-}
-
-/* ћетод дл€ определени€, находитсс€ ли один контур внутри другого*/
-bool ImageRecognizer::isInsideContour(const std::vector<cv::Point> &checkingContour, const std::vector<cv::Point> &contourContainer)
-{
-    int i;
-    float distance;
-    for(i = 0; i < checkingContour.size(); i++)
-    {
-        distance = cv::pointPolygonTest(contourContainer,checkingContour.at(i),true);
-        if(distance <= -2 )
-        {
-            return false;
-        }
-    }
-    return true;
-}
 
