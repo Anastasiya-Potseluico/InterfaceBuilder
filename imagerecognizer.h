@@ -25,16 +25,13 @@ private:
     GeometricalObjectsCollector * _collector; //Класс для сбора геометрических фигур в виджеты
 
 
-    void prepareImage();
     void findGeometricalFeatures();
     bool isTriangle(std::vector<cv::Point> & contour);
     bool isRectangle(std::vector<cv::Point> & contour);
     bool isEllipse(std::vector<cv::Point> & contour);
     double angle(cv::Point pt1, cv::Point pt2, cv::Point pt0);
     void collectFeaturesIntoWidgets();
-    void throwExtraContoursFromList(QList<std::vector<cv::Point> > &list);
     bool isInsideContour(const std::vector<cv::Point> & checkingContour,const std::vector<cv::Point> & contourContainer);
-    void throwExtraContours();
 };
 
 #endif // IMAGERECOGNIZER_H

@@ -1,4 +1,5 @@
 #include "imagerecognizer.h"
+#include "pushbutton.h"
 
 ImageRecognizer::ImageRecognizer()
 {
@@ -9,53 +10,37 @@ ImageRecognizer::ImageRecognizer(cv::Mat source)
     _inputImage = source;
 }
 
-/*Метод для предварительной обработки изображения*/
-void ImageRecognizer::prepareImage()
-{
-    //Гауссово размытие
-    cv::cvtColor(_inputImage, _inputImage, CV_BGR2GRAY);
-    //Детектор границ Канни
-    cv::Canny(_inputImage, _inputImage, 10, 50, 3);
-}
-
 /*Метод для отыскания геометрических фигур на изображении*/
 void ImageRecognizer::findGeometricalFeatures()
 {
-    prepareImage();
+    cv::cvtColor(_inputImage, _inputImage, CV_BGR2GRAY);
     std::vector<std::vector<cv::Point> > contours;
     std::vector<cv::Vec4i> hierarchy;
     cv::findContours(_inputImage, contours,hierarchy, CV_RETR_TREE , CV_CHAIN_APPROX_SIMPLE);
-
     std::vector<cv::Point> approx;
 
+    float square;
     for (int i = 0; i < contours.size(); i++)
     {
         // Аппроксимируем контуры.
         cv::approxPolyDP(cv::Mat(contours[i]), approx, cv::arcLength(cv::Mat(contours[i]), true)*0.02, true);
-
+        square = cv::contourArea(contours[i],true);
+        if(square > 0)
+        {
             if (isTriangle(approx))
             {
-                _triangles.append(approx);
+                _triangles.append(contours[i]);
             }
-            else if (isRectangle(approx))
+            else if (isRectangle(approx)&& cv::contourArea(contours[i],true) > 0)
             {
-                _rectangles.append(approx);
+                _rectangles.append(contours[i]);
             }
-            else if (isEllipse(approx))
+            else if (isEllipse(approx) && cv::contourArea(contours[i],true) > 0)
             {
-                _circles.append(approx);
+                _circles.append(contours[i]);
             }
-            else
-            {
-                cv::Moments points = moments( contours[i], false );
-                cv::Point2f p = cv::Point2f( points.m10/points.m00 , points.m01/points.m00 );
-                QString point = QString::number(p.x).append(" ").append(QString::number(p.y));
-                point.append("Unexpected shape recognized");
-                _errors.append(point);
-
-            }
+        }
     }
-    throwExtraContours();
     //!!!!!!!!ПРОВЕРКА!!!! ПОТОМ УБРАТЬ!!!
 
 
@@ -168,28 +153,14 @@ void ImageRecognizer::collectFeaturesIntoWidgets()
 /*Метод для отбрасывания лишних распознанных контуров в списке контуров */
 void ImageRecognizer::throwExtraContoursFromList(QList<std::vector<cv::Point> > &list)
 {
-    for(int i=0;i<list.size();i++)
+
+    for(int i = 0;i<list.size();i++ )
     {
-        for(int j=0;j<list.size();j++)
+        float square = cv::contourArea(list.at(i),true);
+        if(square < 0)
         {
-            float square1 = cv::contourArea(list.at(i));
-            float square2 = cv::contourArea(list.at(j));
-            if(square1 > square2 && i!=j)
-            {
-                if(square2 > square1*0.60 && isInsideContour(list.at(j),list.at(i)))
-                {
-                    list.removeAt(i);
-                    j=-1;
-                }
-            }
-            else if (square1 <= square2 && i!=j)
-            {
-                if(square1 > square2*0.60 && isInsideContour(list.at(i),list.at(j)))
-                {
-                    list.removeAt(i);
-                    j=-1;
-                }
-            }
+            list.removeAt(i);
+            i=-1;
         }
     }
 }
@@ -197,8 +168,6 @@ void ImageRecognizer::throwExtraContoursFromList(QList<std::vector<cv::Point> > 
 void ImageRecognizer::throwExtraContours()
 {
     throwExtraContoursFromList(_rectangles);
-    throwExtraContoursFromList(_triangles);
-    throwExtraContoursFromList(_circles);
 }
 
 /* Метод для определения, находитсся ли один контур внутри другого*/
