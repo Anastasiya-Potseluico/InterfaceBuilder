@@ -1,8 +1,9 @@
 #include "radiobutton.h"
 
-RadioButton::RadioButton(QPoint&position):AbstractButton(position)
+RadioButton::RadioButton(QPoint&position, int numberOfWidget):AbstractButton(position)
 {
-    _size = QSize(4,5);
+    _size = QSize(130,40);
+    _text = QString("RadioButton_").append(QString::number(numberOfWidget));
 }
 
 QString RadioButton::writeSelfIntoFile(QFile &file)
