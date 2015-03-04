@@ -8,16 +8,18 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include "geometricalobjectscollector.h"
 
+#include "typeinfo"
+
 class ImageRecognizer
 {
 public:
     ImageRecognizer();
     ImageRecognizer(cv::Mat source);
-    QList<AbstractWidget> recognizeWidgets();
+    QList<AbstractWidget*> recognizeWidgets();
 
 private:
     cv::Mat _inputImage;
-    QList<AbstractWidget> _widgets;
+    QList<AbstractWidget*> _widgets;
     QList<std::vector<cv::Point> > _triangles;
     QList<std::vector<cv::Point> > _rectangles;
     QList<std::vector<cv::Point> > _circles;
