@@ -2,6 +2,9 @@
 
 GeometricalObjectsCollector::GeometricalObjectsCollector()
 {
+    _widgetCounts.insert(radio_button,0);
+    _widgetCounts.insert(push_button,0);
+    _widgetCounts.insert(check_box,0);
 }
 
 /*  онструктор принимает на вход три списка с распознанными геометрическими фигурами*/
