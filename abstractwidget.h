@@ -10,6 +10,9 @@
 */
 class AbstractWidget
 {
+public:
+    AbstractWidget(QPoint& position);
+    virtual void drawSelf() = 0;
 protected:
     QSize _size; // Размер видета.
     QPoint _position; // Позиция виджета на главное окне.
@@ -17,7 +20,8 @@ protected:
     bool _enabled; // Видимость виджета.
 
     //void drawSelf();
-QString writeSelfIntoFile(QFile&file);
+    QString writeSelfIntoFile(QFile&file);
+
 };
 
 #endif // ABSTRACTWIDGET_H
