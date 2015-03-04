@@ -7,7 +7,8 @@
 class AbstractButton : public AbstractWidget
 {
 public:
-    AbstractButton();
+    AbstractButton(QPoint &position);
+    virtual void drawSelf() = 0;
 
 protected:
     bool _checkable;
