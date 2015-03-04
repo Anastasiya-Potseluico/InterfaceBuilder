@@ -6,7 +6,7 @@
 class PushButton : public AbstractButton
 {
 public:
-    PushButton();
+    PushButton(QPoint&position);
     QString writeSelfIntoFile(QFile&file);
 private:
     bool _defaultOn;
