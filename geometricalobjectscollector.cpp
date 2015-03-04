@@ -5,6 +5,7 @@ GeometricalObjectsCollector::GeometricalObjectsCollector()
     _widgetCounts.insert(radio_button,0);
     _widgetCounts.insert(push_button,0);
     _widgetCounts.insert(check_box,0);
+    _widgetCounts.insert(combo_box,0);
 }
 
 /* Конструктор принимает на вход три списка с распознанными геометрическими фигурами*/
@@ -82,26 +83,31 @@ void GeometricalObjectsCollector::findPushButtons()
 void GeometricalObjectsCollector::findRadioButtons()
 {
     int i;
-    int countRadioButton;
+    int countRadioButton = 0;
     int roundCountInside,
         rectangleCountInside,
         triangleCountInside;
+
+    QList<std::vector<cv::Point> > roundsList;
     for(i = 0; i < _rounds.size(); i++)
     {
-        roundCountInside = shapeCountInside(_rounds[i], _rounds);
-        rectangleCountInside = shapeCountInside(_rounds[i], _rectangles);
-        triangleCountInside = shapeCountInside(_rounds[i], _triangles);
+        roundsList = shapeCountInside(_rounds[i], _rounds);
+        roundCountInside = roundsList.size();
+        rectangleCountInside = shapeCountInside(_rounds[i], _rectangles).size();
+        triangleCountInside = shapeCountInside(_rounds[i], _triangles).size();
         if(roundCountInside == 1 && !rectangleCountInside && !triangleCountInside)
         {
             cv::Moments moment = moments(_rounds[i], false);
             cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
             QPoint* center = new QPoint(p.x,p.y);
             countRadioButton = _widgetCounts.value(radio_button);
-            _widgetCounts.insert(radio_button,countRadioButton++);
-            RadioButton * button = new RadioButton(*center,countRadioButton++);
+            countRadioButton+=1;
+            _widgetCounts.insert(radio_button,countRadioButton);
+            RadioButton * button = new RadioButton(*center,countRadioButton);
             _widgets.append(button);
             _rounds.removeOne(_rounds[i]);
-            i --;
+            _rounds.removeOne(roundsList[0]);
+            i -= 2;
         }
     }
 }
@@ -109,32 +115,35 @@ void GeometricalObjectsCollector::findRadioButtons()
 /* Метод для выделения комбобоксов из геометрических объектов*/
 void GeometricalObjectsCollector::findComboBoxes()
 {
-    int i, j, count;
-    float square1, square2;
-    int rectanglecount = 0;
+    int i;
+    int countComboBox;
+    int roundCountInside,
+        rectangleCountInside,
+        triangleCountInside;
+    QList<std::vector<cv::Point> > trianglesList;
     for(i = 0; i < _rectangles.size(); i++)
     {
-        for(j = 0; j < _rectangles.size() && j!=i; j++)
+        roundCountInside = shapeCountInside(_rectangles[i], _rounds).size();
+        rectangleCountInside = shapeCountInside(_rectangles[i], _rectangles).size();
+        trianglesList = shapeCountInside(_rectangles[i], _triangles);
+        triangleCountInside = trianglesList.size();
+        if(triangleCountInside == 1 && !rectangleCountInside && !roundCountInside )
         {
-
+            if(getLocation(_rectangles[i],trianglesList[0]) == (right_center || right_up || right_down))
+            {
+                cv::Moments moment = moments(_rectangles[i], false);
+                cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
+                QPoint* center = new QPoint(p.x,p.y);
+                countComboBox = _widgetCounts.value(combo_box);
+                countComboBox += 1;
+                _widgetCounts.insert(radio_button,countComboBox);
+                ComboBox * box = new ComboBox(*center,countComboBox);
+                _widgets.append(box);
+                _rectangles.removeOne(_rectangles[i]);
+                _triangles.removeOne(trianglesList[0]);
+                i --;
+            }
         }
-    }
-
-
-
-    if(isInsideContour(_rounds[i], _rounds[j]) || isInsideContour(_rounds[j], _rounds[i]))
-    {
-        cv::Moments moment = moments(_rounds[i], false);
-        cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
-        QPoint* center = new QPoint(p.x,p.y);
-        count = _widgetCounts.value(radio_button);
-        _widgetCounts.insert(radio_button,count++);
-        RadioButton * button = new RadioButton(*center,count++);
-        _widgets.append(button);
-        _rounds.removeOne(_rounds[i]);
-        _rounds.removeOne(_rounds[j]);
-        i = -1;
-        j = -1;
     }
 }
 
@@ -180,18 +189,18 @@ void GeometricalObjectsCollector::findImageViews()
 {
 }
 
-int GeometricalObjectsCollector::shapeCountInside(std::vector<cv::Point> &contour, QList<std::vector<cv::Point> > & list)
+QList<std::vector<cv::Point> > GeometricalObjectsCollector::shapeCountInside(std::vector<cv::Point> &contour, QList<std::vector<cv::Point> > & list)
 {
     int i;
-    int sum_count = 0;
+    QList<std::vector<cv::Point> > shapesInside;
     for(i = 0; i < list.size(); i++)
     {
         if(isInsideContour(list[i], contour) && list[i] != contour)
         {
-            sum_count+=1;
+            shapesInside.append(list[i]);
         }
     }
-    return sum_count;
+    return shapesInside;
 }
 
 
