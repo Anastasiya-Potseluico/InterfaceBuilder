@@ -33,6 +33,16 @@ private:
     void findRadioButtons();
     void findComboBoxes();
     void findCheckBoxes();
+    void findLineEdits();
+    void findSpinBoxes();
+    void findListWidgets();
+    void findTreeWidgets();
+    void findTableWidgets();
+    void findLabels();
+    void findProgressBars();
+    void findCalendars();
+    void findImageViews();
+    int shapeCountInside(std::vector<cv::Point> &contour, QList<std::vector<cv::Point> > & list);
 
 };
 
