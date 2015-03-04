@@ -81,7 +81,7 @@ void GeometricalObjectsCollector::findPushButtons()
 /* Метод для выделения радиокнопок из геометрических объектов*/
 void GeometricalObjectsCollector::findRadioButtons()
 {
-    int i, j;
+    int i, j, count;
     for(i = 0; i < _rounds.size(); i++)
     {
         for(j = 0; j < _rounds.size() && j!=i; j++)
@@ -91,7 +91,9 @@ void GeometricalObjectsCollector::findRadioButtons()
                 cv::Moments moment = moments(_rounds[i], false);
                 cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
                 QPoint* center = new QPoint(p.x,p.y);
-                RadioButton * button = new RadioButton(*center);
+                count = _widgetCounts.value(radio_button);
+                _widgetCounts.insert(radio_button,count++);
+                RadioButton * button = new RadioButton(*center,count++);
                 _widgets.append(button);
                 _rounds.removeOne(_rounds[i]);
                 _rounds.removeOne(_rounds[j]);
