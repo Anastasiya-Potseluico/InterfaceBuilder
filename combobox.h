@@ -3,7 +3,7 @@
 
 #include "abstractbutton.h"
 
-class ComboBox : public AbstractWidget //???????
+class ComboBox : public AbstractWidget
 {
 public:
     ComboBox(QPoint &position, int numberOfWidget);
