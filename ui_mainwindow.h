@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon 9. Feb 20:24:11 2015
+** Created: Fri 27. Feb 15:27:19 2015
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,11 +14,13 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QGraphicsView>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
+#include <QtGui/QSpacerItem>
 #include <QtGui/QStatusBar>
 #include <QtGui/QTabWidget>
 #include <QtGui/QWidget>
@@ -36,7 +38,12 @@ public:
     QTabWidget *interfaceWidget;
     QWidget *maket_interface;
     QWidget *scheme_interface;
+    QGridLayout *gridLayout_2;
+    QGraphicsView *schemeView_b;
     QWidget *both_interface;
+    QGridLayout *gridLayout_3;
+    QGraphicsView *shemeView_s;
+    QSpacerItem *horizontalSpacer;
     QMenuBar *menuBar;
     QMenu *menu;
     QStatusBar *statusBar;
@@ -105,9 +112,31 @@ public:
         interfaceWidget->addTab(maket_interface, QString());
         scheme_interface = new QWidget();
         scheme_interface->setObjectName(QString::fromUtf8("scheme_interface"));
+        gridLayout_2 = new QGridLayout(scheme_interface);
+        gridLayout_2->setSpacing(6);
+        gridLayout_2->setContentsMargins(11, 11, 11, 11);
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        schemeView_b = new QGraphicsView(scheme_interface);
+        schemeView_b->setObjectName(QString::fromUtf8("schemeView_b"));
+
+        gridLayout_2->addWidget(schemeView_b, 0, 0, 1, 1);
+
         interfaceWidget->addTab(scheme_interface, QString());
         both_interface = new QWidget();
         both_interface->setObjectName(QString::fromUtf8("both_interface"));
+        gridLayout_3 = new QGridLayout(both_interface);
+        gridLayout_3->setSpacing(6);
+        gridLayout_3->setContentsMargins(11, 11, 11, 11);
+        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
+        shemeView_s = new QGraphicsView(both_interface);
+        shemeView_s->setObjectName(QString::fromUtf8("shemeView_s"));
+
+        gridLayout_3->addWidget(shemeView_s, 0, 1, 1, 1);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_3->addItem(horizontalSpacer, 0, 0, 1, 1);
+
         interfaceWidget->addTab(both_interface, QString());
 
         gridLayout->addWidget(interfaceWidget, 0, 0, 1, 1);

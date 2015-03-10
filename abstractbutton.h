@@ -7,7 +7,7 @@
 class AbstractButton : public AbstractWidget
 {
 public:
-    AbstractButton(QPoint &position);
+    AbstractButton(QPoint &position, QSize &size);
     virtual void drawSelf() = 0;
 
 protected:

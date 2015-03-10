@@ -1,0 +1,16 @@
+INPUT(
+./debug\main.o
+./debug\mainwindow.o
+./debug\abstractwidget.o
+./debug\psdparser.o
+./debug\imagerecognizer.o
+./debug\geometricalobjectscollector.o
+./debug\abstractbutton.o
+./debug\pushbutton.o
+./debug\radiobutton.o
+./debug\combobox.o
+./debug\lineedit.o
+./debug\testgeometricalobjectcollector.o
+./debug\moc_mainwindow.o
+./debug\moc_testgeometricalobjectcollector.o
+);

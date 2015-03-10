@@ -1,6 +1,6 @@
 #include "abstractbutton.h"
 
-AbstractButton::AbstractButton(QPoint&position) : AbstractWidget(position)
+AbstractButton::AbstractButton(QPoint&position,QSize &size) : AbstractWidget(position, size)
 {
     //AbstractWidget(position);
     _checkable = true;

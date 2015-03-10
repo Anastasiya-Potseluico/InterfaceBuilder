@@ -144,8 +144,17 @@ double ImageRecognizer::angle(cv::Point pt1, cv::Point pt2, cv::Point pt0)
 QList<AbstractWidget> ImageRecognizer::recognizeWidgets()
 {
     findGeometricalFeatures();
-    _collector = new GeometricalObjectsCollector(_rectangles,_triangles, _circles);
-    _collector->collectObjectsIntoWidgets();
+    _collector = *(new GeometricalObjectsCollector(_rectangles,_triangles, _circles));
+    _widgets = _collector.collectObjectsIntoWidgets();
+    for(int i =0 ;i<_widgets.size();i++)
+    {
+
+        if(dynamic_cast<PushButton*>(_widgets[i]))
+        {
+            int h = 0;
+        }
+
+    }
 }
 
 
