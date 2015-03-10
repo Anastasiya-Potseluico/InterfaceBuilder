@@ -1,7 +1,7 @@
 #ifndef COMBOBOX_H
 #define COMBOBOX_H
 
-#include "abstractbutton.h"
+#include "abstractwidget.h"
 
 class ComboBox : public AbstractWidget
 {
@@ -9,6 +9,12 @@ public:
     ComboBox(QPoint &position, int numberOfWidget);
     QString writeSelfIntoFile(QFile&file);
     void drawSelf();
+
+private:
+    QList<QString> _items; // Айтемы комбобокса.
+    bool _isEditable; // Флаг возможности редактирования.
+    int _currentIndex; // Текущий индекс айтема комбобокса.
+
 };
 
 #endif // COMBOBOX_H

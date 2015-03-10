@@ -1,8 +1,8 @@
 #include "combobox.h"
+#include "abstractbutton.h"
 
-ComboBox::ComboBox (QPoint&position, int numberOfWidget):AbstractButton(position)
+ComboBox::ComboBox (QPoint&position, int numberOfWidget):AbstractWidget(position,*(new QSize(69,22)))
 {
-    _size = QSize(130,40);
     _name = QString("ComboBox_").append(QString::number(numberOfWidget));
 }
 
