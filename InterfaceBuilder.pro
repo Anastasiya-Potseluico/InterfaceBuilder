@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += testlib
 
 TARGET = InterfaceBuilder
 TEMPLATE = app
@@ -14,12 +15,26 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     abstractwidget.cpp \
     psdparser.cpp \
-    imagerecognizer.cpp
+    imagerecognizer.cpp \
+    geometricalobjectscollector.cpp \
+    abstractbutton.cpp \
+    pushbutton.cpp \
+    radiobutton.cpp \
+    combobox.cpp \
+    lineedit.cpp \
+    testgeometricalobjectcollector.cpp
 
 HEADERS  += mainwindow.h \
     abstractwidget.h \
     psdparser.h \
-    imagerecognizer.h
+    imagerecognizer.h \
+    geometricalobjectscollector.h \
+    abstractbutton.h \
+    pushbutton.h \
+    radiobutton.h \
+    combobox.h \
+    lineedit.h \
+    testgeometricalobjectcollector.h
 
 FORMS    += mainwindow.ui
 
