@@ -1,8 +1,10 @@
 #include "abstractwidget.h"
 
-AbstractWidget::AbstractWidget(QPoint &position)
+AbstractWidget::AbstractWidget(QPoint &position, QSize &size)
 {
-    this->_position = position;
+    _position = position;
+    _size = size;
+    _enabled = true;
 }
 
 QString AbstractWidget::writeSelfIntoFile(QFile &file)

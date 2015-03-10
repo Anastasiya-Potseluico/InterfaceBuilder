@@ -11,7 +11,7 @@
 class AbstractWidget
 {
 public:
-    AbstractWidget(QPoint& position);
+    AbstractWidget(QPoint& position, QSize &size);
     virtual void drawSelf() = 0;
 protected:
     QSize _size; // Размер видета.
