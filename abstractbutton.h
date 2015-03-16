@@ -8,14 +8,14 @@ class AbstractButton : public AbstractWidget
 {
 public:
     AbstractButton(QPoint &position, QSize &size);
-    virtual void drawSelf() = 0;
+    virtual void drawSelf(QGraphicsScene &scene) = 0;
 
 protected:
     bool _checkable;
     bool _isChecked;
-    bool _down;
     QString _text;
     QImage _icon;
+
     QString writeSelfIntoFile(QFile&file);
 };
 
