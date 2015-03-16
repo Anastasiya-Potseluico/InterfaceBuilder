@@ -8,7 +8,7 @@ class ComboBox : public AbstractWidget
 public:
     ComboBox(QPoint &position, int numberOfWidget);
     QString writeSelfIntoFile(QFile&file);
-    void drawSelf();
+    void drawSelf(QGraphicsScene &scene);
 
 private:
     QList<QString> _items; // Айтемы комбобокса.
