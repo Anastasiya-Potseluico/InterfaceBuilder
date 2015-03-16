@@ -7,6 +7,7 @@
 #include "psdparser.h"
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/core/core.hpp"
+#include "widgetview.h"
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +27,8 @@ private:
     PSDParser *_parser; // Класс парсера макетов.
     cv::Mat loadImage();
     void loadPSD();
+    void drawWidgets(QGraphicsScene &scene);
+
 
 private slots:
     void chooseAction(QAction * action);

@@ -25,6 +25,8 @@ void MainWindow::chooseAction(QAction *action)
         loaded = loadImage();
         _recognizer = new ImageRecognizer(loaded);
         _recognizer->recognizeWidgets();
+        showInterface();
+
     }
     else if (action->objectName()=="loadPSDAction")
     {
@@ -51,13 +53,32 @@ void MainWindow::loadPSD()
 /*Слот для показа отображений интерфейсов*/
 void MainWindow::showInterface()
 {
+    QGraphicsScene* scene = new QGraphicsScene(this);
+
     switch (ui->interfaceWidget->currentIndex())
     {
     case 0:
+
         break;
     case 1:
+        ui->schemeView_b->setScene(scene);
+        drawWidgets(*scene);
+        ui->schemeView_b->show();
         break;
     case 2:
+        ui->shemeView_s->setScene(scene);
+        drawWidgets(*scene);
+        ui->shemeView_s->show();
         break;
+    }
+}
+
+void MainWindow::drawWidgets(QGraphicsScene &scene)
+{
+    QList<AbstractWidget*> list = _recognizer->getWidgets();
+    int size = list.size();
+    for(int i =0 ;i<size;i++)
+    {
+        list[i]->drawSelf(scene);
     }
 }
