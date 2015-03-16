@@ -157,4 +157,12 @@ QList<AbstractWidget> ImageRecognizer::recognizeWidgets()
     }
 }
 
+QList<AbstractWidget *> ImageRecognizer::getWidgets()
+{
+    QList<AbstractWidget *> list = _widgets;
+    return list;
+}
+
+
+
 

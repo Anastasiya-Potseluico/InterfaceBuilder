@@ -16,6 +16,7 @@ public:
     ImageRecognizer();
     ImageRecognizer(cv::Mat source);
     QList<AbstractWidget> recognizeWidgets();
+    QList<AbstractWidget*> getWidgets();
 
 private:
     cv::Mat _inputImage;
@@ -26,7 +27,6 @@ private:
     QList<QString> _errors;
     GeometricalObjectsCollector  _collector; //Класс для сбора геометрических фигур в виджеты
 
-
     void findGeometricalFeatures();
     bool isTriangle(std::vector<cv::Point> & contour);
     bool isRectangle(std::vector<cv::Point> & contour);
@@ -34,6 +34,7 @@ private:
     double angle(cv::Point pt1, cv::Point pt2, cv::Point pt0);
     void collectFeaturesIntoWidgets();
     bool isInsideContour(const std::vector<cv::Point> & checkingContour,const std::vector<cv::Point> & contourContainer);
+
 };
 
 #endif // IMAGERECOGNIZER_H
