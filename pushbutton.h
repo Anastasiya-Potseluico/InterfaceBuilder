@@ -2,7 +2,7 @@
 #define PUSHBUTTON_H
 
 #include "abstractbutton.h"
-#include "widgetview.h"
+#include "pushbuttonview.h"
 #include <QPoint>
 
 class PushButton : public AbstractButton

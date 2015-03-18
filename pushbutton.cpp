@@ -5,7 +5,7 @@ PushButton::PushButton(QPoint &position, int numberOfWidget) : AbstractButton(po
     _defaultOn = true;
     _flat = true;
     _checkable = false;
-
+    _name = QString("PushButton_").append(QString::number(numberOfWidget));
 }
 
 QString PushButton::writeSelfIntoFile(QFile &file)
@@ -29,6 +29,6 @@ QString PushButton::writeSelfIntoFile(QFile &file)
 
 void PushButton::drawSelf(QGraphicsScene &scene)
 {
-    WidgetView * view = new WidgetView(this);
+    PushButtonView * view = new PushButtonView(this);
     scene.addItem(view);
 }
