@@ -24,6 +24,7 @@ protected:
     QString _name; // Имя виджета.
     bool _enabled; // Видимость виджета.
 
+
     QString writeSelfIntoFile(QFile&file);
 
 };
