@@ -2,7 +2,7 @@
 #define RADIOBUTTON_H
 
 #include "abstractbutton.h"
-#include "widgetview.h"
+#include "radiobuttonview.h"
 #include <QGraphicsItem>
 
 class RadioButton : public AbstractButton
