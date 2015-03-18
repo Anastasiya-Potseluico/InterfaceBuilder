@@ -54,7 +54,7 @@ void MainWindow::loadPSD()
 void MainWindow::showInterface()
 {
     QGraphicsScene* scene = new QGraphicsScene(this);
-
+    scene->setSceneRect(0,0,900,900);
     switch (ui->interfaceWidget->currentIndex())
     {
     case 0:
@@ -77,7 +77,7 @@ void MainWindow::drawWidgets(QGraphicsScene &scene)
 {
     QList<AbstractWidget*> list = _recognizer->getWidgets();
     int size = list.size();
-    for(int i =0 ;i<size;i++)
+    for(int i =0; i<size; i++)
     {
         list[i]->drawSelf(scene);
     }
