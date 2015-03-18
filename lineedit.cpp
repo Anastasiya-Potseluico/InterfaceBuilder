@@ -12,6 +12,6 @@ QString LineEdit::writeSelfIntoFile(QFile &file)
 {
 }
 
-void LineEdit::drawSelf()
+void LineEdit::drawSelf(QGraphicsScene &scene)
 {
 }
