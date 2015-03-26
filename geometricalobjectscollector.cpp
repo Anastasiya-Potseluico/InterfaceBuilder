@@ -28,47 +28,65 @@ QList<AbstractWidget*> GeometricalObjectsCollector::collectObjectsIntoWidgets()
     QList<std::vector<cv::Point> > trianglesList;
     QList<std::vector<cv::Point> > rectanglesList;
     QList<std::vector<cv::Point> > roundsList;
+    int beforeRectanglesSize, beforeTrianglesSize;
+    bool found = false;
     for(i = 0; i < _rectangles.size(); i++)
     {
-        roundsList = shapeCountInside(_rectangles[i], _rounds);
-        rectanglesList = shapeCountInside(_rectangles[i], _rectangles);
-        trianglesList = shapeCountInside(_rectangles[i], _triangles);
+        roundsList = getInnerShapesList(_rectangles[i], _rounds);
+        rectanglesList = getInnerShapesList(_rectangles[i], _rectangles);
+        trianglesList = getInnerShapesList(_rectangles[i], _triangles);
 
         if(trianglesList.size() == 1 && !rectanglesList.size() && !roundsList.size())
         {
-            findComboBoxes(_rectangles[i],trianglesList[0]);
-            findLineEdits(_rectangles[i],trianglesList[0]);
+            found = findComboBoxes(_rectangles[i],trianglesList[0]);
+            if(!found)
+            {
+               found = findLineEdits(_rectangles[i],trianglesList[0]);
+            }
         }
         else if (!trianglesList.size() && rectanglesList.size()==1 && !roundsList.size())
         {
-            findPushButtons(_rectangles[i],rectanglesList[0]);
-            findCheckBoxes(_rectangles[i],rectanglesList[0]);
+            found = findPushButtons(_rectangles[i],rectanglesList[0]);
+            if(!found)
+            {
+                found = findCheckBoxes(_rectangles[i],rectanglesList[0]);
+            }
         }
         else if (!trianglesList.size() && !rectanglesList.size() && roundsList.size() == 1)
         {
+            found = findLabels(_rectangles[i],roundsList[0]);
+            if(!found)
+            {
+                found = findGraphicsViews(_rectangles[i],roundsList[0]);
+            }
 
+        }
+        if(found)
+        {
+            i = -1; //Начинаем просмотр фигур сначала
+            found = false;
         }
     }
     return _widgets;
 }
 
 /* Метод для нахождения расположения одного контура в другом*/
-FIGURE_LOCATION GeometricalObjectsCollector::getLocation(std::vector<cv::Point> &figure1,
-                                                         std::vector<cv::Point> &figure2)
+FIGURE_LOCATION GeometricalObjectsCollector::getLocation(std::vector<cv::Point> &figureContainer,
+                                                         std::vector<cv::Point> &figureInner)
 {
     //Найти центр первого контура
-    cv::Moments moment1 = moments(figure1, false);
+    cv::Moments moment1 = moments(figureContainer, false);
     cv::Point2f p1 = cv::Point2f( moment1.m10/moment1.m00 , moment1.m01/moment1.m00 );
     //Найти центр второго контура
-    cv::Moments moment2 = moments(figure2, false);
+    cv::Moments moment2 = moments(figureInner, false);
     cv::Point2f p2 = cv::Point2f( moment2.m10/moment2.m00 , moment2.m01/moment2.m00 );
     //float distance = cv::pointPolygonTest(list.at(i),p,true);
 
     float differenceX, differenceY;
-    if(isInsideContour(figure1, figure2)) {
-        differenceX = p1.x - p2.x;
-        differenceY = p1.y - p2.y;
-        if(abs(differenceX) < 10 && abs(differenceY) < 10) return center;
+    if(isInsideContour(figureContainer, figureInner)) {
+        differenceX = p2.x - p1.x;
+        differenceY = p2.y - p1.y;
+        if(abs(differenceX) < 10 && abs(differenceY) < 10) return near_center;
         else if(differenceX < 0 && abs(differenceY) < 10) return left_center;
         else if (differenceX > 0 && abs(differenceY) < 10) return right_center;
         else if (abs(differenceX) < 10 && differenceY < 0) return center_up;
@@ -82,7 +100,7 @@ FIGURE_LOCATION GeometricalObjectsCollector::getLocation(std::vector<cv::Point> 
 }
 
 /* Метод для определения, находитсся ли один контур внутри другого*/
-bool GeometricalObjectsCollector::isInsideContour(const std::vector<cv::Point> &checkingContour, const std::vector<cv::Point> &contourContainer)
+bool GeometricalObjectsCollector::isInsideContour(const std::vector<cv::Point> &contourContainer, const std::vector<cv::Point> &checkingContour)
 {
     int i;
     float distance;
@@ -99,7 +117,7 @@ bool GeometricalObjectsCollector::isInsideContour(const std::vector<cv::Point> &
 
 
 /* Метод для выделения кнопок из геометрических объектов*/
-void GeometricalObjectsCollector::findPushButtons(std::vector<cv::Point> &buttonFrame,std::vector<cv::Point> &buttonInnerFigure)
+bool GeometricalObjectsCollector::findPushButtons(std::vector<cv::Point> &buttonFrame,std::vector<cv::Point> &buttonInnerFigure)
 {
     int pushButtonCount;
     if(getLocation(buttonFrame, buttonInnerFigure) == right_down)
@@ -118,7 +136,7 @@ void GeometricalObjectsCollector::findPushButtons(std::vector<cv::Point> &button
 }
 
 /* Метод для выделения радиокнопок из геометрических объектов*/
-void GeometricalObjectsCollector::findRadioButtons()
+bool GeometricalObjectsCollector::findRadioButtons()
 {
     int i;
     int radioButtonCount;
@@ -129,10 +147,10 @@ void GeometricalObjectsCollector::findRadioButtons()
     QList<std::vector<cv::Point> > roundsList;
     for(i = 0; i < _rounds.size(); i++)
     {
-        roundsList = shapeCountInside(_rounds[i], _rounds);
+        roundsList = getInnerShapesList(_rounds[i], _rounds);
         roundCountInside = roundsList.size();
-        rectangleCountInside = shapeCountInside(_rounds[i], _rectangles).size();
-        triangleCountInside = shapeCountInside(_rounds[i], _triangles).size();
+        rectangleCountInside = getInnerShapesList(_rounds[i], _rectangles).size();
+        triangleCountInside = getInnerShapesList(_rounds[i], _triangles).size();
         if(roundCountInside == 1 && !rectangleCountInside && !triangleCountInside)
         {
             cv::Moments moment = moments(_rounds[i], false);
@@ -151,7 +169,7 @@ void GeometricalObjectsCollector::findRadioButtons()
 }
 
 /* Метод для выделения комбобоксов из геометрических объектов*/
-void GeometricalObjectsCollector::findComboBoxes(std::vector<cv::Point> &buttonFrame,std::vector<cv::Point> &buttonInnerFigure)
+bool GeometricalObjectsCollector::findComboBoxes(std::vector<cv::Point> &buttonFrame,std::vector<cv::Point> &buttonInnerFigure)
 {
     int comboBoxCount;
     if(getLocation(buttonFrame,buttonInnerFigure) == (right_center || right_up || right_down))
@@ -166,14 +184,21 @@ void GeometricalObjectsCollector::findComboBoxes(std::vector<cv::Point> &buttonF
         _widgets.append(box);
         _rectangles.removeOne(buttonFrame);
         _triangles.removeOne(buttonInnerFigure);
+        return true;
     }
+    return false;
 }
 
 /* Метод для выделения чекбоксов из геометрических объектов*/
-void GeometricalObjectsCollector::findCheckBoxes(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure)
+bool GeometricalObjectsCollector::findCheckBoxes(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure)
 {
     int checkBoxCount;
-    if(getLocation(buttonFrame, buttonInnerFigure) == (center || center_up || center_down || left_center ||right_center))
+    FIGURE_LOCATION currentLocation = getLocation(buttonFrame, buttonInnerFigure);
+    if(currentLocation == near_center
+            || currentLocation == center_up
+            || currentLocation == center_down
+            || currentLocation == left_center
+            || currentLocation == right_center)
     {
         cv::Moments moment = moments(buttonFrame, false);
         cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
@@ -185,13 +210,18 @@ void GeometricalObjectsCollector::findCheckBoxes(std::vector<cv::Point> &buttonF
         _widgets.append(box);
         _rectangles.removeOne(buttonFrame);
         _rectangles.removeOne(buttonInnerFigure);
+        return true;
     }
+    return false;
 }
 
-void GeometricalObjectsCollector::findLineEdits(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure)
+bool GeometricalObjectsCollector::findLineEdits(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure)
 {
     int lineEditCount;
-    if(getLocation(buttonFrame,buttonInnerFigure) == (left_center || left_up || left_down))
+    FIGURE_LOCATION currentLocation = getLocation(buttonFrame,buttonInnerFigure);
+    if(currentLocation == left_center
+            || currentLocation == left_up
+            || currentLocation == left_down)
     {
         cv::Moments moment = moments(buttonFrame, false);
         cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
@@ -203,29 +233,34 @@ void GeometricalObjectsCollector::findLineEdits(std::vector<cv::Point> &buttonFr
         _widgets.append(edit);
         _rectangles.removeOne(buttonFrame);
         _triangles.removeOne(buttonInnerFigure);
+        return true;
     }
+    return false;
 }
 
-void GeometricalObjectsCollector::findSpinBoxes()
+bool GeometricalObjectsCollector::findSpinBoxes()
 {
 }
 
-void GeometricalObjectsCollector::findListWidgets()
+bool GeometricalObjectsCollector::findListWidgets()
 {
 }
 
-void GeometricalObjectsCollector::findTreeWidgets()
+bool GeometricalObjectsCollector::findTreeWidgets()
 {
 }
 
-void GeometricalObjectsCollector::findTableWidgets()
+bool GeometricalObjectsCollector::findTableWidgets()
 {
 }
 
-void GeometricalObjectsCollector::findLabels(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure)
+bool GeometricalObjectsCollector::findLabels(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure)
 {
     int labelCount;
-    if(getLocation(buttonFrame, buttonInnerFigure) == (left_down || left_up || left_center))
+    FIGURE_LOCATION currentLocation = getLocation(buttonFrame,buttonInnerFigure);
+    if(currentLocation == left_down
+            || currentLocation == left_up
+            || currentLocation == left_center)
     {
         cv::Moments moment = moments(buttonFrame, false);
         cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
@@ -237,18 +272,20 @@ void GeometricalObjectsCollector::findLabels(std::vector<cv::Point> &buttonFrame
         _widgets.append(label);
         _rectangles.removeOne(buttonFrame);
         _rectangles.removeOne(buttonInnerFigure);
+        return true;
     }
+    return false;
 }
 
-void GeometricalObjectsCollector::findProgressBars()
+bool GeometricalObjectsCollector::findProgressBars()
 {
 }
 
-void GeometricalObjectsCollector::findCalendars()
+bool GeometricalObjectsCollector::findCalendars()
 {
 }
 
-void GeometricalObjectsCollector::findGraphicsViews(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure)
+bool GeometricalObjectsCollector::findGraphicsViews(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure)
 {
     int graphicsViewCount;
     if(getLocation(buttonFrame, buttonInnerFigure) == right_down)
@@ -263,16 +300,18 @@ void GeometricalObjectsCollector::findGraphicsViews(std::vector<cv::Point> &butt
         _widgets.append(view);
         _rectangles.removeOne(buttonFrame);
         _rectangles.removeOne(buttonInnerFigure);
+        return true;
     }
+    return false;
 }
 
-QList<std::vector<cv::Point> > GeometricalObjectsCollector::shapeCountInside(std::vector<cv::Point> &contour, QList<std::vector<cv::Point> > & list)
+QList<std::vector<cv::Point> > GeometricalObjectsCollector::getInnerShapesList(std::vector<cv::Point> &contour, QList<std::vector<cv::Point> > & list)
 {
     int i;
     QList<std::vector<cv::Point> > shapesInside;
     for(i = 0; i < list.size(); i++)
     {
-        if(isInsideContour(list[i], contour) && list[i] != contour)
+        if(isInsideContour(contour, list[i]) && list[i] != contour)
         {
             shapesInside.append(list[i]);
         }
