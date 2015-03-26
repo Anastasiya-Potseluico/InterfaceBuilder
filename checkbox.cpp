@@ -12,4 +12,6 @@ QString CheckBox::writeSelfIntoFile(QFile &file)
 
 void CheckBox::drawSelf(QGraphicsScene &scene)
 {
+    CheckBoxView * view = new CheckBoxView(this);
+    scene.addItem(view);
 }

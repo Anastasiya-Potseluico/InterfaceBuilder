@@ -2,6 +2,7 @@
 #define CHECKBOX_H
 
 #include "abstractbutton.h"
+#include "checkboxview.h"
 
 class CheckBox : public AbstractButton
 {
