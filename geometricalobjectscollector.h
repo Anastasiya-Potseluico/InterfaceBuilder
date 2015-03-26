@@ -13,7 +13,7 @@
 #include "lineedit.h"
 #include "checkbox.h"
 
-enum FIGURE_LOCATION {left_up, left_down, center_up, center_down, center, left_center, right_center, right_up, right_down, none};
+enum FIGURE_LOCATION {left_up, left_down, center_up, center_down, near_center, left_center, right_center, right_up, right_down, none};
 enum FIGURE_NAME {radio_button, push_button, check_box, combo_box, line_edit, label, graphics_view};
 
 class GeometricalObjectsCollector
@@ -32,22 +32,22 @@ private:
     QList<AbstractWidget*> _widgets;
     QMap<FIGURE_NAME,int> _widgetCounts;
 
-    FIGURE_LOCATION getLocation(std::vector<cv::Point> &figure1, std::vector<cv::Point> &figure2);
-    bool isInsideContour(const std::vector<cv::Point> & checkingContour,const std::vector<cv::Point> & contourContainer);
-    void findPushButtons(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
-    void findRadioButtons();
-    void findComboBoxes(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
-    void findCheckBoxes(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
-    void findLineEdits(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
-    void findSpinBoxes();
-    void findListWidgets();
-    void findTreeWidgets();
-    void findTableWidgets();
-    void findLabels(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
-    void findProgressBars();
-    void findCalendars();
-    void findGraphicsViews(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
-    QList<std::vector<cv::Point> > shapeCountInside(std::vector<cv::Point> &contour, QList<std::vector<cv::Point> > & list);
+    FIGURE_LOCATION getLocation(std::vector<cv::Point> &figureContainer, std::vector<cv::Point> &figureInner);
+    bool isInsideContour(const std::vector<cv::Point> & contourContainer,const std::vector<cv::Point> & checkingContour);
+    bool findPushButtons(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
+    bool findRadioButtons();
+    bool findComboBoxes(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
+    bool findCheckBoxes(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
+    bool findLineEdits(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
+    bool findSpinBoxes();
+    bool findListWidgets();
+    bool findTreeWidgets();
+    bool findTableWidgets();
+    bool findLabels(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
+    bool findProgressBars();
+    bool findCalendars();
+    bool findGraphicsViews(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
+    QList<std::vector<cv::Point> > getInnerShapesList(std::vector<cv::Point> &contour, QList<std::vector<cv::Point> > & list);
 
 };
 
