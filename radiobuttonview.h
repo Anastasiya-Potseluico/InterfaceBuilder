@@ -2,8 +2,7 @@
 #define RADIOBUTTONVIEW_H
 
 #include "abstractwidgetview.h"
-#include <QPainter>
-#include <QGraphicsSceneMouseEvent>
+#include <QFont>
 
 class RadioButtonView : public AbstractWidgetView
 {
