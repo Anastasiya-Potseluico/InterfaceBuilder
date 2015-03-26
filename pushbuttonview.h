@@ -2,7 +2,6 @@
 #define PUSHBUTTONVIEW_H
 
 #include "abstractwidgetview.h"
-#include <QPainter>
 
 class PushButtonView : public AbstractWidgetView
 {
