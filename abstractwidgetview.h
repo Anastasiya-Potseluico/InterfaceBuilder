@@ -3,6 +3,7 @@
 
 #include "abstractwidget.h"
 #include <QGraphicsItem>
+#include <QPainter>
 
 class AbstractWidgetView : public QGraphicsItem
 {
