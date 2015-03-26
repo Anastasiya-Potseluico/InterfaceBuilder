@@ -54,7 +54,8 @@ void MainWindow::loadPSD()
 void MainWindow::showInterface()
 {
     QGraphicsScene* scene = new QGraphicsScene(this);
-    scene->setSceneRect(0,0,900,900);
+    scene->setSceneRect(-5, -5, 1500,1500);
+    scene->addRect(0,0,1200,900,QPen(Qt::black, 1),QBrush());
     switch (ui->interfaceWidget->currentIndex())
     {
     case 0:

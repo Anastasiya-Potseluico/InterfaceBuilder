@@ -7,7 +7,7 @@
 #include "psdparser.h"
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/core/core.hpp"
-#include "widgetview.h"
+#include "abstractwidgetview.h"
 
 namespace Ui {
 class MainWindow;
@@ -28,7 +28,6 @@ private:
     cv::Mat loadImage();
     void loadPSD();
     void drawWidgets(QGraphicsScene &scene);
-
 
 private slots:
     void chooseAction(QAction * action);
