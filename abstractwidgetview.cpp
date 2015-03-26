@@ -41,17 +41,17 @@ void AbstractWidgetView::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     {
         setPos(0, y());
     }
-    else if (x() > 900 - this->_drawedWidget->getSize().width())
+    else if (x() > 1200 - this->_drawedWidget->getSize().width())
     {
-        setPos(900 - this->_drawedWidget->getSize().width(), y());
+        setPos(1200 - this->_drawedWidget->getSize().width(), y());
     }
 
     if (y() < 0)
     {
         setPos(x(), 0);
     }
-    else if (y() > 900 - this->_drawedWidget->getSize().height())
+    else if (y() > 1200 - this->_drawedWidget->getSize().height())
     {
-        setPos(x(), 900 - this->_drawedWidget->getSize().height());
+        setPos(x(), 1200 - this->_drawedWidget->getSize().height());
     }
 }
