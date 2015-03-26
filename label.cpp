@@ -14,4 +14,6 @@ QString Label::writeSelfIntoFile(QFile &file)
 
 void Label::drawSelf(QGraphicsScene &scene)
 {
+    LabelView * view = new LabelView(this);
+    scene.addItem(view);
 }

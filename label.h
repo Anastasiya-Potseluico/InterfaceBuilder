@@ -2,6 +2,7 @@
 #define LABEL_H
 
 #include "abstractwidget.h"
+#include "labelview.h"
 
 enum VERTICAL_ALIGNMENT {top, center_v, bottom};
 enum HORIZONTAL_ALIGNMENT {left, center_h, right, justify};
