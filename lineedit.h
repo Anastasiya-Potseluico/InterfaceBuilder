@@ -1,6 +1,7 @@
 #ifndef LINEEDIT_H
 #define LINEEDIT_H
 #include "abstractwidget.h"
+#include "lineeditview.h"
 
 class LineEdit : public AbstractWidget
 {

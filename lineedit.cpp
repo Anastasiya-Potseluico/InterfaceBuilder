@@ -1,7 +1,7 @@
 #include "lineedit.h"
 
 
-LineEdit::LineEdit(QPoint &position, int numberOfWidget):AbstractWidget(position,*(new QSize(130,40)))
+LineEdit::LineEdit(QPoint &position, int numberOfWidget):AbstractWidget(position,*(new QSize(113,20)))
 {
     _name = QString("LineEdit_").append(QString::number(numberOfWidget));
     _text = QString("");
@@ -14,4 +14,6 @@ QString LineEdit::writeSelfIntoFile(QFile &file)
 
 void LineEdit::drawSelf(QGraphicsScene &scene)
 {
+    LineEditView * view = new LineEditView(this);
+    scene.addItem(view);
 }
