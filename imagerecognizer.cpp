@@ -146,15 +146,7 @@ QList<AbstractWidget> ImageRecognizer::recognizeWidgets()
     findGeometricalFeatures();
     _collector = *(new GeometricalObjectsCollector(_rectangles,_triangles, _circles));
     _widgets = _collector.collectObjectsIntoWidgets();
-    for(int i =0 ;i<_widgets.size();i++)
-    {
 
-        if(dynamic_cast<PushButton*>(_widgets[i]))
-        {
-            int h = 0;
-        }
-
-    }
 }
 
 QList<AbstractWidget *> ImageRecognizer::getWidgets()
