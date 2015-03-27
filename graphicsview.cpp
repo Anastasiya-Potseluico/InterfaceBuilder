@@ -10,7 +10,8 @@ GraphicsView::GraphicsView(QPoint &position, int numberOfWidget):AbstractWidget(
 
 void GraphicsView::drawSelf(QGraphicsScene &scene)
 {
-
+    GraphicsViewView * view = new GraphicsViewView(this);
+    scene.addItem(view);
 }
 
 QString GraphicsView::writeSelfIntoFile(QFile &file)

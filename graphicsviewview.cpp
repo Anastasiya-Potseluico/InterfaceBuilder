@@ -1,10 +1,10 @@
-#include "graphicsvewview.h"
+#include "graphicsviewview.h"
 
-GraphicsVewView::GraphicsVewView(AbstractWidget *drawedWidget) : AbstractWidgetView(drawedWidget)
+GraphicsViewView::GraphicsViewView(AbstractWidget *drawedWidget) : AbstractWidgetView(drawedWidget)
 {
 }
 
-void GraphicsVewView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void GraphicsViewView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QRectF rect = boundingRect();
     QPen pen(Qt::black, 1);
