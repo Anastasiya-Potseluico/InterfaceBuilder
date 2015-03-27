@@ -2,6 +2,7 @@
 #define COMBOBOX_H
 
 #include "abstractwidget.h"
+#include "comboboxview.h"
 
 class ComboBox : public AbstractWidget
 {

@@ -15,4 +15,6 @@ QString ComboBox::writeSelfIntoFile(QFile &file)
 
 void ComboBox::drawSelf(QGraphicsScene &scene)
 {
+    ComboBoxView * view = new ComboBoxView(this);
+    scene.addItem(view);
 }
