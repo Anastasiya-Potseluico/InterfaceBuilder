@@ -28,7 +28,6 @@ QList<AbstractWidget*> GeometricalObjectsCollector::collectObjectsIntoWidgets()
     QList<std::vector<cv::Point> > trianglesList;
     QList<std::vector<cv::Point> > rectanglesList;
     QList<std::vector<cv::Point> > roundsList;
-    int beforeRectanglesSize, beforeTrianglesSize;
     bool found = false;
     for(i = 0; i < _rectangles.size(); i++)
     {
