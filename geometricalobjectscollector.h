@@ -12,6 +12,7 @@
 #include "label.h"
 #include "lineedit.h"
 #include "checkbox.h"
+#include "graphicsview.h"
 
 enum FIGURE_LOCATION {left_up, left_down, center_up, center_down, near_center, left_center, right_center, right_up, right_down, none};
 enum FIGURE_NAME {radio_button, push_button, check_box, combo_box, line_edit, label, graphics_view};
