@@ -171,7 +171,10 @@ bool GeometricalObjectsCollector::findRadioButtons()
 bool GeometricalObjectsCollector::findComboBoxes(std::vector<cv::Point> &buttonFrame,std::vector<cv::Point> &buttonInnerFigure)
 {
     int comboBoxCount;
-    if(getLocation(buttonFrame,buttonInnerFigure) == (right_center || right_up || right_down))
+     FIGURE_LOCATION currentLocation = getLocation(buttonFrame,buttonInnerFigure);
+    if(currentLocation == right_center
+            || currentLocation == right_up
+            || currentLocation == right_down)
     {
         cv::Moments moment = moments(buttonFrame, false);
         cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
