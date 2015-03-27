@@ -27,17 +27,17 @@ void ImageRecognizer::findGeometricalFeatures()
         square = cv::contourArea(contours[i],true);
         if(square > 0)
         {
-            if (isTriangle(approx))
-            {
-                _triangles.append(contours[i]);
-            }
-            else if (isRectangle(approx)&& cv::contourArea(contours[i],true) > 0)
+            if (isRectangle(approx)&& cv::contourArea(contours[i],true) > 0)
             {
                 _rectangles.append(contours[i]);
             }
             else if (isEllipse(approx) && cv::contourArea(contours[i],true) > 0)
             {
                 _circles.append(contours[i]);
+            }
+            else if (isTriangle(approx))
+            {
+                _triangles.append(contours[i]);
             }
         }
     }
@@ -82,7 +82,7 @@ void ImageRecognizer::findGeometricalFeatures()
 /*Метод для определения, является ли контур треугольником */
 bool ImageRecognizer::isTriangle(std::vector<cv::Point> &contour)
 {
-    return (contour.size() == 3);
+    return (contour.size() < 5);
 }
 
 /*Метод для определения, является ли контур прямоугольником */
