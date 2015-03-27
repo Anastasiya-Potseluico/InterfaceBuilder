@@ -287,7 +287,12 @@ bool GeometricalObjectsCollector::findCalendars()
 bool GeometricalObjectsCollector::findGraphicsViews(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure)
 {
     int graphicsViewCount;
-    if(getLocation(buttonFrame, buttonInnerFigure) == right_down)
+    FIGURE_LOCATION currentLocation = getLocation(buttonFrame, buttonInnerFigure);
+    if(currentLocation == near_center
+            || currentLocation == center_v
+            || currentLocation == center_h
+            || currentLocation == center_up
+            || currentLocation == center_down)
     {
         cv::Moments moment = moments(buttonFrame, false);
         cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
@@ -295,7 +300,7 @@ bool GeometricalObjectsCollector::findGraphicsViews(std::vector<cv::Point> &butt
         graphicsViewCount = _widgetCounts.value(graphics_view);
         graphicsViewCount+=1;
         _widgetCounts.insert(graphics_view,graphicsViewCount);
-        AbstractWidget * view = new PushButton(center,graphicsViewCount);
+        AbstractWidget * view = new GraphicsView(center,graphicsViewCount);
         _widgets.append(view);
         _rectangles.removeOne(buttonFrame);
         _rectangles.removeOne(buttonInnerFigure);
