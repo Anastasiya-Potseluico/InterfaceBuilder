@@ -1,6 +1,4 @@
 #include "abstractwidgetview.h"
-#include "pushbutton.h"
-#include "radiobutton.h"
 #include <QPainter>
 
 AbstractWidgetView::AbstractWidgetView(AbstractWidget *drawedWidget)

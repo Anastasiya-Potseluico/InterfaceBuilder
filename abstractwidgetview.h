@@ -5,6 +5,7 @@
 #include <QGraphicsItem>
 #include <QPainter>
 
+
 class AbstractWidgetView : public QGraphicsItem
 {
 public:
