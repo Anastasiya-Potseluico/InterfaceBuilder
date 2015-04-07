@@ -313,15 +313,15 @@ bool GeometricalObjectsCollector::findCalendars(std::vector<cv::Point> &buttonFr
     {
         isLeftUpCorner = true;
     }
-    else if( loc1 == left_down || loc2 == left_down || loc3 == left_down || loc4 == left_down )
+    if( loc1 == left_down || loc2 == left_down || loc3 == left_down || loc4 == left_down )
     {
         isLeftDownCorner = true;
     }
-    else  if( loc1 == right_up || loc2 == right_up || loc3 == right_up || loc4 == right_up )
+    if( loc1 == right_up || loc2 == right_up || loc3 == right_up || loc4 == right_up )
     {
         isRightUpCorner = true;
     }
-    else if( loc1 == right_down || loc2 == right_down || loc3 == right_down || loc4 == right_down )
+    if( loc1 == right_down || loc2 == right_down || loc3 == right_down || loc4 == right_down )
     {
         isRightDownCorner = true;
     }
