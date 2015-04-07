@@ -27,11 +27,11 @@ void ImageRecognizer::findGeometricalFeatures()
         square = cv::contourArea(contours[i],true);
         if(square > 0)
         {
-            if (isRectangle(approx)&& cv::contourArea(contours[i],true) > 0)
+            if (isRectangle(approx))
             {
                 _rectangles.append(contours[i]);
             }
-            else if (isEllipse(approx) && cv::contourArea(contours[i],true) > 0)
+            else if (isEllipse(approx))
             {
                 _circles.append(contours[i]);
             }

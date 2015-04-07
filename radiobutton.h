@@ -3,7 +3,6 @@
 
 #include "abstractbutton.h"
 #include "radiobuttonview.h"
-#include <QGraphicsItem>
 
 class RadioButton : public AbstractButton
 {
