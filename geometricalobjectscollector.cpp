@@ -266,6 +266,43 @@ bool GeometricalObjectsCollector::findTreeWidgets()
 
 bool GeometricalObjectsCollector::findTableWidgets(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerFigures)
 {
+    FIGURE_LOCATION loc1 = getLocation(buttonFrame, buttonInnerFigures[0]);
+    FIGURE_LOCATION loc2 = getLocation(buttonFrame, buttonInnerFigures[1]);
+    FIGURE_LOCATION loc3 = getLocation(buttonFrame, buttonInnerFigures[2]);
+    FIGURE_LOCATION loc4 = getLocation(buttonFrame, buttonInnerFigures[3]);
+
+    bool isLeftUpCorner = false;
+    bool isRightUpCorner = false;
+
+    int tableCount;
+
+    if( loc1 == left_up || loc2 == left_up || loc3 == left_up || loc4 == left_up )
+    {
+        isLeftUpCorner = true;
+    }
+    if( loc1 == right_up || loc2 == right_up || loc3 == right_up || loc4 == right_up )
+    {
+        isRightUpCorner = true;
+    }
+
+    if(isLeftUpCorner && isRightUpCorner)
+    {
+        cv::Moments moment = moments(buttonFrame, false);
+        cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
+        QPoint center(p.x,p.y);
+        tableCount = _widgetCounts.value(table_widget);
+        tableCount+=1;
+        _widgetCounts.insert(table_widget,tableCount);
+        AbstractWidget * tableWidget = new TableWidget(center,tableCount);
+        _widgets.append(tableWidget);
+        _rectangles.removeOne(buttonFrame);
+        _rectangles.removeOne(buttonInnerFigures[0]);
+        _rectangles.removeOne(buttonInnerFigures[1]);
+        _rectangles.removeOne(buttonInnerFigures[2]);
+        _rectangles.removeOne(buttonInnerFigures[3]);
+        return true;
+    }
+    return false;
 }
 
 bool GeometricalObjectsCollector::findLabels(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure)
