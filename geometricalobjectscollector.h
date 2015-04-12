@@ -18,9 +18,10 @@
 #include "tablewidget.h"
 #include "listwidget.h"
 #include "treewidget.h"
+#include "spinbox.h"
 
 enum FIGURE_LOCATION {left_up, left_down, center_up, center_down, near_center, left_center, right_center, right_up, right_down, none};
-enum FIGURE_NAME {radio_button, push_button, check_box, combo_box, line_edit, label, graphics_view, calendar, table_widget, list_widget, tree_widget};
+enum FIGURE_NAME {radio_button, push_button, check_box, combo_box, line_edit, label, graphics_view, calendar, table_widget, list_widget, tree_widget, progress_bar, spin_box};
 
 class GeometricalObjectsCollector
 {
@@ -45,7 +46,7 @@ private:
     bool findComboBoxes(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
     bool findCheckBoxes(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
     bool findLineEdits(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
-    bool findSpinBoxes();
+    bool findSpinBoxes(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerFigures);
     bool findListWidgets(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerFigures);
     bool findTreeWidgets(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerRects, std::vector<cv::Point> &buttonInnerCircle);
     bool findTableWidgets(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerFigures);

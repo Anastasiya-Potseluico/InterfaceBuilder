@@ -13,6 +13,8 @@ GeometricalObjectsCollector::GeometricalObjectsCollector()
     _widgetCounts.insert(table_widget,0);
     _widgetCounts.insert(list_widget,0);
     _widgetCounts.insert(tree_widget,0);
+    _widgetCounts.insert(spin_box,0);
+    _widgetCounts.insert(progress_bar,0);
 }
 
 /*  онструктор принимает на вход три списка с распознанными геометрическими фигурами*/
@@ -81,6 +83,10 @@ QList<AbstractWidget*> GeometricalObjectsCollector::collectObjectsIntoWidgets()
         else if (!trianglesList.size() && rectanglesList.size()==2 && roundsList.size() == 1)
         {
             found = findTreeWidgets(_rectangles[i],rectanglesList,roundsList[0]);
+        }
+        else if (trianglesList.size() == 2 && !rectanglesList.size() && !roundsList.size())
+        {
+            found = findSpinBoxes(_rectangles[i],trianglesList);
         }
         if(found)
         {
@@ -262,8 +268,39 @@ bool GeometricalObjectsCollector::findLineEdits(std::vector<cv::Point> &buttonFr
     return false;
 }
 
-bool GeometricalObjectsCollector::findSpinBoxes()
+bool GeometricalObjectsCollector::findSpinBoxes(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerFigures)
 {
+    FIGURE_LOCATION loc1 = getLocation(buttonFrame, buttonInnerFigures[0]);
+    FIGURE_LOCATION loc2 = getLocation(buttonFrame, buttonInnerFigures[1]);
+
+    int spinBoxCount;
+
+    bool firstInRightSide = false;
+    bool secondInRightSide = false;
+    if( loc1 == right_up || loc1 == right_down || loc1 == right_center)
+    {
+        firstInRightSide = true;
+    }
+    if( loc2 == right_up || loc2 == right_down || loc2 == right_center)
+    {
+        secondInRightSide = true;
+    }
+    if(firstInRightSide && secondInRightSide)
+    {
+        cv::Moments moment = moments(buttonFrame, false);
+        cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
+        QPoint center(p.x,p.y);
+        spinBoxCount = _widgetCounts.value(spin_box);
+        spinBoxCount+=1;
+        _widgetCounts.insert(spin_box,spinBoxCount);
+        AbstractWidget * spinBox = new SpinBox(center,spinBoxCount);
+        _widgets.append(spinBox);
+        _rectangles.removeOne(buttonFrame);
+        _triangles.removeOne(buttonInnerFigures[0]);
+        _triangles.removeOne(buttonInnerFigures[1]);
+        return true;
+    }
+    return false;
 }
 
 bool GeometricalObjectsCollector::findListWidgets(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerFigures)
