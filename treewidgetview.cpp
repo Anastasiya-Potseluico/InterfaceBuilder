@@ -16,7 +16,7 @@ void TreeWidgetView::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     QFont font = painter->font();
     font.setPointSize(12);
     painter->setFont(font);
-    painter->drawText(QPointF(rect.x()+ 0.4*rect.width(), rect.y()+rect.height()*0.3),"Дерево");
-    painter->drawText(QPointF(rect.x()+ 0.4*rect.width(), rect.y()+rect.height()*0.45),"некоторых");
-    painter->drawText(QPointF(rect.x()+ 0.4*rect.width(), rect.y()+rect.height()*0.6),"данных");
+    painter->drawText(QPointF(rect.x()+ 0.4*rect.width(), rect.y()+rect.height()*0.45),"Дерево");
+    painter->drawText(QPointF(rect.x()+ 0.4*rect.width(), rect.y()+rect.height()*0.6),"некоторых");
+    painter->drawText(QPointF(rect.x()+ 0.4*rect.width(), rect.y()+rect.height()*0.75),"данных");
 }
