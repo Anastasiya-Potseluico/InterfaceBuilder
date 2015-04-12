@@ -11,6 +11,7 @@ GeometricalObjectsCollector::GeometricalObjectsCollector()
     _widgetCounts.insert(graphics_view,0);
     _widgetCounts.insert(calendar,0);
     _widgetCounts.insert(table_widget,0);
+    _widgetCounts.insert(list_widget,0);
 }
 
 /*  онструктор принимает на вход три списка с распознанными геометрическими фигурами*/
@@ -71,6 +72,10 @@ QList<AbstractWidget*> GeometricalObjectsCollector::collectObjectsIntoWidgets()
             {
                 found = findTableWidgets(_rectangles[i],rectanglesList);
             }
+        }
+        else if (!trianglesList.size() && rectanglesList.size()==3 && !roundsList.size())
+        {
+            found = findListWidgets(_rectangles[i],rectanglesList);
         }
         if(found)
         {
@@ -256,8 +261,53 @@ bool GeometricalObjectsCollector::findSpinBoxes()
 {
 }
 
-bool GeometricalObjectsCollector::findListWidgets()
+bool GeometricalObjectsCollector::findListWidgets(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerFigures)
 {
+    FIGURE_LOCATION loc1 = getLocation(buttonFrame, buttonInnerFigures[0]);
+    FIGURE_LOCATION loc2 = getLocation(buttonFrame, buttonInnerFigures[1]);
+    FIGURE_LOCATION loc3 = getLocation(buttonFrame, buttonInnerFigures[2]);
+
+    bool isLeftUpCorner = false;
+    bool isRightUpCorner = false;
+    bool isLeftDownCorner = false;
+    bool isRightDownCorner = false;
+
+    int listCount;
+
+    if( loc1 == left_up || loc2 == left_up || loc3 == left_up)
+    {
+        isLeftUpCorner = true;
+    }
+    if( loc1 == right_up || loc2 == right_up || loc3 == right_up)
+    {
+        isRightUpCorner = true;
+    }
+    if( loc1 == left_down || loc2 == left_down || loc3 == left_down)
+    {
+        isLeftDownCorner = true;
+    }
+    if( loc1 == right_down || loc2 == right_down || loc3 == right_down)
+    {
+        isRightDownCorner = true;
+    }
+
+    if(!(isLeftUpCorner && isRightUpCorner && isLeftDownCorner && isRightDownCorner))
+    {
+        cv::Moments moment = moments(buttonFrame, false);
+        cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
+        QPoint center(p.x,p.y);
+        listCount = _widgetCounts.value(list_widget);
+        listCount+=1;
+        _widgetCounts.insert(list_widget,listCount);
+        AbstractWidget * listWidget = new ListWidget(center,listCount);
+        _widgets.append(listWidget);
+        _rectangles.removeOne(buttonFrame);
+        _rectangles.removeOne(buttonInnerFigures[0]);
+        _rectangles.removeOne(buttonInnerFigures[1]);
+        _rectangles.removeOne(buttonInnerFigures[2]);
+        return true;
+    }
+    return false;
 }
 
 bool GeometricalObjectsCollector::findTreeWidgets()
