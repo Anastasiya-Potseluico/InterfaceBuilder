@@ -12,6 +12,7 @@ GeometricalObjectsCollector::GeometricalObjectsCollector()
     _widgetCounts.insert(calendar,0);
     _widgetCounts.insert(table_widget,0);
     _widgetCounts.insert(list_widget,0);
+    _widgetCounts.insert(tree_widget,0);
 }
 
 /*  онструктор принимает на вход три списка с распознанными геометрическими фигурами*/
@@ -76,6 +77,10 @@ QList<AbstractWidget*> GeometricalObjectsCollector::collectObjectsIntoWidgets()
         else if (!trianglesList.size() && rectanglesList.size()==3 && !roundsList.size())
         {
             found = findListWidgets(_rectangles[i],rectanglesList);
+        }
+        else if (!trianglesList.size() && rectanglesList.size()==2 && roundsList.size() == 1)
+        {
+            found = findTreeWidgets(_rectangles[i],rectanglesList,roundsList[0]);
         }
         if(found)
         {
@@ -310,8 +315,57 @@ bool GeometricalObjectsCollector::findListWidgets(std::vector<cv::Point> &button
     return false;
 }
 
-bool GeometricalObjectsCollector::findTreeWidgets()
+bool GeometricalObjectsCollector::findTreeWidgets(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerRects, std::vector<cv::Point> &buttonInnerCircle)
 {
+    FIGURE_LOCATION loc1 = getLocation(buttonFrame, buttonInnerCircle);
+    FIGURE_LOCATION loc2 = getLocation(buttonFrame, buttonInnerRects[0]);
+    FIGURE_LOCATION loc3 = getLocation(buttonFrame, buttonInnerRects[1]);
+
+    bool isLeftUpCorner = false;
+    bool isRightUpCorner = false;
+    bool isLeftDownCorner = false;
+    bool isRightDownCorner = false;
+
+    int treeCount;
+
+    if( loc1 == left_up)
+    {
+        isLeftUpCorner = true;
+    }
+    if( loc2 == right_up || loc3 == right_up)
+    {
+        isRightUpCorner = true;
+    }
+    if(loc2 == left_down || loc3 == left_down)
+    {
+        isLeftDownCorner = true;
+    }
+    if(loc2 == right_down || loc3 == right_down)
+    {
+        isRightDownCorner = true;
+    }
+    if( loc2 == left_up || loc3 == left_up)
+    {
+        isLeftUpCorner = false;
+    }
+
+    if(!(isRightUpCorner && isLeftDownCorner && isRightDownCorner) && isLeftUpCorner)
+    {
+        cv::Moments moment = moments(buttonFrame, false);
+        cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
+        QPoint center(p.x,p.y);
+        treeCount = _widgetCounts.value(tree_widget);
+        treeCount+=1;
+        _widgetCounts.insert(tree_widget,treeCount);
+        AbstractWidget * treeWidget = new TreeWidget(center,treeCount);
+        _widgets.append(treeWidget);
+        _rectangles.removeOne(buttonFrame);
+        _rectangles.removeOne(buttonInnerRects[0]);
+        _rectangles.removeOne(buttonInnerRects[1]);
+        _rounds.removeOne(buttonInnerCircle);
+        return true;
+    }
+    return false;
 }
 
 bool GeometricalObjectsCollector::findTableWidgets(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerFigures)
