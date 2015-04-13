@@ -27,8 +27,5 @@ void SpinBoxView::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     path.lineTo(rect.x() + 0.75*rect.width(), rect.y() + rect.height()*0.4);
     path.lineTo(rect.x() + 0.95*rect.width(), rect.y() + rect.height()*0.4);
     path.lineTo(rect.x() + 0.85*rect.width(), rect.y() + rect.height()*0.2);
-    painter->setPen(Qt::NoPen);
     painter->fillPath(path,QBrush(Qt::black));
-
-
 }
