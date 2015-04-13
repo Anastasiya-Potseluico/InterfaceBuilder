@@ -19,6 +19,7 @@
 #include "listwidget.h"
 #include "treewidget.h"
 #include "spinbox.h"
+#include "progressbar.h"
 
 enum FIGURE_LOCATION {left_up, left_down, center_up, center_down, near_center, left_center, right_center, right_up, right_down, none};
 enum FIGURE_NAME {radio_button, push_button, check_box, combo_box, line_edit, label, graphics_view, calendar, table_widget, list_widget, tree_widget, progress_bar, spin_box};
@@ -51,7 +52,7 @@ private:
     bool findTreeWidgets(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerRects, std::vector<cv::Point> &buttonInnerCircle);
     bool findTableWidgets(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerFigures);
     bool findLabels(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
-    bool findProgressBars();
+    bool findProgressBars(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerFigures);
     bool findCalendars(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerFigures);
     bool findGraphicsViews(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
     QList<std::vector<cv::Point> > getInnerShapesList(std::vector<cv::Point> &contour, QList<std::vector<cv::Point> > & list);

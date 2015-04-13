@@ -84,6 +84,10 @@ QList<AbstractWidget*> GeometricalObjectsCollector::collectObjectsIntoWidgets()
         {
             found = findTreeWidgets(_rectangles[i],rectanglesList,roundsList[0]);
         }
+        else if (!trianglesList.size() && rectanglesList.size()==2 && !roundsList.size())
+        {
+            found = findProgressBars(_rectangles[i],rectanglesList);
+        }
         else if (trianglesList.size() == 2 && !rectanglesList.size() && !roundsList.size())
         {
             found = findSpinBoxes(_rectangles[i],trianglesList);
@@ -147,7 +151,13 @@ bool GeometricalObjectsCollector::isInsideContour(const std::vector<cv::Point> &
 bool GeometricalObjectsCollector::findPushButtons(std::vector<cv::Point> &buttonFrame,std::vector<cv::Point> &buttonInnerFigure)
 {
     int pushButtonCount;
-    if(getLocation(buttonFrame, buttonInnerFigure) == right_down)
+    FIGURE_LOCATION currentLocation = getLocation(buttonFrame,buttonInnerFigure);
+    bool isInRightCorner;
+    if (currentLocation == right_down || currentLocation == right_center)
+    {
+        isInRightCorner = true;
+    }
+    if(isInRightCorner)
     {
         cv::Moments moment = moments(buttonFrame, false);
         cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
@@ -469,8 +479,42 @@ bool GeometricalObjectsCollector::findLabels(std::vector<cv::Point> &buttonFrame
     return false;
 }
 
-bool GeometricalObjectsCollector::findProgressBars()
+bool GeometricalObjectsCollector::findProgressBars(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerFigures)
 {
+    FIGURE_LOCATION loc1 = getLocation(buttonFrame, buttonInnerFigures[0]);
+    FIGURE_LOCATION loc2 = getLocation(buttonFrame, buttonInnerFigures[1]);
+
+    bool firstInRigthSide = false;
+    bool secondInRigthSide = false;
+
+    int calendarCount;
+
+    if( loc1 == right || loc1 == right_up ||  loc1 == right_down || loc1 == right_center)
+    {
+        firstInRigthSide = true;
+    }
+    if( loc2 == right || loc2 == right_up ||  loc2 == right_down || loc2 == right_center)
+    {
+        secondInRigthSide = true;
+    }
+
+    if(! (firstInRigthSide && secondInRigthSide))
+    {
+        cv::Moments moment = moments(buttonFrame, false);
+        cv::Point2f p = cv::Point2f( moment.m10/moment.m00 , moment.m01/moment.m00 );
+        QPoint center(p.x,p.y);
+        calendarCount = _widgetCounts.value(progress_bar);
+        calendarCount+=1;
+        _widgetCounts.insert(progress_bar,calendarCount);
+        AbstractWidget * progressBar = new ProgressBar(center,calendarCount);
+        _widgets.append(progressBar);
+        _rectangles.removeOne(buttonFrame);
+        _rectangles.removeOne(buttonInnerFigures[0]);
+        _rectangles.removeOne(buttonInnerFigures[1]);
+        return true;
+    }
+    return false;
+
 }
 
 bool GeometricalObjectsCollector::findCalendars(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerFigures)
