@@ -1,10 +1,13 @@
 #ifndef TREEWIDGETVIEW_H
 #define TREEWIDGETVIEW_H
 
-class TreeWidgetView
+#include "abstractwidgetview.h"
+
+class TreeWidgetView : public AbstractWidgetView
 {
 public:
-    TreeWidgetView();
+    TreeWidgetView(AbstractWidget *drawedWidget);
+    void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget);
 };
 
 #endif // TREEWIDGETVIEW_H
