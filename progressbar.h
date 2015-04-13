@@ -2,6 +2,7 @@
 #define PROGRESSBAR_H
 
 #include "abstractwidget.h"
+#include "progressbarview.h"
 
 class ProgressBar : public AbstractWidget
 {
@@ -14,6 +15,8 @@ private:
     bool _textVisible;
     int _value;
     bool _invertedAppearance;
+    int _minValue;
+    int _maxValue;
 };
 
 #endif // PROGRESSBAR_H

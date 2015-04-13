@@ -16,4 +16,6 @@ QString ProgressBar::writeSelfIntoFile(QFile &file)
 
 void ProgressBar::drawSelf(QGraphicsScene &scene)
 {
+    ProgressBarView * view = new ProgressBarView(this);
+    scene.addItem(view);
 }
