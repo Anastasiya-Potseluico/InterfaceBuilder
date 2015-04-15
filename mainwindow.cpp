@@ -95,11 +95,11 @@ void MainWindow::getRealInterface(QGraphicsScene &scene)
       xmlWriter.writeStartDocument();
       QList<AbstractWidget*> list = _recognizer->getWidgets();
       int size = list.size();
-      for(int i =0; i<size; i++)
-      {
-          list[i]->writeSelfIntoFile(xmlWriter);
-          int h = 0;
-      }
+     // for(int i =0; i<size; i++)
+    //  {
+     //     list[i]->writeSelfIntoFile(xmlWriter);
+     //     int h = 0;
+     // }
       file.close();
     //Вызвать для каждого виджета запиь в файл
 

@@ -1,10 +1,6 @@
 #include "imagerecognizer.h"
 #include "pushbutton.h"
 
-ImageRecognizer::ImageRecognizer()
-{
-}
-
 ImageRecognizer::ImageRecognizer(cv::Mat source)
 {
     _inputImage = source;

@@ -1,5 +1,5 @@
 #include <QtGui/QApplication>
-//#include <QTest>
+#include <QTest>
 #include <QTextCodec>
 #include "mainwindow.h"
 #include <windows.h>
@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     Sleep( 3000 );
     QTextCodec *codec = QTextCodec::codecForName("cp1251");
     QTextCodec::setCodecForCStrings(codec);
-    //QTest::qExec(&test1);
+    QTest::qExec(&test1);
     MainWindow w;
     w.show();
     

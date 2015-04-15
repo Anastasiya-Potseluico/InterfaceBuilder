@@ -75,6 +75,16 @@ background-color: #E6E6E3;
        <attribute name="title">
         <string>Макет интерфейса</string>
        </attribute>
+       <widget class="QGraphicsView" name="interfaceView">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>1141</width>
+          <height>541</height>
+         </rect>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="scheme_interface">
        <attribute name="title">
@@ -95,17 +105,7 @@ background-color: #E6E6E3;
          <widget class="QGraphicsView" name="shemeView_s"/>
         </item>
         <item row="0" column="0">
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
+         <widget class="QGraphicsView" name="interfaceView_s"/>
         </item>
        </layout>
       </widget>

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri 27. Feb 15:27:19 2015
+** Created: Wed 15. Apr 14:29:38 2015
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -20,7 +20,6 @@
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
-#include <QtGui/QSpacerItem>
 #include <QtGui/QStatusBar>
 #include <QtGui/QTabWidget>
 #include <QtGui/QWidget>
@@ -37,13 +36,14 @@ public:
     QGridLayout *gridLayout;
     QTabWidget *interfaceWidget;
     QWidget *maket_interface;
+    QGraphicsView *interfaceView;
     QWidget *scheme_interface;
     QGridLayout *gridLayout_2;
     QGraphicsView *schemeView_b;
     QWidget *both_interface;
     QGridLayout *gridLayout_3;
     QGraphicsView *shemeView_s;
-    QSpacerItem *horizontalSpacer;
+    QGraphicsView *interfaceView_s;
     QMenuBar *menuBar;
     QMenu *menu;
     QStatusBar *statusBar;
@@ -109,6 +109,9 @@ public:
         interfaceWidget->setMovable(true);
         maket_interface = new QWidget();
         maket_interface->setObjectName(QString::fromUtf8("maket_interface"));
+        interfaceView = new QGraphicsView(maket_interface);
+        interfaceView->setObjectName(QString::fromUtf8("interfaceView"));
+        interfaceView->setGeometry(QRect(10, 10, 1141, 541));
         interfaceWidget->addTab(maket_interface, QString());
         scheme_interface = new QWidget();
         scheme_interface->setObjectName(QString::fromUtf8("scheme_interface"));
@@ -133,9 +136,10 @@ public:
 
         gridLayout_3->addWidget(shemeView_s, 0, 1, 1, 1);
 
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        interfaceView_s = new QGraphicsView(both_interface);
+        interfaceView_s->setObjectName(QString::fromUtf8("interfaceView_s"));
 
-        gridLayout_3->addItem(horizontalSpacer, 0, 0, 1, 1);
+        gridLayout_3->addWidget(interfaceView_s, 0, 0, 1, 1);
 
         interfaceWidget->addTab(both_interface, QString());
 

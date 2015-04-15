@@ -1,5 +1,6 @@
 #include "geometricalobjectscollector.h"
 
+
 GeometricalObjectsCollector::GeometricalObjectsCollector()
 {
     _widgetCounts.insert(radio_button,0);
