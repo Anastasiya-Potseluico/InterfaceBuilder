@@ -5,7 +5,7 @@
 #include <QPoint>
 #include <QString>
 #include <QGraphicsScene>
-#include <QFile>
+#include <QXmlStreamWriter>
 
 
 /* Класс абстрактного виджета.
@@ -18,14 +18,12 @@ public:
     QPoint getPosition();
     QSize getSize();
     void setPosition(QPoint &position);
+    QString writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
 protected:
     QSize _size; // Размер видета.
     QPoint _position; // Позиция виджета на главное окне.
     QString _name; // Имя виджета.
     bool _enabled; // Видимость виджета.
-
-
-    QString writeSelfIntoFile(QFile&file);
 
 };
 
