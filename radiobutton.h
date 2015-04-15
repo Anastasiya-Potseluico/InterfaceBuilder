@@ -8,7 +8,7 @@ class RadioButton : public AbstractButton
 {
 public:
     RadioButton(QPoint &position, int numberOfWidget);
-    QString writeSelfIntoFile(QFile&file);
+    QString writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
     void drawSelf(QGraphicsScene &scene);
 
 };
