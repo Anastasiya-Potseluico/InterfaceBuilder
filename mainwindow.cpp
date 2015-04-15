@@ -45,21 +45,19 @@ cv::Mat MainWindow::loadImage()
     return source;
 }
 
-/*Метод для загрузки PSD-файла*/
-void MainWindow::loadPSD()
-{
-}
-
 /*Слот для показа отображений интерфейсов*/
 void MainWindow::showInterface()
 {
     QGraphicsScene* scene = new QGraphicsScene(this);
     scene->setSceneRect(-5, -5, 1500,1500);
     scene->addRect(0,0,1200,900,QPen(Qt::black, 1),QBrush());
+    QGraphicsScene* scene1 = new QGraphicsScene(this);
+    scene1->setSceneRect(-5, -5, 1500,1500);
+    scene1->addRect(0,0,1200,900,QPen(Qt::black, 1),QBrush());
     switch (ui->interfaceWidget->currentIndex())
     {
     case 0:
-
+        ui->interfaceView->setScene(scene1);
         break;
     case 1:
         ui->schemeView_b->setScene(scene);
@@ -70,6 +68,8 @@ void MainWindow::showInterface()
         ui->shemeView_s->setScene(scene);
         drawWidgets(*scene);
         ui->shemeView_s->show();
+        ui->interfaceView_s->setScene(scene1);
+        getRealInterface(*scene1);
         break;
     }
 }
@@ -82,4 +82,26 @@ void MainWindow::drawWidgets(QGraphicsScene &scene)
     {
         list[i]->drawSelf(scene);
     }
+}
+
+void MainWindow::getRealInterface(QGraphicsScene &scene)
+{
+    //Создать файл формата xml
+      QFile file("tempname");
+      file.open(QIODevice::WriteOnly);
+
+      QXmlStreamWriter xmlWriter(&file);
+      xmlWriter.setAutoFormatting(true);
+      xmlWriter.writeStartDocument();
+      QList<AbstractWidget*> list = _recognizer->getWidgets();
+      int size = list.size();
+      for(int i =0; i<size; i++)
+      {
+          list[i]->writeSelfIntoFile(xmlWriter);
+          int h = 0;
+      }
+      file.close();
+    //Вызвать для каждого виджета запиь в файл
+
+    //Преобразовать полученный файл в виджет и поместить его на сцену
 }

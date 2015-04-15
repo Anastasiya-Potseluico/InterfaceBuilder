@@ -8,6 +8,7 @@
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/core/core.hpp"
 #include "abstractwidgetview.h"
+#include "QXmlStreamWriter"
 
 namespace Ui {
 class MainWindow;
@@ -24,10 +25,9 @@ public:
 private:
     Ui::MainWindow *ui;
     ImageRecognizer *_recognizer; // Класс распознавателя виджетов на изображении.
-    PSDParser *_parser; // Класс парсера макетов.
     cv::Mat loadImage();
-    void loadPSD();
     void drawWidgets(QGraphicsScene &scene);
+    void getRealInterface(QGraphicsScene &scene);
 
 private slots:
     void chooseAction(QAction * action);
