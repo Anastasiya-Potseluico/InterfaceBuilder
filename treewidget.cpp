@@ -7,7 +7,7 @@ TreeWidget::TreeWidget(QPoint &position, int numberOfWidget): AbstractItemWidget
     _columnCount = 1;
 }
 
-QString TreeWidget::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
+QString TreeWidget::writeSelfIntoFile(QFile &file)
 {
 }
 

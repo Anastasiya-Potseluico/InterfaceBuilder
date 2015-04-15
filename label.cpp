@@ -8,7 +8,7 @@ Label::Label(QPoint &position, int numberOfWidget):AbstractWidget(position,*(new
     _name = QString("Label_").append(QString::number(numberOfWidget));
 }
 
-QString Label::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
+QString Label::writeSelfIntoFile(QFile &file)
 {
 }
 

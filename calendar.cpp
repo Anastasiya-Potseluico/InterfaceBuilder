@@ -11,7 +11,7 @@ Calendar::Calendar(QPoint &position, int numberOfWidget):AbstractWidget(position
     _firstWeekDay = sunday;
 }
 
-QString Calendar::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
+QString Calendar::writeSelfIntoFile(QFile &file)
 {
 }
 

@@ -11,7 +11,7 @@ class Calendar : public AbstractWidget
 {
 public:
     Calendar(QPoint &position, int numberOfWidget);
-    QString writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
+    QString writeSelfIntoFile(QFile&file);
     void drawSelf(QGraphicsScene &scene);
 
 private:

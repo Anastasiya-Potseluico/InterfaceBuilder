@@ -8,7 +8,7 @@ TableWidget::TableWidget(QPoint &position, int numberOfWidget) : AbstractItemWid
     _columnCount = 0;
 }
 
-QString TableWidget::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
+QString TableWidget::writeSelfIntoFile(QFile &file)
 {
 }
 

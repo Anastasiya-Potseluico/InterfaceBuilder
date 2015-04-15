@@ -8,7 +8,7 @@ ComboBox::ComboBox (QPoint&position, int numberOfWidget):AbstractWidget(position
     _isEditable = false;
 }
 
-QString ComboBox::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
+QString ComboBox::writeSelfIntoFile(QFile &file)
 {
 
 }

@@ -8,7 +8,7 @@ class ProgressBar : public AbstractWidget
 {
 public:
     ProgressBar(QPoint &position, int numberOfWidget);
-    QString writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
+    QString writeSelfIntoFile(QFile&file);
     void drawSelf(QGraphicsScene &scene);
 
 private:

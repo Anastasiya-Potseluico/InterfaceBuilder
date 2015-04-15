@@ -6,7 +6,7 @@ CheckBox::CheckBox(QPoint &position, int numberOfWidget):AbstractButton(position
     _name = QString("CheckBox_").append(QString::number(numberOfWidget));
 }
 
-QString CheckBox::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
+QString CheckBox::writeSelfIntoFile(QFile &file)
 {
 }
 

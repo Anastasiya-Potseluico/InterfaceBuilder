@@ -10,7 +10,7 @@ ProgressBar::ProgressBar(QPoint &position, int numberOfWidget) :AbstractWidget(p
     _maxValue = 100;
 }
 
-QString ProgressBar::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
+QString ProgressBar::writeSelfIntoFile(QFile &file)
 {
 }
 

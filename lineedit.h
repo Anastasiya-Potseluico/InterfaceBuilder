@@ -7,7 +7,7 @@ class LineEdit : public AbstractWidget
 {
 public:
     LineEdit(QPoint &position, int numberOfWidget);
-    QString writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
+    QString writeSelfIntoFile(QFile&file);
     void drawSelf(QGraphicsScene &scene);
 
 private:
