@@ -10,7 +10,7 @@ SpinBox::SpinBox(QPoint &position, int numberOfWidget):AbstractWidget(position,*
     _value = 0;
 }
 
-QString SpinBox::writeSelfIntoFile(QFile &file)
+QString SpinBox::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
 {
 }
 

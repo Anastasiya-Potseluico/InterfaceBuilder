@@ -8,7 +8,7 @@ LineEdit::LineEdit(QPoint &position, int numberOfWidget):AbstractWidget(position
     _readOnly = false;
 }
 
-QString LineEdit::writeSelfIntoFile(QFile &file)
+QString LineEdit::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
 {
 }
 

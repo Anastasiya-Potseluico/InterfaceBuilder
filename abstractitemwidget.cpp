@@ -6,6 +6,6 @@ AbstractItemWidget::AbstractItemWidget(QPoint &position, QSize &size) : Abstract
     _tabKeyNavigate = false;
 }
 
-QString AbstractItemWidget::writeSelfIntoFile(QFile &file)
+QString AbstractItemWidget::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
 {
 }

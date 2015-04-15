@@ -14,7 +14,7 @@ void GraphicsView::drawSelf(QGraphicsScene &scene)
     scene.addItem(view);
 }
 
-QString GraphicsView::writeSelfIntoFile(QFile &file)
+QString GraphicsView::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
 {
-
+    AbstractWidget::writeSelfIntoFile(xmlWriter);
 }
