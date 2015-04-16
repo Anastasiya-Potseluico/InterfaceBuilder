@@ -3,13 +3,31 @@
 PushButton::PushButton(QPoint &position, int numberOfWidget) : AbstractButton(position,*(new QSize(75,23)))
 {
     _defaultOn = true;
+    _text = "PushButton";
     _flat = true;
     _checkable = false;
     _name = QString("PushButton_").append(QString::number(numberOfWidget));
 }
 
-QString PushButton::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
+void PushButton::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
 {
+    xmlWriter.writeStartElement("widget");
+    xmlWriter.writeAttribute("class","QPushButton");
+    xmlWriter.writeAttribute("name",_name);
+
+    AbstractButton::writeSelfIntoFile(xmlWriter);
+
+    xmlWriter.writeStartElement("property");
+    xmlWriter.writeAttribute("name","default");
+    xmlWriter.writeTextElement("bool",_defaultOn ? "true":"false");
+    xmlWriter.writeEndElement();
+
+    xmlWriter.writeStartElement("property");
+    xmlWriter.writeAttribute("name","flat");
+    xmlWriter.writeTextElement("bool",_flat ? "true":"false");
+    xmlWriter.writeEndElement();
+
+    xmlWriter.writeEndElement();
 
 }
 
