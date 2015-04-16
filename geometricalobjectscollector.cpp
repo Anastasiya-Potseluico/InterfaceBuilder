@@ -490,11 +490,11 @@ bool GeometricalObjectsCollector::findProgressBars(std::vector<cv::Point> &butto
 
     int calendarCount;
 
-    if( loc1 == right || loc1 == right_up ||  loc1 == right_down || loc1 == right_center)
+    if(loc1 == right_up ||  loc1 == right_down || loc1 == right_center)
     {
         firstInRigthSide = true;
     }
-    if( loc2 == right || loc2 == right_up ||  loc2 == right_down || loc2 == right_center)
+    if(loc2 == right_up ||  loc2 == right_down || loc2 == right_center)
     {
         secondInRigthSide = true;
     }
