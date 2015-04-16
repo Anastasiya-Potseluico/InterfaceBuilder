@@ -43,6 +43,7 @@ cv::Mat MainWindow::loadImage()
     filePath = QFileDialog::getOpenFileName(this,"Open picture",QString(),"Picture(*.png *.jpg *.bmp)");
     cv::Mat source = cv::imread(filePath.toStdString().c_str());
     return source;
+
 }
 
 /*Слот для показа отображений интерфейсов*/
@@ -87,21 +88,20 @@ void MainWindow::drawWidgets(QGraphicsScene &scene)
 void MainWindow::getRealInterface(QGraphicsScene &scene)
 {
     //Создать файл формата xml
-      QFile file("tempname");
-      file.open(QIODevice::WriteOnly);
 
-      QXmlStreamWriter xmlWriter(&file);
-      xmlWriter.setAutoFormatting(true);
-      xmlWriter.writeStartDocument();
-      QList<AbstractWidget*> list = _recognizer->getWidgets();
-      int size = list.size();
-     // for(int i =0; i<size; i++)
-    //  {
-     //     list[i]->writeSelfIntoFile(xmlWriter);
-     //     int h = 0;
-     // }
-      file.close();
+    QFile file("temp");
+    bool ok =  file.open(QIODevice::WriteOnly);
+    int e = file.OpenError;
+    QXmlStreamWriter xmlWriter(&file);
+    xmlWriter.setAutoFormatting(true);
+    xmlWriter.writeStartDocument();
+    QList<AbstractWidget*> list = _recognizer->getWidgets();
+    int size = list.size();
     //Вызвать для каждого виджета запиь в файл
+    for(int i =0; i<size; i++)
+    {
+        list[i]->writeSelfIntoFile(xmlWriter);
+    }
 
     //Преобразовать полученный файл в виджет и поместить его на сцену
 }
