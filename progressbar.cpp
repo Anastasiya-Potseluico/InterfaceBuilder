@@ -10,8 +10,41 @@ ProgressBar::ProgressBar(QPoint &position, int numberOfWidget) :AbstractWidget(p
     _maxValue = 100;
 }
 
-QString ProgressBar::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
+void ProgressBar::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
 {
+    xmlWriter.writeStartElement("widget");
+    xmlWriter.writeAttribute("class","QProgressBar");
+    xmlWriter.writeAttribute("name",_name);
+
+    AbstractWidget::writeSelfIntoFile(xmlWriter);
+
+    xmlWriter.writeStartElement("property");
+    xmlWriter.writeAttribute("name","textVisible");
+    xmlWriter.writeTextElement("bool",_textVisible ? "true":"false");
+    xmlWriter.writeEndElement();
+
+    xmlWriter.writeStartElement("property");
+    xmlWriter.writeAttribute("name","invertedAppearance");
+    xmlWriter.writeTextElement("bool",_invertedAppearance ? "true":"false");
+    xmlWriter.writeEndElement();
+
+    xmlWriter.writeStartElement("property");
+    xmlWriter.writeAttribute("name","value");
+    xmlWriter.writeTextElement("number",QString::number(_value));
+    xmlWriter.writeEndElement();
+
+    xmlWriter.writeStartElement("property");
+    xmlWriter.writeAttribute("name","maximum");
+    xmlWriter.writeTextElement("number",QString::number(_maxValue));
+    xmlWriter.writeEndElement();
+
+    xmlWriter.writeStartElement("property");
+    xmlWriter.writeAttribute("name","minimum");
+    xmlWriter.writeTextElement("number",QString::number(_minValue));
+    xmlWriter.writeEndElement();
+
+    xmlWriter.writeEndElement();
+
 }
 
 void ProgressBar::drawSelf(QGraphicsScene &scene)
