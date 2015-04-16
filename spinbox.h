@@ -8,7 +8,7 @@ class SpinBox : public AbstractWidget
 {
 public:
     SpinBox(QPoint &position, int numberOfWidget);
-    QString writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
+    void writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
     void drawSelf(QGraphicsScene &scene);
 
 private:
