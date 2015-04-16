@@ -8,7 +8,7 @@ class ComboBox : public AbstractWidget
 {
 public:
     ComboBox(QPoint &position, int numberOfWidget);
-    QString writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
+    void writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
     void drawSelf(QGraphicsScene &scene);
 
 private:
