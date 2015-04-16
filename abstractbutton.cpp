@@ -7,8 +7,3 @@ AbstractButton::AbstractButton(QPoint&position,QSize &size) : AbstractWidget(pos
     _isChecked = false;
     _text = QString("");
 }
-
-QString AbstractButton::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
-{
-
-}

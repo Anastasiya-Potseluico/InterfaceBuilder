@@ -9,7 +9,28 @@ class AbstractButton : public AbstractWidget
 public:
     AbstractButton(QPoint &position, QSize &size);
     virtual void drawSelf(QGraphicsScene &scene) = 0;
-    QString writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
+    virtual void writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
+    {
+        AbstractWidget::writeSelfIntoFile(xmlWriter);
+
+        xmlWriter.writeStartElement("property");
+        xmlWriter.writeAttribute("name","text");
+        xmlWriter.writeTextElement("string",_text);
+        xmlWriter.writeEndElement();
+        xmlWriter.writeStartElement("property");
+        xmlWriter.writeAttribute("name","checkable");
+        xmlWriter.writeTextElement("bool",_checkable ? "true":"false");
+        xmlWriter.writeEndElement();
+        if(_checkable)
+        {
+            xmlWriter.writeStartElement("property");
+            xmlWriter.writeAttribute("name","checked");
+            xmlWriter.writeTextElement("bool",_isChecked ? "true":"false");
+            xmlWriter.writeEndElement();
+        }
+        // TODO QIcon
+    }
+
 protected:
     bool _checkable;
     bool _isChecked;
