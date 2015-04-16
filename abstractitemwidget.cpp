@@ -5,7 +5,3 @@ AbstractItemWidget::AbstractItemWidget(QPoint &position, QSize &size) : Abstract
     _autoScroll = true;
     _tabKeyNavigate = false;
 }
-
-QString AbstractItemWidget::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
-{
-}
