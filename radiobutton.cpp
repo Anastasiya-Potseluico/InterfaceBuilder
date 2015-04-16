@@ -8,9 +8,15 @@ RadioButton::RadioButton(QPoint&position, int numberOfWidget):AbstractButton(pos
     _text = "RadioButton";
 }
 
-QString RadioButton::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
+void RadioButton::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
 {
-    int g = 0;
+    xmlWriter.writeStartElement("widget");
+    xmlWriter.writeAttribute("class","QRadioButton");
+    xmlWriter.writeAttribute("name",_name);
+
+    AbstractButton::writeSelfIntoFile(xmlWriter);
+
+    xmlWriter.writeEndElement();
 }
 
 void RadioButton::drawSelf(QGraphicsScene &scene)
