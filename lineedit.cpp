@@ -8,8 +8,25 @@ LineEdit::LineEdit(QPoint &position, int numberOfWidget):AbstractWidget(position
     _readOnly = false;
 }
 
-QString LineEdit::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
+void LineEdit::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
 {
+    xmlWriter.writeStartElement("widget");
+    xmlWriter.writeAttribute("class","QLineEdit");
+    xmlWriter.writeAttribute("name",_name);
+
+    AbstractWidget::writeSelfIntoFile(xmlWriter);
+
+    xmlWriter.writeStartElement("property");
+    xmlWriter.writeAttribute("name","text");
+    xmlWriter.writeTextElement("string",_text);
+    xmlWriter.writeEndElement();
+
+    xmlWriter.writeStartElement("property");
+    xmlWriter.writeAttribute("name","readOnly");
+    xmlWriter.writeTextElement("bool",_readOnly ? "true":"false");
+    xmlWriter.writeEndElement();
+
+    xmlWriter.writeEndElement();
 }
 
 void LineEdit::drawSelf(QGraphicsScene &scene)
