@@ -574,8 +574,8 @@ bool GeometricalObjectsCollector::findGraphicsViews(std::vector<cv::Point> &butt
     int graphicsViewCount;
     FIGURE_LOCATION currentLocation = getLocation(buttonFrame, buttonInnerFigure);
     if(currentLocation == near_center
-            || currentLocation == center_v
-            || currentLocation == center_h
+            || currentLocation == left_center
+            || currentLocation == right_center
             || currentLocation == center_up
             || currentLocation == center_down)
     {
