@@ -11,6 +11,16 @@ public:
     virtual void writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
     {
         AbstractWidget::writeSelfIntoFile(xmlWriter);
+
+        xmlWriter.writeStartElement("property");
+        xmlWriter.writeAttribute("name","tabKeyNavigate");
+        xmlWriter.writeTextElement("bool",_tabKeyNavigate ? "true":"false");
+        xmlWriter.writeEndElement();
+
+        xmlWriter.writeStartElement("property");
+        xmlWriter.writeAttribute("name","autoScroll");
+        xmlWriter.writeTextElement("bool",_autoScroll ? "true":"false");
+        xmlWriter.writeEndElement();
     }
 
 protected:
