@@ -7,8 +7,25 @@ ListWidget::ListWidget(QPoint &position, int numberOfWidget) : AbstractItemWidge
     _wordWrap = true;
 }
 
-QString ListWidget::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
+void ListWidget::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
 {
+    xmlWriter.writeStartElement("widget");
+    xmlWriter.writeAttribute("class","QListWidget");
+    xmlWriter.writeAttribute("name",_name);
+
+    AbstractItemWidget::writeSelfIntoFile(xmlWriter);
+
+    xmlWriter.writeStartElement("property");
+    xmlWriter.writeAttribute("name","wordWrap");
+    xmlWriter.writeTextElement("bool",_wordWrap ? "true":"false");
+    xmlWriter.writeEndElement();
+
+    xmlWriter.writeStartElement("property");
+    xmlWriter.writeAttribute("name","sortingEnabled");
+    xmlWriter.writeTextElement("bool",_sortingEnabled ? "true":"false");
+    xmlWriter.writeEndElement();
+
+    xmlWriter.writeEndElement();
 }
 
 void ListWidget::drawSelf(QGraphicsScene &scene)
