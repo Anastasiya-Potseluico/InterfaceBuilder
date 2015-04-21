@@ -3,6 +3,7 @@
 
 #include <QList>
 #include "abstractwidget.h"
+#include "mainwindowcontainer.h"
 #include "opencv2/core/core.hpp"
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -14,12 +15,12 @@ class ImageRecognizer
 {
 public:
     ImageRecognizer(cv::Mat source);
-    QList<AbstractWidget> recognizeWidgets();
-    QList<AbstractWidget*> getWidgets();
+    MainWindowContainer* recognizeWidgets();
+    AbstractWidget *getMainWindow();
 
 private:
     cv::Mat _inputImage;
-    QList<AbstractWidget*> _widgets;
+    MainWindowContainer* _mainWindow;
     QList<std::vector<cv::Point> > _triangles;
     QList<std::vector<cv::Point> > _rectangles;
     QList<std::vector<cv::Point> > _circles;

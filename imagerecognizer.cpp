@@ -137,18 +137,17 @@ double ImageRecognizer::angle(cv::Point pt1, cv::Point pt2, cv::Point pt0)
     return (dx1*dx2 + dy1*dy2)/sqrt((dx1*dx1 + dy1*dy1)*(dx2*dx2 + dy2*dy2) + 1e-10);
 }
 
-QList<AbstractWidget> ImageRecognizer::recognizeWidgets()
+MainWindowContainer *ImageRecognizer::recognizeWidgets()
 {
     findGeometricalFeatures();
     _collector = *(new GeometricalObjectsCollector(_rectangles,_triangles, _circles));
-    _widgets = _collector.collectObjectsIntoWidgets();
-
+    _mainWindow = _collector.collectObjectsIntoWidgets();
+    return _mainWindow;
 }
 
-QList<AbstractWidget *> ImageRecognizer::getWidgets()
+AbstractWidget *ImageRecognizer::getMainWindow()
 {
-    QList<AbstractWidget *> list = _widgets;
-    return list;
+    return _mainWindow;
 }
 
 
