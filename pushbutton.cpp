@@ -2,7 +2,7 @@
 
 PushButton::PushButton(QPoint &position, int numberOfWidget) : AbstractButton(position,*(new QSize(75,23)))
 {
-    _defaultOn = true;
+    _defaultOn = false;
     _text = "PushButton";
     _flat = false;
     _checkable = false;
