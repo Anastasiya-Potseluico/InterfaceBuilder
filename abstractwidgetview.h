@@ -4,7 +4,8 @@
 #include "abstractwidget.h"
 #include <QGraphicsItem>
 #include <QPainter>
-
+#include <QStyle>
+#include <QStyleOptionGraphicsItem>
 
 class AbstractWidgetView : public QGraphicsItem
 {
@@ -18,6 +19,9 @@ protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
+    void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
+
 
 private:
     void drawRadioButton(QPainter *painter);

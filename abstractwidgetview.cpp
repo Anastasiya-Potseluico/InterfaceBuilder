@@ -10,7 +10,6 @@ AbstractWidgetView::AbstractWidgetView(AbstractWidget *drawedWidget)
 
 void AbstractWidgetView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-
 }
 
 QRectF AbstractWidgetView::boundingRect() const
@@ -52,4 +51,13 @@ void AbstractWidgetView::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     {
         setPos(x(), 1200 - this->_drawedWidget->getSize().height());
     }
+}
+
+void AbstractWidgetView::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+
+}
+
+void AbstractWidgetView::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
 }
