@@ -1,6 +1,6 @@
 #include "mainwindowcontainer.h"
 
-MainWindowContainer::MainWindowContainer(QList<AbstractWidget*> widgets):AbstractWidget()
+MainWindowContainer::MainWindowContainer(QList<AbstractWidget*> widgets)
 {
     _widgets = widgets;
     _windowTitle = "MainWindow";
