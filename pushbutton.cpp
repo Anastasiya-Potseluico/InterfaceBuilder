@@ -4,7 +4,7 @@ PushButton::PushButton(QPoint &position, int numberOfWidget) : AbstractButton(po
 {
     _defaultOn = true;
     _text = "PushButton";
-    _flat = true;
+    _flat = false;
     _checkable = false;
     _name = QString("PushButton_").append(QString::number(numberOfWidget));
 }
