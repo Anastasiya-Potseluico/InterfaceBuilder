@@ -77,12 +77,8 @@ void MainWindow::showInterface()
 
 void MainWindow::drawWidgets(QGraphicsScene &scene)
 {
-    QList<AbstractWidget*> list = _recognizer->getWidgets();
-    int size = list.size();
-    for(int i =0; i<size; i++)
-    {
-        list[i]->drawSelf(scene);
-    }
+    AbstractWidget* window = _recognizer->getMainWindow();
+    window->drawSelf(scene);
 }
 
 void MainWindow::getRealInterface(QGraphicsScene &scene)
@@ -95,13 +91,13 @@ void MainWindow::getRealInterface(QGraphicsScene &scene)
     QXmlStreamWriter xmlWriter(&file);
     xmlWriter.setAutoFormatting(true);
     xmlWriter.writeStartDocument();
-    QList<AbstractWidget*> list = _recognizer->getWidgets();
-    int size = list.size();
-    //Вызвать для каждого виджета запиь в файл
-    for(int i =0; i<size; i++)
-    {
-        list[i]->writeSelfIntoFile(xmlWriter);
-    }
+
+    xmlWriter.writeStartElement("ui");
+    xmlWriter.writeAttribute("version","4.0");
+    AbstractWidget* window = _recognizer->getMainWindow();
+    window->writeSelfIntoFile(xmlWriter);
+
+    xmlWriter.writeEndElement();
 
     //Преобразовать полученный файл в виджет и поместить его на сцену
 }
