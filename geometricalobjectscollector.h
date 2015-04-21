@@ -20,6 +20,7 @@
 #include "treewidget.h"
 #include "spinbox.h"
 #include "progressbar.h"
+#include "mainwindowcontainer.h"
 
 enum FIGURE_LOCATION {left_up, left_down, center_up, center_down, near_center, left_center, right_center, right_up, right_down, none};
 enum FIGURE_NAME {radio_button, push_button, check_box, combo_box, line_edit, label, graphics_view, calendar, table_widget, list_widget, tree_widget, progress_bar, spin_box};
@@ -31,13 +32,14 @@ public:
     GeometricalObjectsCollector(QList<std::vector<cv::Point> >&rectangles,
                                 QList<std::vector<cv::Point> >&triangles,
                                 QList<std::vector<cv::Point> >&rounds);
-    QList<AbstractWidget*> collectObjectsIntoWidgets();
+    MainWindowContainer* collectObjectsIntoWidgets();
 
 private:
     QList<std::vector<cv::Point> > _rectangles;
     QList<std::vector<cv::Point> > _triangles;
     QList<std::vector<cv::Point> > _rounds;
     QList<AbstractWidget*> _widgets;
+    MainWindowContainer * _mainWindow;
     QMap<FIGURE_NAME,int> _widgetCounts;
 
     FIGURE_LOCATION getLocation(std::vector<cv::Point> &figureContainer, std::vector<cv::Point> &figureInner);

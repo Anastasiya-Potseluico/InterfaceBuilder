@@ -29,7 +29,7 @@ GeometricalObjectsCollector::GeometricalObjectsCollector(QList<std::vector<cv::P
 }
 
 /* Метод для сбора геометрических фигур в виджеты */
-QList<AbstractWidget*> GeometricalObjectsCollector::collectObjectsIntoWidgets()
+MainWindowContainer *GeometricalObjectsCollector::collectObjectsIntoWidgets()
 {
     findRadioButtons();
 
@@ -99,7 +99,8 @@ QList<AbstractWidget*> GeometricalObjectsCollector::collectObjectsIntoWidgets()
             found = false;
         }
     }
-    return _widgets;
+    _mainWindow = new MainWindowContainer(_widgets);
+    return _mainWindow;
 }
 
 /* Метод для нахождения расположения одного контура в другом*/
