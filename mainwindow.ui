@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QGridLayout" name="gridLayout_3">
     <item row="0" column="0">
      <widget class="QTabWidget" name="interfaceWidget">
       <property name="font">
@@ -75,16 +75,11 @@ background-color: #E6E6E3;
        <attribute name="title">
         <string>Макет интерфейса</string>
        </attribute>
-       <widget class="QGraphicsView" name="interfaceView">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>1141</width>
-          <height>541</height>
-         </rect>
-        </property>
-       </widget>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QGraphicsView" name="interfaceView"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="scheme_interface">
        <attribute name="title">
@@ -100,12 +95,27 @@ background-color: #E6E6E3;
        <attribute name="title">
         <string>Оба варианта</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="1">
-         <widget class="QGraphicsView" name="shemeView_s"/>
-        </item>
+       <layout class="QGridLayout" name="gridLayout">
         <item row="0" column="0">
-         <widget class="QGraphicsView" name="interfaceView_s"/>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QGraphicsView" name="interfaceView_s"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="updateButton">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>available_updates.png</normaloff>available_updates.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGraphicsView" name="shemeView_s"/>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -127,8 +137,6 @@ background-color: #E6E6E3;
      <string>Меню</string>
     </property>
     <addaction name="loadImageAction"/>
-    <addaction name="loadPSDAction"/>
-    <addaction name="generateUIAction"/>
    </widget>
    <addaction name="menu"/>
   </widget>

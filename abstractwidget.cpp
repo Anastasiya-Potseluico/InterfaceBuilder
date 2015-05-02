@@ -19,7 +19,32 @@ QSize AbstractWidget::getSize()
     return returnedSize;
 }
 
+QList<QWidget *> AbstractWidget::getSettings()
+{
+    return _settings;
+}
+
+QString AbstractWidget::getName()
+{
+    return QString(_name);
+}
+
+void AbstractWidget::setSize(QSize &size)
+{
+    _size = size;
+}
+
 void AbstractWidget::setPosition(QPoint &position)
 {
     _position = position;
 }
+
+void AbstractWidget::addWidgetsForSettings()
+{
+    QCheckBox *enabled = new QCheckBox();
+    enabled->setText("Widget is enabled");
+    enabled->setChecked(_enabled);
+    enabled->setObjectName("enabled");
+    _settings.append(enabled);
+}
+

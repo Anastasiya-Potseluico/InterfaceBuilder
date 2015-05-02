@@ -7,7 +7,7 @@ RadioButtonView::RadioButtonView(AbstractWidget *drawedWidget) :AbstractWidgetVi
 
 void RadioButtonView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QRectF rect = boundingRect();
+    QRectF rect = widgetSize();
     QPen pen(Qt::black, 1);
 
     //Рисуем внешний круг виджета
@@ -20,10 +20,8 @@ void RadioButtonView::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     int newY = rect.y() + rect.height()/4;
     QRectF innerRect = QRectF(newX, newY, rect.height()/2,rect.height()/2);
     painter->drawEllipse(innerRect);
-    //Добавляем текст Radio Button
-    QFont font = painter->font();
-    font.setPointSize(6);
-    painter->setFont(font);
-
-    painter->drawText(QPointF(rect.x()+ 1.1*rect.height(), rect.y()+rect.height()*0.7),"Переключатель");
+    _itemText.setPos(rect.x()+ 1.1*rect.height(), rect.y()+rect.height()*0.05);
+    _itemText.setPlainText("Переключатель");
+    _itemText.setFont(QFont("Cambria", 8));
+    _itemText.setParentItem(this);
 }

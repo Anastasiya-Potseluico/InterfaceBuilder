@@ -6,7 +6,13 @@
 #include <QString>
 #include <QGraphicsScene>
 #include <QFile>
+#include <QCheckBox>
+#include <QLineEdit>
+#include <QLabel>
+#include <QSpinBox>
+#include <QMap>
 #include <QXmlStreamWriter>
+
 
 
 /* Класс абстрактного виджета.
@@ -16,8 +22,24 @@ class AbstractWidget
 public:
     AbstractWidget(QPoint& position, QSize &size);
     virtual void drawSelf(QGraphicsScene &scene) = 0;
+    virtual QString getClassname() = 0;
+
+    virtual void setSettings(QMap<QString, QString> &settings)
+    {
+        QString tempString = settings.value("name");
+        this->_name = tempString;
+        tempString = settings.value("enabled");
+        if(tempString == "true")
+            this->_enabled = true;
+        else
+            this->_enabled = false;
+    }
+
     QPoint getPosition();
     QSize getSize();
+    QList<QWidget*> getSettings();
+    QString getName();
+    void setSize(QSize &size);
     void setPosition(QPoint &position);
     virtual void writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
     {
@@ -43,7 +65,8 @@ protected:
     QPoint _position; // Позиция виджета на главное окне.
     QString _name; // Имя виджета.
     bool _enabled; // Видимость виджета.
-
+    QList<QWidget*> _settings;
+    void addWidgetsForSettings();
 };
 
 #endif // ABSTRACTWIDGET_H

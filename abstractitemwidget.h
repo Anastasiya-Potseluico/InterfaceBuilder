@@ -8,6 +8,21 @@ class AbstractItemWidget : public AbstractWidget
 public:
     AbstractItemWidget(QPoint &position, QSize &size);
     virtual void drawSelf(QGraphicsScene &scene) = 0;
+    virtual QString getClassname() = 0;
+    virtual void setSettings(QMap<QString, QString> &settings)
+    {
+        QString tempString = settings.value("tabKeyNavigate");
+        if(tempString == "true")
+            this->_tabKeyNavigate = true;
+        else
+            this->_tabKeyNavigate = false;
+        tempString = settings.value("autoScroll");
+        if(tempString == "true")
+            this->_autoScroll = true;
+        else
+            this->_autoScroll = false;
+    }
+
     virtual void writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
     {
         AbstractWidget::writeSelfIntoFile(xmlWriter);
@@ -26,6 +41,7 @@ public:
 protected:
     bool _autoScroll;
     bool _tabKeyNavigate;
+    void addWidgetsForSettings();
 };
 
 #endif // ABSTRACTITEMWIDGET_H

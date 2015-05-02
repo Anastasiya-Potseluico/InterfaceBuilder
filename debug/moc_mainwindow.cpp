@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Wed 15. Apr 14:28:38 2015
+** Created: Sun 3. May 01:21:17 2015
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,13 +33,18 @@ static const uint qt_meta_data_MainWindow[] = {
  // slots: signature, parameters, type, tag, flags
       19,   12,   11,   11, 0x08,
       42,   11,   11,   11, 0x08,
+      58,   11,   11,   11, 0x08,
+      87,   81,   11,   11, 0x08,
+     121,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0action\0chooseAction(QAction*)\0"
-    "showInterface()\0"
+    "showInterface()\0writeWidgetsIntoFile()\0"
+    "scene\0getRealInterface(QGraphicsScene&)\0"
+    "syncronizeInterface()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -73,9 +78,12 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: chooseAction((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
         case 1: showInterface(); break;
+        case 2: writeWidgetsIntoFile(); break;
+        case 3: getRealInterface((*reinterpret_cast< QGraphicsScene(*)>(_a[1]))); break;
+        case 4: syncronizeInterface(); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 5;
     }
     return _id;
 }

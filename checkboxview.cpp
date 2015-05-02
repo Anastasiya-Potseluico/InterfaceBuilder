@@ -6,7 +6,7 @@ CheckBoxView::CheckBoxView(AbstractWidget *drawedWidget) :AbstractWidgetView(dra
 
 void CheckBoxView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QRectF rect = boundingRect();
+    QRectF rect = widgetSize();
     QPen pen(Qt::black, 1);
 
     //Рисуем внешний прямоугольник виджета
@@ -18,10 +18,9 @@ void CheckBoxView::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     int newY = rect.y() + rect.height()/4;
     QRectF innerRect = QRectF(newX, newY, rect.height()/2,rect.height()/2);
     painter->drawRect(innerRect);
-    //Добавляем текст кнопка-флажок
-    QFont font = painter->font();
-    font.setPointSize(6);
-    painter->setFont(font);
 
-    painter->drawText(QPointF(rect.x()+ 1.1*rect.height(), rect.y()+rect.height()*0.7),"Кнопка-флаг");
+    _itemText.setPos(rect.x()+ 1.1*rect.height(), rect.y()+rect.height()*0.05);
+    _itemText.setPlainText("Кнопка-флаг");
+    _itemText.setFont(QFont("Cambria", 8));
+    _itemText.setParentItem(this);
 }

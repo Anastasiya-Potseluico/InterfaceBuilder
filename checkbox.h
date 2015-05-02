@@ -10,6 +10,9 @@ public:
     CheckBox(QPoint &position, int numberOfWidget);
     void writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
     void drawSelf(QGraphicsScene &scene);
+    void setSettings(QMap<QString, QString> &settings);
+    QString getClassname();
+    void addWidgetsForSettings();
 
 private:
     bool _tristate;

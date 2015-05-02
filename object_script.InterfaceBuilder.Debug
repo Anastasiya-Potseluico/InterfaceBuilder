@@ -2,7 +2,6 @@ INPUT(
 ./debug\main.o
 ./debug\mainwindow.o
 ./debug\abstractwidget.o
-./debug\psdparser.o
 ./debug\imagerecognizer.o
 ./debug\geometricalobjectscollector.o
 ./debug\abstractbutton.o
@@ -35,6 +34,11 @@ INPUT(
 ./debug\calendar.o
 ./debug\abstractwidgetview.o
 ./debug\abstractitemwidget.o
+./debug\mainwindowcontainer.o
+./debug\mainwindowview.o
+./debug\cornergrabber.o
+./debug\dialogsettings.o
 ./debug\moc_mainwindow.o
 ./debug\moc_testgeometricalobjectcollector.o
+./debug\moc_dialogsettings.o
 );

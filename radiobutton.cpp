@@ -6,6 +6,7 @@ RadioButton::RadioButton(QPoint&position, int numberOfWidget):AbstractButton(pos
 {
     _name = QString("RadioButton_").append(QString::number(numberOfWidget));
     _text = "RadioButton";
+    addWidgetsForSettings();
 }
 
 void RadioButton::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
@@ -23,6 +24,29 @@ void RadioButton::drawSelf(QGraphicsScene &scene)
 {
     RadioButtonView * view = new RadioButtonView(this);
     scene.addItem(view);
+}
+
+void RadioButton::setSettings(QMap<QString, QString> &settings)
+{
+    AbstractButton::setSettings(settings);
+}
+
+void RadioButton::addWidgetsForSettings()
+{
+
+    QLabel *labelName = new QLabel("Name Of Radio Button");
+    QLineEdit *name = new QLineEdit();
+    name->setObjectName("name");
+    name->setText(_name);
+    _settings.append(labelName);
+    _settings.append(name);
+
+    AbstractButton::addWidgetsForSettings();
+}
+
+QString RadioButton::getClassname()
+{
+    return QString("RadioButton");
 }
 
 

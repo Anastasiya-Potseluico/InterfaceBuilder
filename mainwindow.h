@@ -7,7 +7,9 @@
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/core/core.hpp"
 #include "abstractwidgetview.h"
-#include "QXmlStreamWriter"
+#include <QXmlStreamWriter>
+#include <QUiLoader>
+#include <QScrollBar>
 
 namespace Ui {
 class MainWindow;
@@ -24,13 +26,17 @@ public:
 private:
     Ui::MainWindow *ui;
     ImageRecognizer *_recognizer; // Класс распознавателя виджетов на изображении.
+    GeometricalObjectsCollector *_widgetsCollector;
     cv::Mat loadImage();
     void drawWidgets(QGraphicsScene &scene);
-    void getRealInterface(QGraphicsScene &scene);
+    void prepareScenes();
 
 private slots:
     void chooseAction(QAction * action);
     void showInterface();
+    void writeWidgetsIntoFile();
+    void getRealInterface(QGraphicsScene &scene);
+    void syncronizeInterface();
 };
 
 #endif // MAINWINDOW_H

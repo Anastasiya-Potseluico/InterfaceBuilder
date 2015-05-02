@@ -2,13 +2,18 @@
 #define MAINWINDOWCONTAINER_H
 
 #include "abstractwidget.h"
+#include "mainwindowview.h"
 
 class MainWindowContainer : public AbstractWidget
 {
 public:
-    MainWindowContainer(QList<AbstractWidget *> widgets);
+    MainWindowContainer();
     void writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
     void drawSelf(QGraphicsScene &scene);
+    void setWidgets(QList<AbstractWidget*> widgets);
+    void setSettings(QMap<QString, QString> &settings);
+    QString getClassname();
+    void addWidgetsForSettings();
 
 private:
     QList <AbstractWidget*> _widgets; // Список виджетов, расположенных на главном окне.

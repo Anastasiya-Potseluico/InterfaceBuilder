@@ -10,9 +10,12 @@ public:
     ComboBox(QPoint &position, int numberOfWidget);
     void writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
     void drawSelf(QGraphicsScene &scene);
+    void setSettings(QMap<QString, QString> &settings);
+    QString getClassname();
+    void addWidgetsForSettings();
 
 private:
-    QList<QString> _items; // Айтемы комбобокса.
+    QStringList _items; // Айтемы комбобокса.
     bool _isEditable; // Флаг возможности редактирования.
     int _currentIndex; // Текущий индекс айтема комбобокса.
 

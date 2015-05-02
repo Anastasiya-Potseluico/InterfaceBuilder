@@ -15,24 +15,22 @@ class ImageRecognizer
 {
 public:
     ImageRecognizer(cv::Mat source);
-    MainWindowContainer* recognizeWidgets();
-    AbstractWidget *getMainWindow();
+
+    QList<std::vector<cv::Point> > getRounds();
+    QList<std::vector<cv::Point> > getTriangles();
+    QList<std::vector<cv::Point> > getRectangles();
+    void findGeometricalFeatures();
 
 private:
     cv::Mat _inputImage;
-    MainWindowContainer* _mainWindow;
     QList<std::vector<cv::Point> > _triangles;
     QList<std::vector<cv::Point> > _rectangles;
     QList<std::vector<cv::Point> > _circles;
-    QList<QString> _errors;
-    GeometricalObjectsCollector  _collector; //Класс для сбора геометрических фигур в виджеты
 
-    void findGeometricalFeatures();
     bool isTriangle(std::vector<cv::Point> & contour);
     bool isRectangle(std::vector<cv::Point> & contour);
     bool isEllipse(std::vector<cv::Point> & contour);
     double angle(cv::Point pt1, cv::Point pt2, cv::Point pt0);
-    void collectFeaturesIntoWidgets();
     bool isInsideContour(const std::vector<cv::Point> & checkingContour,const std::vector<cv::Point> & contourContainer);
 
 };

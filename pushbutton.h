@@ -11,9 +11,14 @@ public:
     PushButton(QPoint&position, int numberOfWidget);
     void writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
     void drawSelf(QGraphicsScene &scene);
+    QString getClassname();
+    void addWidgetsForSettings();
+    void setSettings(QMap<QString, QString> &settings);
+
 private:
     bool _defaultOn;
     bool _flat;
+
 
 };
 

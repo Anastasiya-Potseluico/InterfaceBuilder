@@ -7,7 +7,7 @@ CalendarView::CalendarView(AbstractWidget *drawedWidget):AbstractWidgetView(draw
 
 void CalendarView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QRectF rect = boundingRect();
+    QRectF rect = widgetSize();
     QPen pen(Qt::black, 1);
 
     //Рисуем внешний прямоугольник виджета
@@ -17,10 +17,9 @@ void CalendarView::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 
     painter->drawLine(QPointF(rect.x()+rect.width()/2,rect.y()+rect.height()/4), QPointF(rect.x()+rect.width()/2,rect.y()+rect.height()));
     painter->drawLine(QPointF(rect.x(),rect.y()+rect.height()*0.63), QPointF(rect.x()+rect.width(),rect.y()+rect.height()*0.63));
-    QFont font = painter->font();
-    font.setPointSize(12);
-    painter->setFont(font);
-
-    painter->drawText(QPointF(rect.x()+ 0.3*rect.width(), rect.y()+rect.height()*0.15),"Календарь");
+    _itemText.setPos(rect.x()+ 0.3*rect.width(), rect.y()+rect.height()*0.05);
+    _itemText.setPlainText("Календарь");
+    _itemText.setFont(QFont("Cambria", 12));
+    _itemText.setParentItem(this);
 }
 

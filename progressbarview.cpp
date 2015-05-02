@@ -6,7 +6,7 @@ ProgressBarView::ProgressBarView(AbstractWidget *drawedWidget) : AbstractWidgetV
 
 void ProgressBarView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QRectF rect = boundingRect();
+    QRectF rect = widgetSize();
     QPen pen(Qt::black, 1);
     //Рисуем внешний прямоугольник виджета
     painter->setPen(pen);
@@ -14,8 +14,8 @@ void ProgressBarView::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     painter->setBrush(QBrush(Qt::green));
     painter->drawRect(rect.x(), rect.y(), rect.x()+0.2*rect.width(), rect.height());
     painter->setPen(pen);
-    QFont font = painter->font();
-    font.setPointSize(12);
-    painter->setFont(font);
-    painter->drawText(QPointF(rect.x()+ 0.35*rect.width(), rect.y()+rect.height()*0.8),"20%");
+    _itemText.setPos(rect.x()+ 0.35*rect.width(), rect.y()+rect.height()*0.05);
+    _itemText.setPlainText("20%");
+    _itemText.setFont(QFont("Cambria", 12));
+    _itemText.setParentItem(this);
 }

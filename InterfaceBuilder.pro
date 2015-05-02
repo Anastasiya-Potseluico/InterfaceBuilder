@@ -14,7 +14,6 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     abstractwidget.cpp \
-    psdparser.cpp \
     imagerecognizer.cpp \
     geometricalobjectscollector.cpp \
     abstractbutton.cpp \
@@ -46,11 +45,14 @@ SOURCES += main.cpp\
     calendarview.cpp \
     calendar.cpp \
     abstractwidgetview.cpp \
-    abstractitemwidget.cpp
+    abstractitemwidget.cpp \
+    mainwindowcontainer.cpp \
+    mainwindowview.cpp \
+    cornergrabber.cpp \
+    dialogsettings.cpp
 
 HEADERS  += mainwindow.h \
     abstractwidget.h \
-    psdparser.h \
     imagerecognizer.h \
     geometricalobjectscollector.h \
     abstractbutton.h \
@@ -84,10 +86,15 @@ HEADERS  += mainwindow.h \
     calendarview.h \
     calendar.h \
     abstractwidgetview.h \
-    abstractitemwidget.h
+    abstractitemwidget.h \
+    mainwindowcontainer.h \
+    mainwindowview.h \
+    cornergrabber.h \
+    dialogsettings.h
 
 FORMS    += mainwindow.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    dialogsettings.ui
 
 CONFIG += uitools
 

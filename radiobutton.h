@@ -10,6 +10,9 @@ public:
     RadioButton(QPoint &position, int numberOfWidget);
     void writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
     void drawSelf(QGraphicsScene &scene);
+    void setSettings(QMap<QString, QString> &settings);
+    void addWidgetsForSettings();
+    QString getClassname();
 
 };
 

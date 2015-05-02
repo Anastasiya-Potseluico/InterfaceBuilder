@@ -6,15 +6,17 @@ ComboBoxView::ComboBoxView(AbstractWidget *drawedWidget) : AbstractWidgetView(dr
 
 void ComboBoxView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QRectF rect = boundingRect();
+    QRectF rect = widgetSize();
     QPen pen(Qt::black, 1);
 
     //Рисуем внешний прямоугольник виджета
     painter->setPen(pen);
     painter->drawRect(rect.x(), rect.y(),rect.width(), rect.height());
 
-    //Рисуем текст "Список"
-    painter->drawText(QPointF(rect.x()+ 0.5*rect.height(), rect.y()+rect.height()*0.7),"Список");
+    _itemText.setPos(rect.x()+ 0.05*rect.width(), rect.y()+rect.height()*0.05);
+    _itemText.setPlainText("Список");
+    _itemText.setFont(QFont("Cambria", 10));
+    _itemText.setParentItem(this);
 
     //Рисуем внутренний треугольник виджета
     QPainterPath path;
@@ -24,8 +26,4 @@ void ComboBoxView::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     path.lineTo(rect.x() + 0.85*rect.width(), rect.y() + rect.height()*0.75);
     painter->setPen(Qt::NoPen);
     painter->fillPath(path,QBrush(Qt::black));
-
-
-
-
 }

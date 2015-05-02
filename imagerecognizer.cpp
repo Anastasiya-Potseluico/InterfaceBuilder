@@ -137,19 +137,20 @@ double ImageRecognizer::angle(cv::Point pt1, cv::Point pt2, cv::Point pt0)
     return (dx1*dx2 + dy1*dy2)/sqrt((dx1*dx1 + dy1*dy1)*(dx2*dx2 + dy2*dy2) + 1e-10);
 }
 
-MainWindowContainer *ImageRecognizer::recognizeWidgets()
+QList<std::vector<cv::Point> > ImageRecognizer::getRectangles()
 {
-    findGeometricalFeatures();
-    _collector = *(new GeometricalObjectsCollector(_rectangles,_triangles, _circles));
-    _mainWindow = _collector.collectObjectsIntoWidgets();
-    return _mainWindow;
+    QList<std::vector<cv::Point> > list = _rectangles;
+    return list;
 }
 
-AbstractWidget *ImageRecognizer::getMainWindow()
+QList<std::vector<cv::Point> > ImageRecognizer::getTriangles()
 {
-    return _mainWindow;
+    QList<std::vector<cv::Point> > list = _triangles;
+    return list;
 }
 
-
-
-
+QList<std::vector<cv::Point> > ImageRecognizer::getRounds()
+{
+    QList<std::vector<cv::Point> > list = _circles;
+    return list;
+}

@@ -6,15 +6,13 @@ ListWidgetView::ListWidgetView(AbstractWidget *drawedWidget) :AbstractWidgetView
 
 void ListWidgetView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QRectF rect = boundingRect();
+    QRectF rect = widgetSize();
     QPen pen(Qt::black, 1);
     //Рисуем внешний прямоугольник виджета
     painter->setPen(pen);
     painter->drawRect(rect.x(), rect.y(),rect.width(), rect.height());
-    QFont font = painter->font();
-    font.setPointSize(12);
-    painter->setFont(font);
-    painter->drawText(QPointF(rect.x()+ 0.35*rect.width(), rect.y()+rect.height()*0.3),"Список");
-    painter->drawText(QPointF(rect.x()+ 0.35*rect.width(), rect.y()+rect.height()*0.45),"некоторых");
-    painter->drawText(QPointF(rect.x()+ 0.35*rect.width(), rect.y()+rect.height()*0.6),"данных");
+    _itemText.setPos(rect.x()+ 0.2*rect.width(), rect.y()+rect.height()*0.2);
+    _itemText.setPlainText("Список \nнекоторых \nданных");
+    _itemText.setFont(QFont("Cambria", 12));
+    _itemText.setParentItem(this);
 }

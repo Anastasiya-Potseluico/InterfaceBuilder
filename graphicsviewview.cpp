@@ -6,7 +6,7 @@ GraphicsViewView::GraphicsViewView(AbstractWidget *drawedWidget) : AbstractWidge
 
 void GraphicsViewView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QRectF rect = boundingRect();
+    QRectF rect = widgetSize();
     QPen pen(Qt::black, 1);
 
     //Рисуем внешний прямоугольник виджета

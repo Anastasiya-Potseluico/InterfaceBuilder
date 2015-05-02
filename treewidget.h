@@ -8,8 +8,11 @@ class TreeWidget : public AbstractItemWidget
 {
 public:
     TreeWidget(QPoint &position, int numberOfWidget);
-    QString writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
+    void writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
     void drawSelf(QGraphicsScene &scene);
+    void setSettings(QMap<QString, QString> &settings);
+    QString getClassname();
+    void addWidgetsForSettings();
 
 private:
     bool _headerVisible;

@@ -2,6 +2,7 @@
 #define GEOMETRICALOBJECTSCOLLECTOR_H
 #include <QList>
 #include <QMap>
+#include <QPoint>
 #include "abstractwidget.h"
 #include "opencv2/core/core.hpp"
 #include <opencv2/highgui/highgui.hpp>
@@ -29,10 +30,11 @@ class GeometricalObjectsCollector
 {
 public:
     GeometricalObjectsCollector();
-    GeometricalObjectsCollector(QList<std::vector<cv::Point> >&rectangles,
-                                QList<std::vector<cv::Point> >&triangles,
-                                QList<std::vector<cv::Point> >&rounds);
-    MainWindowContainer* collectObjectsIntoWidgets();
+    GeometricalObjectsCollector(QList<std::vector<cv::Point> >rectangles,
+                                QList<std::vector<cv::Point> >triangles,
+                                QList<std::vector<cv::Point> >rounds);
+    void collectObjectsIntoWidgets();
+    AbstractWidget *getMainWindow();
 
 private:
     QList<std::vector<cv::Point> > _rectangles;
@@ -58,7 +60,8 @@ private:
     bool findCalendars(std::vector<cv::Point> &buttonFrame, QList<std::vector<cv::Point> > &buttonInnerFigures);
     bool findGraphicsViews(std::vector<cv::Point> &buttonFrame, std::vector<cv::Point> &buttonInnerFigure);
     QList<std::vector<cv::Point> > getInnerShapesList(std::vector<cv::Point> &contour, QList<std::vector<cv::Point> > & list);
-
+    QPoint findWidgetCenter(std::vector<cv::Point> &widgetFrame, FIGURE_NAME widgetType);
+    void removeUsedGeometricalPrimitives(QList<std::vector<cv::Point> >&containerList, QList<std::vector<cv::Point> > &removedList);
 };
 
 #endif // GEOMETRICALOBJECTSCOLLECTOR_H

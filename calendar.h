@@ -2,6 +2,8 @@
 #define CALENDAR_H
 
 #include <QDate>
+#include <QDateEdit>
+#include <QComboBox>
 #include "abstractwidget.h"
 #include "calendarview.h"
 
@@ -13,6 +15,9 @@ public:
     Calendar(QPoint &position, int numberOfWidget);
     void writeSelfIntoFile(QXmlStreamWriter &xmlWriter);
     void drawSelf(QGraphicsScene &scene);
+    void setSettings(QMap<QString, QString> &settings);
+    void addWidgetsForSettings();
+    QString getClassname();
 
 private:
     QDate _selectedDate; // Выбранная дата.

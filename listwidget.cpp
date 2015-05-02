@@ -5,6 +5,7 @@ ListWidget::ListWidget(QPoint &position, int numberOfWidget) : AbstractItemWidge
     _name = QString("ListWidget_").append(QString::number(numberOfWidget));
     _sortingEnabled = true;
     _wordWrap = true;
+    addWidgetsForSettings();
 }
 
 void ListWidget::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
@@ -32,5 +33,53 @@ void ListWidget::drawSelf(QGraphicsScene &scene)
 {
     ListWidgetView * view = new ListWidgetView(this);
     scene.addItem(view);
+}
+
+void ListWidget::setSettings(QMap<QString, QString> &settings)
+{
+    AbstractItemWidget::setSettings(settings);
+
+    QString temp;
+    temp = settings.value("wordWrap");
+    if(temp == "true")
+        _wordWrap = true;
+    else
+        _wordWrap = false;
+
+    temp = settings.value("sortingEnabled");
+    if(temp == "true")
+        _sortingEnabled = true;
+    else
+        _sortingEnabled = false;
+}
+
+QString ListWidget::getClassname()
+{
+    return QString("ListWidget");
+}
+
+void ListWidget::addWidgetsForSettings()
+{
+    QLabel *labelName = new QLabel("Name Of List Widget");
+    QLineEdit *name = new QLineEdit();
+    name->setObjectName("name");
+    name->setText(_name);
+    _settings.append(labelName);
+    _settings.append(name);
+
+    AbstractItemWidget::addWidgetsForSettings();
+
+    QCheckBox *wordWrap = new QCheckBox();
+    wordWrap->setText("Word Wrap");
+    wordWrap->setChecked(_wordWrap);
+    wordWrap->setObjectName("wordWrap");
+
+    QCheckBox *sortingEnabled = new QCheckBox();
+    sortingEnabled->setText("Sorting Enabled");
+    sortingEnabled->setChecked(_sortingEnabled);
+    sortingEnabled->setObjectName("sortingEnabled");
+
+    _settings.append(wordWrap);
+    _settings.append(sortingEnabled);
 }
 

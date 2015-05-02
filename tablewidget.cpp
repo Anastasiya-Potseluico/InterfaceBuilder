@@ -6,6 +6,7 @@ TableWidget::TableWidget(QPoint &position, int numberOfWidget) : AbstractItemWid
     _showGrid = true;
     _rowCount = 0;
     _columnCount = 0;
+    addWidgetsForSettings();
 }
 
 void TableWidget::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
@@ -49,4 +50,62 @@ void TableWidget::drawSelf(QGraphicsScene &scene)
 {
     TableWidgetView * view = new TableWidgetView(this);
     scene.addItem(view);
+}
+
+void TableWidget::setSettings(QMap<QString, QString> &settings)
+{
+    AbstractItemWidget::setSettings(settings);
+
+    QString tempString = settings.value("showGrid");
+    if(tempString == "true")
+        this->_showGrid = true;
+    else
+        this->_showGrid = false;
+
+    tempString = settings.value("row");
+    this->_rowCount = tempString.toInt();
+    tempString = settings.value("col");
+    this->_columnCount = tempString.toInt();
+}
+
+QString TableWidget::getClassname()
+{
+    return QString("TableWidget");
+}
+
+void TableWidget::addWidgetsForSettings()
+{
+    QLabel *labelName = new QLabel("Name Of Table Widget");
+    QLineEdit *name = new QLineEdit();
+    name->setObjectName("name");
+    name->setText(_name);
+    _settings.append(labelName);
+    _settings.append(name);
+
+    AbstractItemWidget::addWidgetsForSettings();
+
+    QCheckBox *showGrid = new QCheckBox();
+    showGrid->setText("Show Grid");
+    showGrid->setChecked(_showGrid);
+    showGrid->setObjectName("showGrid");
+
+    QLabel *labelRow = new QLabel("Row Count");
+    QSpinBox *row = new QSpinBox();
+    row->setMaximum(100);
+    row->setMinimum(0);
+    row->setObjectName("row");
+    row->setValue(_rowCount);
+
+    QLabel *labelCol = new QLabel("Column Count");
+    QSpinBox *col = new QSpinBox();
+    col->setMaximum(100);
+    col->setMinimum(0);
+    col->setObjectName("col");
+    col->setValue(_columnCount);
+
+    _settings.append(showGrid);
+    _settings.append(labelRow);
+    _settings.append(row);
+    _settings.append(labelCol);
+    _settings.append(col);
 }
