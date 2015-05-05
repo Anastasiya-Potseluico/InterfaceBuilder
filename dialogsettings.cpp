@@ -15,6 +15,8 @@ DialogSettings::DialogSettings(QWidget *parent, AbstractWidget* widget, QMap<QSt
         mainLayout->addWidget(widgets.at(i));
     }
     QPushButton *ok = new QPushButton("Oê");
+    ok->setDefault( false );
+    ok->setAutoDefault( false ) ;
     mainLayout->addWidget(ok);
     QObject::connect(ok,SIGNAL(clicked()),(QObject*)this,SLOT(saveWidgetFields()));
 
@@ -24,7 +26,6 @@ DialogSettings::DialogSettings(QWidget *parent, AbstractWidget* widget, QMap<QSt
 
 DialogSettings::~DialogSettings()
 {
-
     delete ui;
 }
 
@@ -347,6 +348,6 @@ void DialogSettings::saveWidgetFields()
        {
            saveTreeWidgetFields();
        }
-
+       this->close();
 }
 
