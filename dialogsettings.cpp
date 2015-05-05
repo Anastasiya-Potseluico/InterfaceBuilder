@@ -21,7 +21,7 @@ DialogSettings::DialogSettings(QWidget *parent, AbstractWidget* widget, QMap<QSt
     QObject::connect(ok,SIGNAL(clicked()),(QObject*)this,SLOT(saveWidgetFields()));
 
     this->setLayout(mainLayout);
-
+    prepareExtraValidation();
 }
 
 DialogSettings::~DialogSettings()
@@ -285,6 +285,15 @@ void DialogSettings::saveComboBoxFields()
     _map->insert("items",tempString);
 }
 
+void DialogSettings::prepareExtraValidation()
+{
+     QLineEdit* tempEdit = this->findChild<QLineEdit*>("name");
+     QRegExp expr("^[a-zA-Z_][a-zA-Z0-9_]*$");
+     tempEdit->setValidator(new QRegExpValidator(expr,this));
+     QObject::connect(tempEdit,SIGNAL(editingFinished()),(QObject*)this,SLOT(makeExtraValidation()));
+
+}
+
 void DialogSettings::saveWidgetFields()
 {
        QString widgetName = _widget->getClassname();
@@ -349,5 +358,23 @@ void DialogSettings::saveWidgetFields()
            saveTreeWidgetFields();
        }
        this->close();
+}
+
+void DialogSettings::makeExtraValidation()
+{
+     QLineEdit* tempEdit = this->findChild<QLineEdit*>("name");
+     if(! tempEdit->hasAcceptableInput ())
+     {
+         QMessageBox msgBox;
+         msgBox.setWindowTitle("title");
+         msgBox.setText("Question");
+         msgBox.setStandardButtons(QMessageBox::Yes);
+         msgBox.setDefaultButton(QMessageBox::No);
+         if(msgBox.exec() == QMessageBox::Yes){
+           // do something
+         }else {
+           // do something else
+         }
+     }
 }
 
