@@ -47,7 +47,6 @@ public:
             xmlWriter.writeTextElement("bool",_isChecked ? "true":"false");
             xmlWriter.writeEndElement();
         }
-        // TODO QIcon
     }
 
     virtual void addWidgetsForSettings()
@@ -89,9 +88,6 @@ protected:
     bool _checkable;
     bool _isChecked;
     QString _text;
-    QImage _icon;
-
-
 };
 
 #endif // ABSTRACTBUTTON_H
