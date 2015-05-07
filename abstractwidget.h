@@ -12,15 +12,20 @@
 #include <QSpinBox>
 #include <QMap>
 #include <QXmlStreamWriter>
+#include <QObject>
 
 
 
 /* Класс абстрактного виджета.
 */
-class AbstractWidget
+class AbstractWidget : public QObject
 {
+
+    Q_OBJECT
+
 public:
     AbstractWidget(QPoint& position, QSize &size);
+    void emitSettingsChangedSignal();
     virtual void drawSelf(QGraphicsScene &scene) = 0;
     virtual QString getClassname() = 0;
 
@@ -60,13 +65,25 @@ public:
             xmlWriter.writeEndElement();
     }
 
+    virtual  void addWidgetsForSettings()
+    {
+        QCheckBox *enabled = new QCheckBox();
+        enabled->setText("Widget is enabled");
+        enabled->setChecked(_enabled);
+        enabled->setObjectName("enabled");
+        _settings.append(enabled);
+    }
+
+signals:
+    void settingsChanged();
+
 protected:
     QSize _size; // Размер видета.
     QPoint _position; // Позиция виджета на главное окне.
     QString _name; // Имя виджета.
     bool _enabled; // Видимость виджета.
     QList<QWidget*> _settings;
-    void addWidgetsForSettings();
+
 };
 
 #endif // ABSTRACTWIDGET_H

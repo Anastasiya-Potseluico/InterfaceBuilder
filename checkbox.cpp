@@ -32,13 +32,14 @@ void CheckBox::drawSelf(QGraphicsScene &scene)
 
 void CheckBox::setSettings(QMap<QString, QString> &settings)
 {
-    AbstractWidget::setSettings(settings);
     AbstractButton::setSettings(settings);
     QString tempString = settings.value("tristate");
     if(tempString == "true")
         this->_tristate = true;
     else
         this->_tristate = false;
+    _settings.clear();
+    addWidgetsForSettings();
 }
 
 QString CheckBox::getClassname()

@@ -13,6 +13,7 @@
 
 class AbstractWidgetView : public QGraphicsItem
 {
+
 public:
     AbstractWidgetView(AbstractWidget *drawedWidget);
     virtual void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget);
@@ -32,7 +33,6 @@ protected:
     CornerGrabber*  _corners[4]; // Уголки изменения размера виджета
     void setCornerPositions();
     void adjustSize(int x, int y);
-
 private:
     int cornerWidth;
     int cornerHeight;

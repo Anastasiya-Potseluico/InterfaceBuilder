@@ -67,6 +67,9 @@ void ComboBox::setSettings(QMap<QString, QString> &settings)
     QRegExp rx("(\\n)");
     _items = tempString.split(rx);
     _items.removeAt(_items.size()-1);
+    _settings.clear();
+    addWidgetsForSettings();
+
 }
 
 QString ComboBox::getClassname()

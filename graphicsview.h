@@ -1,7 +1,6 @@
 #ifndef GRAPHICSVIEW_H
 #define GRAPHICSVIEW_H
 
-#include "abstractwidget.h"
 #include "graphicsviewview.h"
 
 enum NEEDED_SCROLL_PANELS {always_on, always_off, as_needed};

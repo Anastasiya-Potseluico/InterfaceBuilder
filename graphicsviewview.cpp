@@ -1,6 +1,6 @@
 #include "graphicsviewview.h"
 
-GraphicsViewView::GraphicsViewView(AbstractWidget *drawedWidget) : AbstractWidgetView(drawedWidget)
+GraphicsViewView::GraphicsViewView(AbstractWidget *drawedWidget) : AbstractWidgetView((AbstractWidget*)drawedWidget)
 {
 }
 
@@ -16,3 +16,4 @@ void GraphicsViewView::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     painter->drawLine(rect.x(), rect.y(),rect.x() + rect.width(), rect.y() + rect.height());
     painter->drawLine(rect.x() + rect.width(), rect.y(),rect.x(), rect.y() + rect.height());
 }
+

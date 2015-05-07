@@ -60,6 +60,8 @@ void MainWindowContainer::setSettings(QMap<QString, QString> &settings)
     AbstractWidget::setSettings(settings);
     QString tempString = settings.value("windowTitle");
     _windowTitle = tempString;
+    _settings.clear();
+    addWidgetsForSettings();
 }
 
 QString MainWindowContainer::getClassname()
@@ -69,6 +71,7 @@ QString MainWindowContainer::getClassname()
 
 void MainWindowContainer::addWidgetsForSettings()
 {
+    _settings.clear();
     QLabel *labelName = new QLabel("Name Of Main Window");
     QLineEdit *name = new QLineEdit();
     name->setObjectName("name");
@@ -87,6 +90,11 @@ void MainWindowContainer::addWidgetsForSettings()
     _settings.append(name);
     _settings.append(labelTitle);
     _settings.append(title);
+}
+
+QList<AbstractWidget *> MainWindowContainer::getWidgets()
+{
+    return _widgets;
 }
 
 QSize MainWindowContainer::countWindowDimension()

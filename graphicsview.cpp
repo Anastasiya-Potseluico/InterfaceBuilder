@@ -51,6 +51,8 @@ void GraphicsView::setSettings(QMap<QString, QString> &settings)
     {
         _horizontalScrollPanel = as_needed;
     }
+    _settings.clear();
+    addWidgetsForSettings();
 }
 
 QString GraphicsView::getClassname()

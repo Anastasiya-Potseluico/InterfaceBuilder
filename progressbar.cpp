@@ -76,6 +76,8 @@ void ProgressBar::setSettings(QMap<QString, QString> &settings)
     this->_minValue = tempString.toInt();
     tempString = settings.value("current");
     this->_value = tempString.toInt();
+    _settings.clear();
+    addWidgetsForSettings();
 }
 
 QString ProgressBar::getClassname()
@@ -85,6 +87,7 @@ QString ProgressBar::getClassname()
 
 void ProgressBar::addWidgetsForSettings()
 {
+    _settings.clear();
     QLabel *labelName = new QLabel("Name Of Progress Bar");
     QLineEdit *name = new QLineEdit();
     name->setObjectName("name");

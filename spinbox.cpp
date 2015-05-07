@@ -70,6 +70,8 @@ void SpinBox::setSettings(QMap<QString, QString> &settings)
     this->_value = tempString.toInt();
     tempString = settings.value("step");
     this->_singleStep = tempString.toInt();
+    _settings.clear();
+    addWidgetsForSettings();
 }
 
 QString SpinBox::getClassname()
@@ -79,6 +81,7 @@ QString SpinBox::getClassname()
 
 void SpinBox::addWidgetsForSettings()
 {
+    _settings.clear();
     QLabel *labelName = new QLabel("Name Of Spin Box");
     QLineEdit *name = new QLineEdit();
     name->setObjectName("name");

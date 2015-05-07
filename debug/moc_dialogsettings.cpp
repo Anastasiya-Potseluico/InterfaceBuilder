@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dialogsettings.h'
 **
-** Created: Sun 3. May 01:21:22 2015
+** Created: Fri 8. May 00:43:39 2015
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_DialogSettings[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,12 +32,14 @@ static const uint qt_meta_data_DialogSettings[] = {
 
  // slots: signature, parameters, type, tag, flags
       16,   15,   15,   15, 0x08,
+      35,   15,   15,   15, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_DialogSettings[] = {
     "DialogSettings\0\0saveWidgetFields()\0"
+    "makeExtraValidation()\0"
 };
 
 const QMetaObject DialogSettings::staticMetaObject = {
@@ -70,9 +72,10 @@ int DialogSettings::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: saveWidgetFields(); break;
+        case 1: makeExtraValidation(); break;
         default: ;
         }
-        _id -= 1;
+        _id -= 2;
     }
     return _id;
 }

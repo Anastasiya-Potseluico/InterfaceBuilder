@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'testgeometricalobjectcollector.h'
 **
-** Created: Sat 2. May 01:11:25 2015
+** Created: Fri 8. May 00:43:37 2015
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

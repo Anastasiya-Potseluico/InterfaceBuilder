@@ -29,11 +29,13 @@ void RadioButton::drawSelf(QGraphicsScene &scene)
 void RadioButton::setSettings(QMap<QString, QString> &settings)
 {
     AbstractButton::setSettings(settings);
+    _settings.clear();
+    addWidgetsForSettings();
 }
 
 void RadioButton::addWidgetsForSettings()
 {
-
+    _settings.clear();
     QLabel *labelName = new QLabel("Name Of Radio Button");
     QLineEdit *name = new QLineEdit();
     name->setObjectName("name");

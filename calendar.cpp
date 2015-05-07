@@ -157,6 +157,8 @@ void Calendar::setSettings(QMap<QString, QString> &settings)
     {
         _firstWeekDay = sunday;
     }
+    _settings.clear();
+    addWidgetsForSettings();
 }
 
 void Calendar::addWidgetsForSettings()

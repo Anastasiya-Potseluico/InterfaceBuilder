@@ -39,6 +39,7 @@ INPUT(
 ./debug\cornergrabber.o
 ./debug\dialogsettings.o
 ./debug\moc_mainwindow.o
+./debug\moc_abstractwidget.o
 ./debug\moc_testgeometricalobjectcollector.o
 ./debug\moc_dialogsettings.o
 );

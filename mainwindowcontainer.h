@@ -14,6 +14,7 @@ public:
     void setSettings(QMap<QString, QString> &settings);
     QString getClassname();
     void addWidgetsForSettings();
+    QList<AbstractWidget*> getWidgets();
 
 private:
     QList <AbstractWidget*> _widgets; // Список виджетов, расположенных на главном окне.

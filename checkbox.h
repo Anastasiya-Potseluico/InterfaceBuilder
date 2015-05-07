@@ -16,7 +16,6 @@ public:
 
 private:
     bool _tristate;
-
 };
 
 #endif // CHECKBOX_H

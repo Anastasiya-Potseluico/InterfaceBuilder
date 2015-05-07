@@ -66,6 +66,8 @@ void TableWidget::setSettings(QMap<QString, QString> &settings)
     this->_rowCount = tempString.toInt();
     tempString = settings.value("col");
     this->_columnCount = tempString.toInt();
+    _settings.clear();
+    addWidgetsForSettings();
 }
 
 QString TableWidget::getClassname()
@@ -75,6 +77,7 @@ QString TableWidget::getClassname()
 
 void TableWidget::addWidgetsForSettings()
 {
+    _settings.clear();
     QLabel *labelName = new QLabel("Name Of Table Widget");
     QLineEdit *name = new QLineEdit();
     name->setObjectName("name");

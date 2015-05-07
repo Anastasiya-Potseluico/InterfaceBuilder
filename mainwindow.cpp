@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->schemeView_b->scene(), SIGNAL(changed(QList<QRectF>)), this, SLOT(writeWidgetsIntoFile()));
     connect(ui->shemeView_s->scene(), SIGNAL(changed(QList<QRectF>)), this, SLOT(writeWidgetsIntoFile()));
     connect(ui->updateButton, SIGNAL(clicked()), this, SLOT(syncronizeInterface()));
+
 }
 
 MainWindow::~MainWindow()
@@ -31,6 +32,7 @@ void MainWindow::chooseAction(QAction *action)
             _recognizer->findGeometricalFeatures();
             _widgetsCollector = new GeometricalObjectsCollector(_recognizer->getRectangles(), _recognizer->getTriangles(), _recognizer->getRounds());
             _widgetsCollector->collectObjectsIntoWidgets();
+            connectWidgetsWithSlot();
             showInterface();
         }
     }
@@ -157,4 +159,14 @@ void MainWindow::prepareScenes()
     ui->schemeView_b->verticalScrollBar()->setValue(0);
     ui->interfaceView->verticalScrollBar()->setValue(0);
     ui->interfaceView->horizontalScrollBar()->setValue(0);
+}
+
+void MainWindow::connectWidgetsWithSlot()
+{
+    QList<AbstractWidget*> list = ((MainWindowContainer*)this->_widgetsCollector->getMainWindow())->getWidgets();
+    for(int i = 0; i < list.size(); i++ )
+    {
+        bool t = connect(list.at(i), SIGNAL(settingsChanged()), this, SLOT(writeWidgetsIntoFile()));
+        int h = 0;
+    }
 }

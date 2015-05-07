@@ -7,16 +7,16 @@
 #include <QCheckBox>
 #include <QDateEdit>
 #include <QComboBox>
+#include <QMessageBox>
 #include <typeinfo>
 
-#include "abstractwidget.h"
+#include "abstractwidgetview.h"
 
 
 namespace Ui {
 class DialogSettings;
 }
 
-class PushButton;
 class DialogSettings : public QDialog
 {
     Q_OBJECT
@@ -44,10 +44,12 @@ private:
     void saveTableWidgetFields();
     void saveTreeWidgetFields();
     void saveComboBoxFields();
+    void prepareExtraValidation();
 
 
 private slots:
     void saveWidgetFields();
+    void makeExtraValidation();
 };
 
 #endif // DIALOGSETTINGS_H

@@ -7,6 +7,11 @@ AbstractWidget::AbstractWidget(QPoint &position, QSize &size)
     _enabled = true;
 }
 
+void AbstractWidget::emitSettingsChangedSignal()
+{
+    emit this->settingsChanged();
+}
+
 QPoint AbstractWidget::getPosition()
 {
     QPoint returnedPoint(_position.x(),_position.y());
@@ -39,12 +44,4 @@ void AbstractWidget::setPosition(QPoint &position)
     _position = position;
 }
 
-void AbstractWidget::addWidgetsForSettings()
-{
-    QCheckBox *enabled = new QCheckBox();
-    enabled->setText("Widget is enabled");
-    enabled->setChecked(_enabled);
-    enabled->setObjectName("enabled");
-    _settings.append(enabled);
-}
 

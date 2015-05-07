@@ -51,6 +51,8 @@ void ListWidget::setSettings(QMap<QString, QString> &settings)
         _sortingEnabled = true;
     else
         _sortingEnabled = false;
+    _settings.clear();
+    addWidgetsForSettings();
 }
 
 QString ListWidget::getClassname()
@@ -60,6 +62,7 @@ QString ListWidget::getClassname()
 
 void ListWidget::addWidgetsForSettings()
 {
+    _settings.clear();
     QLabel *labelName = new QLabel("Name Of List Widget");
     QLineEdit *name = new QLineEdit();
     name->setObjectName("name");

@@ -48,6 +48,8 @@ void LineEdit::setSettings(QMap<QString, QString> &settings)
         _readOnly = false;
     temp = settings.value("text");
     _text = temp;
+    _settings.clear();
+    addWidgetsForSettings();
 }
 
 QString LineEdit::getClassname()
@@ -57,6 +59,7 @@ QString LineEdit::getClassname()
 
 void LineEdit::addWidgetsForSettings()
 {
+    _settings.clear();
     QLabel *labelName = new QLabel("Name Of Line Edit");
     QLineEdit *name = new QLineEdit();
     name->setObjectName("name");

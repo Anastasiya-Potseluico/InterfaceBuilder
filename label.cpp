@@ -129,6 +129,8 @@ void Label::setSettings(QMap<QString, QString> &settings)
     }
     temp = settings.value("text");
     _text = temp;
+    _settings.clear();
+    addWidgetsForSettings();
 }
 
 QString Label::getClassname()
@@ -138,6 +140,7 @@ QString Label::getClassname()
 
 void Label::addWidgetsForSettings()
 {
+    _settings.clear();
     QLabel *labelName = new QLabel("Name Of Label");
     QLineEdit *name = new QLineEdit();
     name->setObjectName("name");

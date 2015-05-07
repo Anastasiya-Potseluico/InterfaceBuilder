@@ -30,6 +30,7 @@ private:
     cv::Mat loadImage();
     void drawWidgets(QGraphicsScene &scene);
     void prepareScenes();
+    void connectWidgetsWithSlot();
 
 private slots:
     void chooseAction(QAction * action);
@@ -37,6 +38,7 @@ private slots:
     void writeWidgetsIntoFile();
     void getRealInterface(QGraphicsScene &scene);
     void syncronizeInterface();
+
 };
 
 #endif // MAINWINDOW_H

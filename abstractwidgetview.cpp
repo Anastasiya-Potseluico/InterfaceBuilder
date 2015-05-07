@@ -74,9 +74,14 @@ void AbstractWidgetView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
     QString title = "Настройки виджета ";
     title.append(_drawedWidget->getName());
     settings->setWindowTitle(title);
-    settings->exec();
-    _drawedWidget->setSettings(settingsMap);
-    int h = 0;
+    int res = settings->exec();
+    if(settings->result() == QDialog::Accepted)
+    {
+        _drawedWidget->setSettings(settingsMap);
+        // Send signal to mainWindow
+        _drawedWidget->emitSettingsChangedSignal();
+
+    }
 }
 
 void AbstractWidgetView::hoverEnterEvent(QGraphicsSceneHoverEvent *event)

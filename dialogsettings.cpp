@@ -1,7 +1,7 @@
 #include "dialogsettings.h"
 #include "ui_dialogsettings.h"
 
-DialogSettings::DialogSettings(QWidget *parent, AbstractWidget* widget, QMap<QString, QString> *map) :
+DialogSettings::DialogSettings(QWidget *parent, AbstractWidget *widget, QMap<QString, QString> *map) :
     QDialog(parent),
     ui(new Ui::DialogSettings)
 {
@@ -231,12 +231,13 @@ void DialogSettings::saveItemFields()
 
 void DialogSettings::saveTableWidgetFields()
 {
+    saveItemFields();
     QCheckBox* tempBox;
-    tempBox = this->findChild<QCheckBox*>("gridVisible");
+    tempBox = this->findChild<QCheckBox*>("showGrid");
     if(tempBox->isChecked())
-        _map->insert("gridVisible","true");
+        _map->insert("showGrid","true");
     else
-        _map->insert("gridVisible","false");
+        _map->insert("showGrid","false");
 
     QSpinBox* tempSpin;
     tempSpin = this->findChild<QSpinBox*>("col");
@@ -357,24 +358,15 @@ void DialogSettings::saveWidgetFields()
        {
            saveTreeWidgetFields();
        }
-       this->close();
+       else if(widgetName == "RadioButton")
+       {
+           saveButtonFields();
+       }
+       this->accept();
 }
 
 void DialogSettings::makeExtraValidation()
 {
-     QLineEdit* tempEdit = this->findChild<QLineEdit*>("name");
-     if(! tempEdit->hasAcceptableInput ())
-     {
-         QMessageBox msgBox;
-         msgBox.setWindowTitle("title");
-         msgBox.setText("Question");
-         msgBox.setStandardButtons(QMessageBox::Yes);
-         msgBox.setDefaultButton(QMessageBox::No);
-         if(msgBox.exec() == QMessageBox::Yes){
-           // do something
-         }else {
-           // do something else
-         }
-     }
+
 }
 

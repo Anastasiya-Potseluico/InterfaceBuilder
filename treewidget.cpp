@@ -61,6 +61,8 @@ void TreeWidget::setSettings(QMap<QString, QString> &settings)
 
     tempString = settings.value("col");
     this->_columnCount = tempString.toInt();
+    _settings.clear();
+    addWidgetsForSettings();
 }
 
 QString TreeWidget::getClassname()
@@ -70,6 +72,7 @@ QString TreeWidget::getClassname()
 
 void TreeWidget::addWidgetsForSettings()
 {
+    _settings.clear();
     QLabel *labelName = new QLabel("Name Of Tree Widget");
     QLineEdit *name = new QLineEdit();
     name->setObjectName("name");

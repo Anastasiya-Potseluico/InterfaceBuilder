@@ -45,6 +45,7 @@ QString PushButton::getClassname()
 
 void PushButton::addWidgetsForSettings()
 {
+    _settings.clear();
     QLabel *labelName = new QLabel("Name Of Push Button");
     QLineEdit *name = new QLineEdit();
     name->setObjectName("name");
@@ -70,7 +71,6 @@ void PushButton::addWidgetsForSettings()
 
 void PushButton::setSettings(QMap<QString, QString> &settings)
 {
-    AbstractWidget::setSettings(settings);
     AbstractButton::setSettings(settings);
     QString tempString = settings.value("defaultOn");
     if(tempString == "true")
@@ -83,5 +83,7 @@ void PushButton::setSettings(QMap<QString, QString> &settings)
         this->_flat = true;
     else
         this->_flat = false;
+    _settings.clear();
+    addWidgetsForSettings();
 }
 
