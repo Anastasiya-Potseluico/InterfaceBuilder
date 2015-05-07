@@ -7,7 +7,7 @@ Calendar::Calendar(QPoint &position, int numberOfWidget):AbstractWidget(position
     _gridVisible = false;
     _selectedDate = QDate::currentDate();
     _maximumDate = QDate(2099,12,31);
-    _minimumDate = QDate(1900,12,12);
+    _minimumDate = QDate(1900,12,31);
     _firstWeekDay = sunday;
     addWidgetsForSettings();
 }
