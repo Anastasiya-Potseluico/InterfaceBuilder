@@ -96,5 +96,5 @@ void TreeWidget::addWidgetsForSettings()
 
     _settings.append(headerVisible);
     _settings.append(labelCol);
-    _settings.append(labelName);
+    _settings.append(col);
 }

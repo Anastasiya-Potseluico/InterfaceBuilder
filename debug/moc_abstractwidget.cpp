@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'abstractwidget.h'
 **
-** Created: Fri 8. May 00:43:34 2015
+** Created: Tue 19. May 17:48:56 2015
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

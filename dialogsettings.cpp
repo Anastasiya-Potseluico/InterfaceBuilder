@@ -19,9 +19,10 @@ DialogSettings::DialogSettings(QWidget *parent, AbstractWidget *widget, QMap<QSt
     ok->setAutoDefault( false ) ;
     mainLayout->addWidget(ok);
     QObject::connect(ok,SIGNAL(clicked()),(QObject*)this,SLOT(saveWidgetFields()));
-
     this->setLayout(mainLayout);
+    makeConnections();
     prepareExtraValidation();
+
 }
 
 DialogSettings::~DialogSettings()
@@ -292,6 +293,30 @@ void DialogSettings::prepareExtraValidation()
      QRegExp expr("^[a-zA-Z_][a-zA-Z0-9_]*$");
      tempEdit->setValidator(new QRegExpValidator(expr,this));
      QObject::connect(tempEdit,SIGNAL(editingFinished()),(QObject*)this,SLOT(makeExtraValidation()));
+}
+
+void DialogSettings::makeConnections()
+{
+     QCheckBox* tempBox = this->findChild<QCheckBox*>("checkable");
+     if(tempBox != NULL)
+     {
+         QObject::connect(tempBox,SIGNAL(stateChanged(int)),(QObject*)this,SLOT(makeExtraValidation()));
+     }
+     QDateEdit *tempDate = this->findChild<QDateEdit*>("selectedDate");
+     if(tempDate != NULL)
+     {
+         QObject::connect(tempDate,SIGNAL(dateChanged(QDate)),(QObject*)this,SLOT(makeExtraValidation()));
+     }
+     QSpinBox *tempSpin = this->findChild<QSpinBox*>("current");
+     if(tempSpin != NULL)
+     {
+         QObject::connect(tempSpin,SIGNAL(valueChanged(int)),(QObject*)this,SLOT(makeExtraValidation()));
+         tempSpin = this->findChild<QSpinBox*>("max");
+         QObject::connect(tempSpin,SIGNAL(valueChanged(int)),(QObject*)this,SLOT(makeExtraValidation()));
+         tempSpin = this->findChild<QSpinBox*>("min");
+         QObject::connect(tempSpin,SIGNAL(valueChanged(int)),(QObject*)this,SLOT(makeExtraValidation()));
+     }
+
 
 }
 
@@ -367,6 +392,37 @@ void DialogSettings::saveWidgetFields()
 
 void DialogSettings::makeExtraValidation()
 {
-
+    QCheckBox* tempBox = this->findChild<QCheckBox*>("checkable");
+    QCheckBox* tempBox2 = this->findChild<QCheckBox*>("isChecked");
+    if(tempBox != NULL)
+    {
+        if(tempBox->isChecked() == true)
+        {
+            tempBox2->setEnabled(true);
+        }
+        else
+        {
+            tempBox2->setEnabled(false);
+            tempBox2->setChecked(false);
+        }
+    }
+    QDateEdit *tempDate = this->findChild<QDateEdit*>("selectedDate");
+    if(tempDate != NULL)
+    {
+        QDateEdit *minDate = this->findChild<QDateEdit*>("minDate");
+        QDateEdit *maxDate = this->findChild<QDateEdit*>("maxDate");
+        tempDate->setMinimumDate(minDate->date());
+        tempDate->setMaximumDate(maxDate->date());
+    }
+    QSpinBox *tempSpin = this->findChild<QSpinBox*>("current");
+    if(tempSpin != NULL)
+    {
+        QSpinBox *min = this->findChild<QSpinBox*>("min");
+        QSpinBox *max = this->findChild<QSpinBox*>("max");
+        tempSpin->setMaximum(max->value());
+        tempSpin->setMinimum(min->value());
+        max->setMinimum(min->value());
+        min->setMaximum(max->value());
+    }
 }
 

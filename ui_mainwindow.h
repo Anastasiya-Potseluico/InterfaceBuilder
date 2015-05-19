@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri 8. May 00:41:18 2015
+** Created: Tue 19. May 17:46:09 2015
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,14 +16,15 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QGraphicsView>
 #include <QtGui/QGridLayout>
-#include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
+#include <QtGui/QSlider>
 #include <QtGui/QStatusBar>
 #include <QtGui/QTabWidget>
+#include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -40,15 +41,21 @@ public:
     QWidget *maket_interface;
     QGridLayout *gridLayout_4;
     QGraphicsView *interfaceView;
+    QSlider *sliderView_b;
     QWidget *scheme_interface;
     QGridLayout *gridLayout_2;
     QGraphicsView *schemeView_b;
+    QSlider *sliderSheme_b;
     QWidget *both_interface;
+    QGridLayout *gridLayout_5;
     QGridLayout *gridLayout;
-    QHBoxLayout *horizontalLayout;
+    QVBoxLayout *verticalLayout_2;
     QGraphicsView *interfaceView_s;
+    QSlider *sliderMaket;
     QPushButton *updateButton;
+    QVBoxLayout *verticalLayout;
     QGraphicsView *shemeView_s;
+    QSlider *sliderScheme;
     QMenuBar *menuBar;
     QMenu *menu;
     QStatusBar *statusBar;
@@ -123,6 +130,12 @@ public:
 
         gridLayout_4->addWidget(interfaceView, 0, 0, 1, 1);
 
+        sliderView_b = new QSlider(maket_interface);
+        sliderView_b->setObjectName(QString::fromUtf8("sliderView_b"));
+        sliderView_b->setOrientation(Qt::Horizontal);
+
+        gridLayout_4->addWidget(sliderView_b, 1, 0, 1, 1);
+
         interfaceWidget->addTab(maket_interface, QString());
         scheme_interface = new QWidget();
         scheme_interface->setObjectName(QString::fromUtf8("scheme_interface"));
@@ -135,20 +148,38 @@ public:
 
         gridLayout_2->addWidget(schemeView_b, 0, 0, 1, 1);
 
+        sliderSheme_b = new QSlider(scheme_interface);
+        sliderSheme_b->setObjectName(QString::fromUtf8("sliderSheme_b"));
+        sliderSheme_b->setOrientation(Qt::Horizontal);
+
+        gridLayout_2->addWidget(sliderSheme_b, 1, 0, 1, 1);
+
         interfaceWidget->addTab(scheme_interface, QString());
         both_interface = new QWidget();
         both_interface->setObjectName(QString::fromUtf8("both_interface"));
-        gridLayout = new QGridLayout(both_interface);
+        gridLayout_5 = new QGridLayout(both_interface);
+        gridLayout_5->setSpacing(6);
+        gridLayout_5->setContentsMargins(11, 11, 11, 11);
+        gridLayout_5->setObjectName(QString::fromUtf8("gridLayout_5"));
+        gridLayout = new QGridLayout();
         gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setSpacing(6);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         interfaceView_s = new QGraphicsView(both_interface);
         interfaceView_s->setObjectName(QString::fromUtf8("interfaceView_s"));
 
-        horizontalLayout->addWidget(interfaceView_s);
+        verticalLayout_2->addWidget(interfaceView_s);
+
+        sliderMaket = new QSlider(both_interface);
+        sliderMaket->setObjectName(QString::fromUtf8("sliderMaket"));
+        sliderMaket->setOrientation(Qt::Horizontal);
+
+        verticalLayout_2->addWidget(sliderMaket);
+
+
+        gridLayout->addLayout(verticalLayout_2, 0, 0, 1, 1);
 
         updateButton = new QPushButton(both_interface);
         updateButton->setObjectName(QString::fromUtf8("updateButton"));
@@ -156,15 +187,27 @@ public:
         icon.addFile(QString::fromUtf8("available_updates.png"), QSize(), QIcon::Normal, QIcon::Off);
         updateButton->setIcon(icon);
 
-        horizontalLayout->addWidget(updateButton);
+        gridLayout->addWidget(updateButton, 0, 1, 1, 1);
 
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setSpacing(6);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         shemeView_s = new QGraphicsView(both_interface);
         shemeView_s->setObjectName(QString::fromUtf8("shemeView_s"));
 
-        horizontalLayout->addWidget(shemeView_s);
+        verticalLayout->addWidget(shemeView_s);
+
+        sliderScheme = new QSlider(both_interface);
+        sliderScheme->setObjectName(QString::fromUtf8("sliderScheme"));
+        sliderScheme->setOrientation(Qt::Horizontal);
+
+        verticalLayout->addWidget(sliderScheme);
 
 
-        gridLayout->addLayout(horizontalLayout, 0, 0, 1, 1);
+        gridLayout->addLayout(verticalLayout, 0, 2, 1, 1);
+
+
+        gridLayout_5->addLayout(gridLayout, 0, 0, 1, 1);
 
         interfaceWidget->addTab(both_interface, QString());
 
@@ -186,7 +229,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        interfaceWidget->setCurrentIndex(2);
+        interfaceWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);

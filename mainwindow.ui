@@ -66,7 +66,7 @@ background-color: #E6E6E3;
        <enum>QTabWidget::Triangular</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <property name="movable">
        <bool>true</bool>
@@ -79,6 +79,13 @@ background-color: #E6E6E3;
         <item row="0" column="0">
          <widget class="QGraphicsView" name="interfaceView"/>
         </item>
+        <item row="1" column="0">
+         <widget class="QSlider" name="sliderView_b">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="scheme_interface">
@@ -89,19 +96,37 @@ background-color: #E6E6E3;
         <item row="0" column="0">
          <widget class="QGraphicsView" name="schemeView_b"/>
         </item>
+        <item row="1" column="0">
+         <widget class="QSlider" name="sliderSheme_b">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="both_interface">
        <attribute name="title">
         <string>Оба варианта</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout">
+       <layout class="QGridLayout" name="gridLayout_5">
         <item row="0" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QGraphicsView" name="interfaceView_s"/>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QGraphicsView" name="interfaceView_s"/>
+            </item>
+            <item>
+             <widget class="QSlider" name="sliderMaket">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
-          <item>
+          <item row="0" column="1">
            <widget class="QPushButton" name="updateButton">
             <property name="text">
              <string/>
@@ -112,8 +137,19 @@ background-color: #E6E6E3;
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QGraphicsView" name="shemeView_s"/>
+          <item row="0" column="2">
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QGraphicsView" name="shemeView_s"/>
+            </item>
+            <item>
+             <widget class="QSlider" name="sliderScheme">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>

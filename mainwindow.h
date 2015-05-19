@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QFileDialog>
-#include "imagerecognizer.h"
+#include "shaperecognizer.h"
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/core/core.hpp"
 #include "abstractwidgetview.h"
@@ -25,8 +25,9 @@ public:
     
 private:
     Ui::MainWindow *ui;
-    ImageRecognizer *_recognizer; // Класс распознавателя виджетов на изображении.
-    GeometricalObjectsCollector *_widgetsCollector;
+    ShapeRecognizer *_recognizer; // Класс распознавателя виджетов на изображении.
+    GeometricalPrimitivesCollector *_widgetsCollector;
+    bool _correctForWriting;
     cv::Mat loadImage();
     void drawWidgets(QGraphicsScene &scene);
     void prepareScenes();
@@ -35,6 +36,7 @@ private:
 private slots:
     void chooseAction(QAction * action);
     void showInterface();
+    void validateSameWidgetNames();
     void writeWidgetsIntoFile();
     void getRealInterface(QGraphicsScene &scene);
     void syncronizeInterface();

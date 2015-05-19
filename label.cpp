@@ -4,7 +4,7 @@
 Label::Label(QPoint &position, int numberOfWidget):AbstractWidget(position,*(new QSize(46,13)))
 {
     _verticalAlignment = center_v;
-    _horizontalAlignment = left;
+    _horizontalAlignment = Left;
     _name = QString("Label_").append(QString::number(numberOfWidget));
     _text = "Label";
     addWidgetsForSettings();
@@ -50,7 +50,7 @@ void Label::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
     alignment.append("|");
     switch (_horizontalAlignment)
     {
-        case left:
+        case Left:
         {
             alignment.append("Qt::AlignLeft");
             break;
@@ -60,7 +60,7 @@ void Label::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
             alignment.append("Qt::AlignHCenter");
             break;
         }
-        case right:
+        case Right:
         {
             alignment.append("Qt::AlignRight");
             break;
@@ -113,7 +113,7 @@ void Label::setSettings(QMap<QString, QString> &settings)
     temp = settings.value("horizontal");
     if(temp == "Left")
     {
-        _horizontalAlignment = left;
+        _horizontalAlignment = Left;
     }
     else if(temp == "Center")
     {
@@ -121,7 +121,7 @@ void Label::setSettings(QMap<QString, QString> &settings)
     }
     else if(temp == "Right")
     {
-        _horizontalAlignment = right;
+        _horizontalAlignment = Right;
     }
     else if(temp == "Justify")
     {
@@ -190,13 +190,13 @@ void Label::addWidgetsForSettings()
     horizontal->addItem("Justify");
     switch (_horizontalAlignment)
     {
-    case left:
+    case Left:
         horizontal->setCurrentIndex(0);
         break;
     case center_h:
         horizontal->setCurrentIndex(1);
         break;
-    case right:
+    case Right:
         horizontal->setCurrentIndex(2);
         break;
     case justify:

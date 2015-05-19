@@ -5,7 +5,7 @@
 #include "labelview.h"
 
 enum VERTICAL_ALIGNMENT {top, center_v, bottom};
-enum HORIZONTAL_ALIGNMENT {left, center_h, right, justify};
+enum HORIZONTAL_ALIGNMENT {Left, center_h, Right, justify};
 
 class Label : public AbstractWidget
 {

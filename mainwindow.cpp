@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     prepareScenes();
+    _correctForWriting = false;
     connect(ui->menuBar, SIGNAL(triggered(QAction*)), this, SLOT(chooseAction(QAction*)));
     connect(ui->interfaceWidget, SIGNAL(currentChanged(int)), this, SLOT(showInterface()));
     connect(ui->schemeView_b->scene(), SIGNAL(changed(QList<QRectF>)), this, SLOT(writeWidgetsIntoFile()));
@@ -28,9 +29,9 @@ void MainWindow::chooseAction(QAction *action)
         loaded = loadImage();
         if(!loaded.empty())
         {
-            _recognizer = new ImageRecognizer(loaded);
+            _recognizer = new ShapeRecognizer(loaded);
             _recognizer->findGeometricalFeatures();
-            _widgetsCollector = new GeometricalObjectsCollector(_recognizer->getRectangles(), _recognizer->getTriangles(), _recognizer->getRounds());
+            _widgetsCollector = new GeometricalPrimitivesCollector(_recognizer->getRectangles(), _recognizer->getTriangles(), _recognizer->getRounds());
             _widgetsCollector->collectObjectsIntoWidgets();
             connectWidgetsWithSlot();
             showInterface();
@@ -45,6 +46,7 @@ cv::Mat MainWindow::loadImage()
     cv::Mat source;
     filePath = QFileDialog::getOpenFileName(this,"Open picture",QString(),"Picture(*.png *.jpg *.bmp)");
     source = cv::imread(filePath.toStdString().c_str());
+    _correctForWriting = true;
     return source;
 }
 
@@ -78,30 +80,72 @@ void MainWindow::showInterface()
     }
 }
 
+void MainWindow::validateSameWidgetNames()
+{
+    // Проверка на уникальность имен
+    QList<AbstractWidget*> list = ((MainWindowContainer*)this->_widgetsCollector->getMainWindow())->getWidgets();
+    int i, j;
+    bool hasSameNames = false;
+    QString sameName;
+    _correctForWriting = true;
+    for(i = 0; i < list.size()-1 && !hasSameNames; i++)
+    {
+        for(j = i+1; j < list.size() && !hasSameNames; j++)
+        {
+            if(list.at(i)->getName() == list.at(j)->getName())
+            {
+                hasSameNames = true;
+                sameName = list.at(i)->getName();
+                _correctForWriting = false;
+            }
+        }
+    }
+    if(hasSameNames)
+    {
+        QMessageBox msgBox;
+        QString text = "Имена виджетов должны быть уникальны. Имеется повторящееся имя ";
+        text.append(sameName);
+        msgBox.setText(text);
+        msgBox.exec();
+    }
+}
+
 void MainWindow::writeWidgetsIntoFile()
 {
     //Создать файл формата xml
-    if(_recognizer != NULL)
+    if(_recognizer != NULL && _widgetsCollector != NULL && _correctForWriting )
     {
-        QFile file("temp.ui");
-        bool ok =  file.open(QIODevice::WriteOnly);
-        QXmlStreamWriter xmlWriter(&file);
-        xmlWriter.setAutoFormatting(true);
-        xmlWriter.writeStartDocument();
 
-        xmlWriter.writeStartElement("ui");
-        xmlWriter.writeAttribute("version","4.0");
-        AbstractWidget* window = _widgetsCollector->getMainWindow();
-        window->writeSelfIntoFile(xmlWriter);
+            QFile file("temp.ui");
+            bool ok =  file.open(QIODevice::WriteOnly);
+            if(!ok)
+            {
+                QMessageBox msgBox;
+                QString text = "Невозможно открыть файл!";
+                msgBox.setText(text);
+                msgBox.exec();
+            }
+            AbstractWidget* window = _widgetsCollector->getMainWindow();
+            if(window != NULL)
+            {
+                QXmlStreamWriter xmlWriter(&file);
+                xmlWriter.setAutoFormatting(true);
+                xmlWriter.writeStartDocument();
 
-        xmlWriter.writeEndElement();
+                xmlWriter.writeStartElement("ui");
+                xmlWriter.writeAttribute("version","4.0");
+
+                window->writeSelfIntoFile(xmlWriter);
+                xmlWriter.writeEndElement();
+            }
+        }
     }
-}
+
 
 void MainWindow::drawWidgets(QGraphicsScene &scene)
 {
     scene.clear();
-    if(_recognizer != NULL)
+    if(_recognizer != NULL && _widgetsCollector !=NULL)
     {
         AbstractWidget* window = _widgetsCollector->getMainWindow();
         window->drawSelf(scene);
@@ -166,7 +210,7 @@ void MainWindow::connectWidgetsWithSlot()
     QList<AbstractWidget*> list = ((MainWindowContainer*)this->_widgetsCollector->getMainWindow())->getWidgets();
     for(int i = 0; i < list.size(); i++ )
     {
-        bool t = connect(list.at(i), SIGNAL(settingsChanged()), this, SLOT(writeWidgetsIntoFile()));
-        int h = 0;
+        connect(list.at(i), SIGNAL(settingsChanged()), this, SLOT(validateSameWidgetNames()));
+        connect(list.at(i), SIGNAL(settingsChanged()), this, SLOT(writeWidgetsIntoFile()));
     }
 }

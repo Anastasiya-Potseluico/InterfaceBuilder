@@ -45,6 +45,7 @@ private:
     void saveTreeWidgetFields();
     void saveComboBoxFields();
     void prepareExtraValidation();
+    void makeConnections();
 
 
 private slots:

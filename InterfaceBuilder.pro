@@ -14,14 +14,11 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     abstractwidget.cpp \
-    imagerecognizer.cpp \
-    geometricalobjectscollector.cpp \
     abstractbutton.cpp \
     pushbutton.cpp \
     radiobutton.cpp \
     combobox.cpp \
     lineedit.cpp \
-    testgeometricalobjectcollector.cpp \
     treewidgetview.cpp \
     treewidget.cpp \
     tablewidgetview.cpp \
@@ -49,18 +46,19 @@ SOURCES += main.cpp\
     mainwindowcontainer.cpp \
     mainwindowview.cpp \
     cornergrabber.cpp \
-    dialogsettings.cpp
+    dialogsettings.cpp \
+    geometricalprimitivescollector.cpp \
+    testgeometricalprimitivescollector.cpp \
+    testshaperecognizer.cpp \
+    shaperecognizer.cpp
 
 HEADERS  += mainwindow.h \
     abstractwidget.h \
-    imagerecognizer.h \
-    geometricalobjectscollector.h \
     abstractbutton.h \
     pushbutton.h \
     radiobutton.h \
     combobox.h \
     lineedit.h \
-    testgeometricalobjectcollector.h \
     ui_mainwindow.h \
     treewidgetview.h \
     treewidget.h \
@@ -90,7 +88,11 @@ HEADERS  += mainwindow.h \
     mainwindowcontainer.h \
     mainwindowview.h \
     cornergrabber.h \
-    dialogsettings.h
+    dialogsettings.h \
+    geometricalprimitivescollector.h \
+    testgeometricalprimitivescollector.h \
+    testshaperecognizer.h \
+    shaperecognizer.h
 
 FORMS    += mainwindow.ui \
     mainwindow.ui \
@@ -102,4 +104,3 @@ INCLUDEPATH += C:\\opencv\\build\\include
 LIBS += -LC:\\opencv-mingw\\bin
 LIBS += -lopencv_core249 -lopencv_highgui249 -lopencv_imgproc249
 
-OTHER_FILES +=

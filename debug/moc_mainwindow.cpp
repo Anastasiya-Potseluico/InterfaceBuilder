@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Fri 8. May 00:43:29 2015
+** Created: Tue 19. May 18:10:29 2015
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -34,16 +34,18 @@ static const uint qt_meta_data_MainWindow[] = {
       19,   12,   11,   11, 0x08,
       42,   11,   11,   11, 0x08,
       58,   11,   11,   11, 0x08,
-      87,   81,   11,   11, 0x08,
-     121,   11,   11,   11, 0x08,
+      84,   11,   11,   11, 0x08,
+     113,  107,   11,   11, 0x08,
+     147,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0action\0chooseAction(QAction*)\0"
-    "showInterface()\0writeWidgetsIntoFile()\0"
-    "scene\0getRealInterface(QGraphicsScene&)\0"
+    "showInterface()\0validateSameWidgetNames()\0"
+    "writeWidgetsIntoFile()\0scene\0"
+    "getRealInterface(QGraphicsScene&)\0"
     "syncronizeInterface()\0"
 };
 
@@ -78,12 +80,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: chooseAction((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
         case 1: showInterface(); break;
-        case 2: writeWidgetsIntoFile(); break;
-        case 3: getRealInterface((*reinterpret_cast< QGraphicsScene(*)>(_a[1]))); break;
-        case 4: syncronizeInterface(); break;
+        case 2: validateSameWidgetNames(); break;
+        case 3: writeWidgetsIntoFile(); break;
+        case 4: getRealInterface((*reinterpret_cast< QGraphicsScene(*)>(_a[1]))); break;
+        case 5: syncronizeInterface(); break;
         default: ;
         }
-        _id -= 5;
+        _id -= 6;
     }
     return _id;
 }

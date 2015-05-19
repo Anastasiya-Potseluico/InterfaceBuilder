@@ -7,8 +7,8 @@ CornerGrabber::CornerGrabber(QGraphicsItem *parent,  int corner, QColor &color)
     _outterborderPen.setWidth(2);
     _outterborderPen.setColor(color);
     _parentItem = parent;
-    _width = 6;
-    _height = 6;
+    _width = 8;
+    _height = 8;
     _mouseButtonState = mouseReleasedState;
    this->setAcceptHoverEvents(true);
 }
@@ -54,10 +54,6 @@ void CornerGrabber::mouseMoveEvent ( QGraphicsSceneMouseEvent * event )
     event->setAccepted(false);
 }
 
-
-// change the color on hover events to indicate to the use the object has
-// been captured by the mouse
-
 void CornerGrabber::hoverLeaveEvent ( QGraphicsSceneHoverEvent * )
 {
     _outterborderColor = Qt::black;
@@ -78,9 +74,6 @@ QRectF CornerGrabber::boundingRect() const
 
 void CornerGrabber::paint (QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-
-    // fill the box with solid color, use sharp corners
-
     _outterborderPen.setCapStyle(Qt::SquareCap);
     _outterborderPen.setStyle(Qt::SolidLine);
     painter->setPen(_outterborderPen);
@@ -93,5 +86,4 @@ void CornerGrabber::paint (QPainter *painter, const QStyleOptionGraphicsItem *, 
     QBrush brush (Qt::SolidPattern);
     brush.setColor (_outterborderColor);
     painter->fillRect(rect,brush);
-
 }

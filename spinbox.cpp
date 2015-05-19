@@ -119,7 +119,7 @@ void SpinBox::addWidgetsForSettings()
 
     QLabel *labelStep = new QLabel("Single Step");
     QSpinBox *step = new QSpinBox();
-    step->setObjectName("current");
+    step->setObjectName("step");
     step->setMaximum(1000);
     step->setMinimum(-1000);
     step->setValue(_singleStep);
