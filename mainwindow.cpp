@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->schemeView_b->scene(), SIGNAL(changed(QList<QRectF>)), this, SLOT(writeWidgetsIntoFile()));
     connect(ui->shemeView_s->scene(), SIGNAL(changed(QList<QRectF>)), this, SLOT(writeWidgetsIntoFile()));
     connect(ui->updateButton, SIGNAL(clicked()), this, SLOT(syncronizeInterface()));
+    connect(ui->sliderScheme, SIGNAL(valueChanged(int)), this, SLOT(zoomScheme()));
 
 }
 
@@ -29,12 +30,17 @@ void MainWindow::chooseAction(QAction *action)
         loaded = loadImage();
         if(!loaded.empty())
         {
+            _outputFileName = QFileDialog::getSaveFileName(this,"Сохранить готовый файл с интерфейсом",QString("output.ui"),"Interface(*.ui)");
+            if( _outputFileName.isEmpty())
+                _outputFileName = "temp.ui";
+
             _recognizer = new ShapeRecognizer(loaded);
             _recognizer->findGeometricalFeatures();
             _widgetsCollector = new GeometricalPrimitivesCollector(_recognizer->getRectangles(), _recognizer->getTriangles(), _recognizer->getRounds());
             _widgetsCollector->collectObjectsIntoWidgets();
             connectWidgetsWithSlot();
             showInterface();
+            drawWidgets(*ui->startView->scene());
         }
     }
 }
@@ -44,7 +50,7 @@ cv::Mat MainWindow::loadImage()
 {
     QString filePath;
     cv::Mat source;
-    filePath = QFileDialog::getOpenFileName(this,"Open picture",QString(),"Picture(*.png *.jpg *.bmp)");
+    filePath = QFileDialog::getOpenFileName(this,"Открыть изображение",QString(),"Picture(*.png *.jpg *.bmp)");
     source = cv::imread(filePath.toStdString().c_str());
     _correctForWriting = true;
     return source;
@@ -116,7 +122,7 @@ void MainWindow::writeWidgetsIntoFile()
     if(_recognizer != NULL && _widgetsCollector != NULL && _correctForWriting )
     {
 
-            QFile file("temp.ui");
+            QFile file(_outputFileName);
             bool ok =  file.open(QIODevice::WriteOnly);
             if(!ok)
             {
@@ -145,6 +151,7 @@ void MainWindow::writeWidgetsIntoFile()
 void MainWindow::drawWidgets(QGraphicsScene &scene)
 {
     scene.clear();
+    scene.addRect(0,0,1200,900,QPen(Qt::gray, 1, Qt::DashDotLine),QBrush());
     if(_recognizer != NULL && _widgetsCollector !=NULL)
     {
         AbstractWidget* window = _widgetsCollector->getMainWindow();
@@ -155,10 +162,11 @@ void MainWindow::drawWidgets(QGraphicsScene &scene)
 void MainWindow::getRealInterface(QGraphicsScene &scene)
 {
     scene.clear();
+    scene.addRect(0,0,1200,900,QPen(Qt::gray, 1, Qt::DashDotLine),QBrush());
     writeWidgetsIntoFile();
     //Преобразовать полученный файл в виджет и поместить его на сцену
     QUiLoader loader;
-    QFile file("temp.ui");
+    QFile file(_outputFileName);
     file.open(QFile::ReadOnly);
     QWidget *myWidget = loader.load(&file, this);
     file.close();
@@ -170,11 +178,20 @@ void MainWindow::syncronizeInterface()
     getRealInterface(*ui->interfaceView_s->scene());
 }
 
+void MainWindow::zoomScheme()
+{
+    int value = ui->sliderScheme->value();
+    if(value < 50)
+        ui->shemeView_s->scale(1.1,1.1);
+    else
+        ui->shemeView_s->scale(0.9, 0.9);
+}
+
 void MainWindow::prepareScenes()
 {
     QGraphicsScene* scene = new QGraphicsScene(this);
     scene->setSceneRect(-5, -5, 1500,1500);
-    scene->addRect(0,0,1200,900,QPen(Qt::black, 1),QBrush());
+    scene->addRect(0,0,1200,900,QPen(Qt::gray, 1, Qt::DashDotLine),QBrush());
 
     QGraphicsScene* scene1 = new QGraphicsScene(this);
     scene1->setSceneRect(-5, -5, 1500,1500);
@@ -187,6 +204,10 @@ void MainWindow::prepareScenes()
     QGraphicsScene* scene3 = new QGraphicsScene(this);
     scene3->setSceneRect(-5, -5, 1500,1500);
     scene3->addRect(0,0,1200,900,QPen(Qt::black, 1),QBrush());
+
+    QGraphicsScene* scene4 = new QGraphicsScene(this);
+    scene4->setSceneRect(-5, -5, 1500,1500);
+    scene4->addRect(0,0,1200,900,QPen(Qt::black, 1),QBrush());
 
     ui->setupUi(this);
 
@@ -203,6 +224,10 @@ void MainWindow::prepareScenes()
     ui->schemeView_b->verticalScrollBar()->setValue(0);
     ui->interfaceView->verticalScrollBar()->setValue(0);
     ui->interfaceView->horizontalScrollBar()->setValue(0);
+    ui->startView->setScene(scene4);
+    ui->startView->verticalScrollBar()->setValue(0);
+    ui->startView->horizontalScrollBar()->setValue(0);
+    ui->startView->setInteractive(false);
 }
 
 void MainWindow::connectWidgetsWithSlot()

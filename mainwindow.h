@@ -27,12 +27,13 @@ private:
     Ui::MainWindow *ui;
     ShapeRecognizer *_recognizer; // Класс распознавателя виджетов на изображении.
     GeometricalPrimitivesCollector *_widgetsCollector;
+    QString _outputFileName;
     bool _correctForWriting;
     cv::Mat loadImage();
+
     void drawWidgets(QGraphicsScene &scene);
     void prepareScenes();
     void connectWidgetsWithSlot();
-
 private slots:
     void chooseAction(QAction * action);
     void showInterface();
@@ -40,6 +41,7 @@ private slots:
     void writeWidgetsIntoFile();
     void getRealInterface(QGraphicsScene &scene);
     void syncronizeInterface();
+    void zoomScheme();
 
 };
 
