@@ -40,7 +40,6 @@ void MainWindow::chooseAction(QAction *action)
             _widgetsCollector->collectObjectsIntoWidgets();
             connectWidgetsWithSlot();
             showInterface();
-            drawWidgets(*ui->startView->scene());
         }
     }
 }
@@ -53,6 +52,11 @@ cv::Mat MainWindow::loadImage()
     filePath = QFileDialog::getOpenFileName(this,"Открыть изображение",QString(),"Picture(*.png *.jpg *.bmp)");
     source = cv::imread(filePath.toStdString().c_str());
     _correctForWriting = true;
+    QImage img (filePath);
+    if(!img.isNull())
+    {
+        ui->startView->scene()->addPixmap(QPixmap::fromImage(img));
+    }
     return source;
 }
 
@@ -206,8 +210,6 @@ void MainWindow::prepareScenes()
     scene3->addRect(0,0,1200,900,QPen(Qt::black, 1),QBrush());
 
     QGraphicsScene* scene4 = new QGraphicsScene(this);
-    scene4->setSceneRect(-5, -5, 1500,1500);
-    scene4->addRect(0,0,1200,900,QPen(Qt::black, 1),QBrush());
 
     ui->setupUi(this);
 
