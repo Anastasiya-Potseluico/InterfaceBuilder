@@ -24,14 +24,20 @@ void MainWindowContainer::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
     xmlWriter.writeStartElement("widget");
     xmlWriter.writeAttribute("class","QWidget");
     xmlWriter.writeAttribute("name","centralWidget");
+
+    xmlWriter.writeStartElement("layout");
+    xmlWriter.writeAttribute("class","QGridLayout");
+    xmlWriter.writeAttribute("name","gridLayout");
     //Сделать лейаут по сетке..... !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     int i;
+
+    setWidgetsIntoGrig();
     for (i = 0; i < _widgets.size(); i++) {
         _widgets[i]->writeSelfIntoFile(xmlWriter);
     }
-
     //записать каждый виджет в файл
 
+    xmlWriter.writeEndElement();
     xmlWriter.writeEndElement();
     xmlWriter.writeEndElement();
 }
@@ -116,4 +122,68 @@ QSize MainWindowContainer::countWindowDimension()
         }
     }
     return QSize(maxX+30, maxY+30);
+}
+
+void MainWindowContainer::setWidgetsIntoGrig()
+{
+    int minWidth; // Минимальная ширина виджета.
+    int minHeight; // Минимальная высота виджета.
+
+    minWidth = _widgets.at(0)->getSize().width();
+    minHeight = _widgets.at(0)->getSize().height();
+
+    int i;
+    // Вычисляем шаг сетки главного окна.
+    for (i = 0; i< _widgets.size(); i++)
+    {
+        if(minWidth > _widgets.at(i)->getSize().width())
+        {
+            minWidth = _widgets.at(i)->getSize().width();
+        }
+        if(minHeight > _widgets.at(i)->getSize().height())
+        {
+            minHeight = _widgets.at(i)->getSize().height();
+        }
+    }
+
+    // Для каждого виджета необходимо узнать номер колонки и строки сетки, а также спаны по ширине и высоте.
+    for (i = 0; i< _widgets.size(); i++)
+    {
+        QString name = _widgets.at(i)->getName();
+        // Находим положение в колонках сетки.
+        int widgetX = _widgets.at(i)->getPosition().x();
+        // Номер колонки сетки.
+        int colNumber = getCellsCount(widgetX, minWidth);
+
+        // Находим положение в строках сетки.
+        int widgetY = _widgets.at(i)->getPosition().y();
+        // Номер строки сетки.
+        int rowNumber = getCellsCount(widgetY, minHeight);
+
+        // Находим спан по строкам.
+        int widgetW = _widgets.at(i)->getSize().width();
+        // Растянутость виджета по строкам.
+        int rowSpan = getCellsCount(widgetW, minWidth);
+
+        // Находим спан по столбцам.
+        int widgetH = _widgets.at(i)->getSize().height();
+        // Растянутость виджета по столбцам.
+        int colSpan = getCellsCount(widgetH, minHeight);
+
+        _widgets.at(i)->setGridPosition(rowNumber, colNumber, rowSpan, colSpan);
+    }
+}
+
+int MainWindowContainer::getCellsCount(int widgetAttribute, int cellDimension)
+{
+    int dimension = widgetAttribute/cellDimension;
+    float div = float (widgetAttribute % cellDimension);
+    float res = div / ((float)cellDimension);
+
+    if( res >= 0.5)
+    {
+        dimension += 1;
+    }
+
+    return dimension;
 }

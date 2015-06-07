@@ -20,7 +20,8 @@ private:
     QList <AbstractWidget*> _widgets; // Список виджетов, расположенных на главном окне.
     QString _windowTitle; // Название главного окна.
     QSize countWindowDimension(); // Метод расчета размера окна на основе имеющихся виджетов.
-
+    void setWidgetsIntoGrig();
+    int getCellsCount(int widgetAttribute, int cellDimension);
 };
 
 #endif // MAINWINDOWCONTAINER_H
