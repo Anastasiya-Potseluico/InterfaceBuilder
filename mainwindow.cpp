@@ -42,6 +42,13 @@ void MainWindow::chooseAction(QAction *action)
             showInterface();
         }
     }
+
+    else if(action->objectName()=="layout")
+    {
+        bool layout = action->isChecked();
+        if(_widgetsCollector != NULL)
+       ((MainWindowContainer*) _widgetsCollector->getMainWindow())->setAutoLayout(layout);
+    }
 }
 
 /*Метод для загрузки изображения*/
@@ -135,8 +142,7 @@ void MainWindow::writeWidgetsIntoFile()
                 msgBox.setText(text);
                 msgBox.exec();
             }
-            AbstractWidget* window = _widgetsCollector->getMainWindow();
-            if(window != NULL)
+            if(_widgetsCollector->getMainWindow() != NULL)
             {
                 QXmlStreamWriter xmlWriter(&file);
                 xmlWriter.setAutoFormatting(true);
@@ -145,8 +151,9 @@ void MainWindow::writeWidgetsIntoFile()
                 xmlWriter.writeStartElement("ui");
                 xmlWriter.writeAttribute("version","4.0");
 
-                window->writeSelfIntoFile(xmlWriter);
+                _widgetsCollector->getMainWindow()->writeSelfIntoFile(xmlWriter);
                 xmlWriter.writeEndElement();
+                file.close();
             }
         }
     }
