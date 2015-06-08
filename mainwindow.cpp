@@ -13,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->shemeView_s->scene(), SIGNAL(changed(QList<QRectF>)), this, SLOT(writeWidgetsIntoFile()));
     connect(ui->updateButton, SIGNAL(clicked()), this, SLOT(syncronizeInterface()));
     connect(ui->sliderScheme, SIGNAL(valueChanged(int)), this, SLOT(zoomScheme()));
+    connect(ui->sliderMaket, SIGNAL(valueChanged(int)), this, SLOT(zoomMaket()));
+    connect(ui->sliderSheme_b, SIGNAL(valueChanged(int)), this, SLOT(zoomScheme_s()));
+    connect(ui->sliderView_b, SIGNAL(valueChanged(int)), this, SLOT(zoomMaket_s()));
 
 }
 
@@ -192,10 +195,41 @@ void MainWindow::syncronizeInterface()
 void MainWindow::zoomScheme()
 {
     int value = ui->sliderScheme->value();
-    if(value < 50)
-        ui->shemeView_s->scale(1.1,1.1);
+    if(value > _sliderShemeValue)
+        ui->shemeView_s->scale(1.25,1.25);
     else
-        ui->shemeView_s->scale(0.9, 0.9);
+        ui->shemeView_s->scale(0.8, 0.8);
+    _sliderShemeValue = value;
+}
+
+void MainWindow::zoomMaket()
+{
+    int value = ui->sliderMaket->value();
+    if(value > _sliderMaketValue)
+        ui->interfaceView_s->scale(1.25,1.25);
+    else
+        ui->interfaceView_s->scale(0.8, 0.8);
+    _sliderMaketValue = value;
+}
+
+void MainWindow::zoomScheme_s()
+{
+    int value = ui->sliderSheme_b->value();
+    if(value > _sliderShemeValue_s)
+        ui->schemeView_b->scale(1.25,1.25);
+    else
+        ui->schemeView_b->scale(0.8, 0.8);
+    _sliderShemeValue_s = value;
+}
+
+void MainWindow::zoomMaket_s()
+{
+    int value = ui->sliderView_b->value();
+    if(value > _sliderMaketValue_s)
+        ui->interfaceView->scale(1.25,1.25);
+    else
+        ui->interfaceView->scale(0.8, 0.8);
+    _sliderMaketValue_s = value;
 }
 
 void MainWindow::prepareScenes()
@@ -237,6 +271,11 @@ void MainWindow::prepareScenes()
     ui->startView->verticalScrollBar()->setValue(0);
     ui->startView->horizontalScrollBar()->setValue(0);
     ui->startView->setInteractive(false);
+
+    _sliderShemeValue = 50;
+    _sliderMaketValue = 50;
+    _sliderShemeValue_s = 50;
+    _sliderMaketValue_s = 50;
 }
 
 void MainWindow::connectWidgetsWithSlot()
