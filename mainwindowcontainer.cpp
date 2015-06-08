@@ -5,6 +5,7 @@ MainWindowContainer::MainWindowContainer():AbstractWidget(*(new QPoint(0,0)),*(n
     _windowTitle = "MainWindow";
     _name = "MainWindow";
     addWidgetsForSettings();
+    _autoLayout = false;
 }
 
 void MainWindowContainer::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
@@ -25,19 +26,37 @@ void MainWindowContainer::writeSelfIntoFile(QXmlStreamWriter &xmlWriter)
     xmlWriter.writeAttribute("class","QWidget");
     xmlWriter.writeAttribute("name","centralWidget");
 
-    xmlWriter.writeStartElement("layout");
-    xmlWriter.writeAttribute("class","QGridLayout");
-    xmlWriter.writeAttribute("name","gridLayout");
-    //Сделать лейаут по сетке..... !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    if(_autoLayout)
+    {
+        xmlWriter.writeStartElement("layout");
+        xmlWriter.writeAttribute("class","QGridLayout");
+        xmlWriter.writeAttribute("name","gridLayout");
+        setWidgetsIntoGrig();
+    }
     int i;
-
-    setWidgetsIntoGrig();
     for (i = 0; i < _widgets.size(); i++) {
+
+        if(_autoLayout)
+        {
+            xmlWriter.writeStartElement("item");
+            xmlWriter.writeAttribute("row",QString::number(_widgets.at(i)->row()));
+            xmlWriter.writeAttribute("column",QString::number(_widgets.at(i)->col()));
+            xmlWriter.writeAttribute("rowspan",QString::number(_widgets.at(i)->rowSpan()));
+            xmlWriter.writeAttribute("colspan",QString::number(_widgets.at(i)->colSpan()));
+        }
         _widgets[i]->writeSelfIntoFile(xmlWriter);
+        if(_autoLayout)
+        {
+            xmlWriter.writeEndElement();
+
+        }
     }
     //записать каждый виджет в файл
+    if(_autoLayout)
+    {
+        xmlWriter.writeEndElement();
+    }
 
-    xmlWriter.writeEndElement();
     xmlWriter.writeEndElement();
     xmlWriter.writeEndElement();
 }
@@ -47,7 +66,8 @@ void MainWindowContainer::drawSelf(QGraphicsScene &scene)
     MainWindowView * mainWindow= new MainWindowView(this);
     scene.addItem(mainWindow);
     int i;
-    for (i = 0; i < _widgets.size(); i++) {
+    for (i = 0; i < _widgets.size(); i++)
+    {
         _widgets[i]->drawSelf(scene);
     }
 }
@@ -96,6 +116,11 @@ void MainWindowContainer::addWidgetsForSettings()
     _settings.append(name);
     _settings.append(labelTitle);
     _settings.append(title);
+}
+
+void MainWindowContainer::setAutoLayout(bool layout)
+{
+    _autoLayout = layout;
 }
 
 QList<AbstractWidget *> MainWindowContainer::getWidgets()

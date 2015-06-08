@@ -14,6 +14,7 @@ public:
     void setSettings(QMap<QString, QString> &settings);
     QString getClassname();
     void addWidgetsForSettings();
+    void setAutoLayout(bool layout);
     QList<AbstractWidget*> getWidgets();
 
 private:
@@ -22,6 +23,7 @@ private:
     QSize countWindowDimension(); // Метод расчета размера окна на основе имеющихся виджетов.
     void setWidgetsIntoGrig();
     int getCellsCount(int widgetAttribute, int cellDimension);
+    bool _autoLayout;
 };
 
 #endif // MAINWINDOWCONTAINER_H
