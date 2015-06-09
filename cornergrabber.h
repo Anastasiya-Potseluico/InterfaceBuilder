@@ -1,65 +1,86 @@
 #ifndef CORNERGRABBER_H
 #define CORNERGRABBER_H
 
-#include <QObject>
+#include <QColor>
 #include <QGraphicsItem>
 #include <QGraphicsRectItem>
-#include <QGraphicsTextItem>
 #include <QGraphicsSceneHoverEvent>
 #include <QGraphicsSceneMouseEvent>
-#include <QColor>
+#include <QGraphicsTextItem>
+#include <QObject>
 #include <QPainter>
 #include <QPen>
 #include <QPointF>
 
-
-
+/*! \file cornergrabber.h
+  *
+  * \class CornerGrabber
+  * \brief Класс угла изменения размера виджета.
+  * \author Поцелуко Анастасия
+*/
 class CornerGrabber : public QGraphicsItem
 {
 
 public:
+    /*!
+    *\brief Конструктор угла.
+    *\param [in] parent Указатель на родительский виджет.
+    *\param [in] corner Тип угла.
+    *\param [in] color Цвет угла.
+    */
     CornerGrabber(QGraphicsItem *parent = 0,  int corner=0, QColor &color = *new QColor());
 
-    int  getCorner(); // Найти тот угол, который был зажат пользователем
-    void setMouseState(int); // Установить состояние мыши
-    int  getMouseState(); // Получить состояние мыши
+    /*!
+    *\brief Метод получения типа угла.
+    *\return Тип угла (0 - левый верхний, далее с 1 по 3 высчитываются по часовой стрелке).
+    */
+    int  getCorner();
 
+    /*!
+    *\brief Метод для установки состояния мыши.
+    *\param [in] parent Указатель на родительский виджет.
+    */
+    void setMouseState(int s);
+
+    /*!
+    *\brief Метод получения состояния мыши.
+    *\return Состояние мыши.
+    */
+    int  getMouseState();
+
+    /*!\brief Координата зажатой кнопки мыши по оси х*/
     qreal mouseDownX;
+    /*!\brief Координата зажатой кнопки мыши по оси у*/
     qreal mouseDownY;
-
-    enum mouseStates {mouseReleasedState, MouseDownState, MouseMovingState}; // Состояния мыши
+    /*!\brief Перечисление возможных состояний мыши*/
+    enum mouseStates {mouseReleasedState, MouseDownState, MouseMovingState};
 
 private:
-
-    virtual QRectF boundingRect() const; ///< must be re-implemented in this class to provide the diminsions of the box to the QGraphicsView
-    virtual void paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); ///< must be re-implemented here to pain the box on the paint-event
-    virtual void hoverEnterEvent ( QGraphicsSceneHoverEvent * event ); ///< must be re-implemented to handle mouse hover enter events
-    virtual void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ); ///< must be re-implemented to handle mouse hover leave events
-
-    // once the hover event handlers are implemented in this class,
-    // the mouse events must allow be implemented because of
-    // some linkage issue - apparrently there is some connection
-    // between the hover events and mouseMove/Press/Release
-    // events which triggers a vtable issue
+    // Переопределенные методы из класса QGraphicsItem.
+    virtual QRectF boundingRect() const;
+    virtual void paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    virtual void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
+    virtual void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
     virtual void mouseMoveEvent ( QGraphicsSceneMouseEvent * event );
     virtual void mouseMoveEvent(QGraphicsSceneDragDropEvent *event);
     virtual void mousePressEvent (QGraphicsSceneMouseEvent * event );
     virtual void mousePressEvent(QGraphicsSceneDragDropEvent *event);
     virtual void mouseReleaseEvent (QGraphicsSceneMouseEvent * event );
 
-    QColor _outterborderColor; ///< the hover event handlers will toggle this between red and black
-    QPen _outterborderPen; ///< the pen is used to paint the red/black border
-
+    /*!\brief Цвет угла*/
+    QColor _outterborderColor;
+    /*!\brief Кисть для отрисовки угла*/
+    QPen _outterborderPen;
+    /*!\brief Родительский виджет*/
     QGraphicsItem *_parentItem;
-
-    int _corner;// 0 - верхний левый, далее по часовой стрелке вокруг представления виджета
-
+    /*!\brief Тип угла*/
+    int _corner;
+    /*!\brief Ширина угла*/
     qreal   _width;
+    /*!\brief Высота угла*/
     qreal   _height;
-
-    int _mouseButtonState; // Текущее состояние мыши.
-
-
+    /*!\brief Текущее состояние мыши*/
+    int _mouseButtonState;
 };
 
 #endif // CORNERGRABBER_H

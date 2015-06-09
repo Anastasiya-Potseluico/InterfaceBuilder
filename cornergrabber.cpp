@@ -1,5 +1,11 @@
 #include "cornergrabber.h"
 
+/*
+* Конструктор угла.
+* param [in] parent Указатель на родительский виджет.
+* param [in] corner Тип угла.
+* param [in] color Цвет угла.
+*/
 CornerGrabber::CornerGrabber(QGraphicsItem *parent,  int corner, QColor &color)
 {
     setParentItem(parent);
@@ -13,21 +19,32 @@ CornerGrabber::CornerGrabber(QGraphicsItem *parent,  int corner, QColor &color)
    this->setAcceptHoverEvents(true);
 }
 
+/*
+* Метод для установки состояния мыши.
+* param [in] parent Указатель на родительский виджет.
+*/
 void CornerGrabber::setMouseState(int s)
 {
     _mouseButtonState = s;
 }
 
+/*
+* Метод получения состояния мыши.
+* return Состояние мыши.
+*/
 int CornerGrabber::getMouseState()
 {
     return _mouseButtonState;
 }
 
+/*
+* Метод получения типа угла.
+* return Тип угла (0 - левый верхний, далее с 1 по 3 высчитываются по часовой стрелке).
+*/
 int CornerGrabber::getCorner()
 {
     return _corner;
 }
-
 
 void CornerGrabber::mouseMoveEvent(QGraphicsSceneDragDropEvent *event)
 {
@@ -70,7 +87,6 @@ QRectF CornerGrabber::boundingRect() const
 {
      return QRectF(0,0,_width,_height);
 }
-
 
 void CornerGrabber::paint (QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
