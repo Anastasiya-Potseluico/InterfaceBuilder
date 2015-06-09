@@ -1,18 +1,27 @@
 #include "graphicsviewview.h"
 
+/*
+* Конструктор представления графиксвью.
+* param [in] drawedWidget Указатель на виджет, который будет отрисовываться.
+*/
 GraphicsViewView::GraphicsViewView(AbstractWidget *drawedWidget) : AbstractWidgetView((AbstractWidget*)drawedWidget)
 {
 }
 
+/*
+* Переопределение метода отрисовки представления графиксвью.
+* param [in] painter QPainter.
+* param [in] option QStyleOptionGraphicsItem.
+* param [in] widget QWidget.
+*/
 void GraphicsViewView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QRectF rect = widgetSize();
     QPen pen(Qt::black, 1);
-
-    //Рисуем внешний прямоугольник виджета
+    // Рисуем внешний прямоугольник виджета.
     painter->setPen(pen);
     painter->drawRect(rect.x(), rect.y(),rect.width(), rect.height());
-    //Рисуем внутренние линии перечеркивания виджета
+    // Рисуем внутренние линии перечеркивания виджета.
     painter->drawLine(rect.x(), rect.y(),rect.x() + rect.width(), rect.y() + rect.height());
     painter->drawLine(rect.x() + rect.width(), rect.y(),rect.x(), rect.y() + rect.height());
 }
